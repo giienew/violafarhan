@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Guest Management - Viola & Farhan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* Desain minimal agar fokus pada fungsi */
+        body { background-color: #f2f2f7; font-family: 'Inter', sans-serif; padding: 20px; }
+        .ios-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .ios-input, .ios-select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        .btn-ios { background: #d4af37; color: #fff; border: none; padding: 15px; width: 100%; font-size: 1rem; font-weight: 700; border-radius: 10px; cursor: pointer; }
+        .guest-item { padding: 15px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center; color: #d4af37; font-family: 'Playfair Display', serif;">Viola & Farhan</h2>
+
+    <div class="ios-card">
+        <h3>Tambah Tamu</h3>
+        <input type="text" id="guestName" class="ios-input" placeholder="Nama Lengkap Tamu...">
+        <select id="guestSide" class="ios-select">
+            <option value="Viola">Viola (Perempuan)</option>
+            <option value="Farhan">Farhan (Laki-laki)</option>
+        </select>
+        <select id="guestCategory" class="ios-select">
+            <option value="Keluarga Inti">Keluarga Inti</option>
+            <option value="Teman">Teman</option>
+        </select>
+        <label><input type="checkbox" id="guestVip"> Prioritas VIP</label>
+        <br><br>
+        <button type="button" class="btn-ios" id="btnSubmit" onclick="simpanTamu()">SIMPAN DATA KE CLOUD</button>
+    </div>
+
+    <div class="ios-card">
+        <h3>Daftar Tamu</h3>
+        <div id="guestList"></div>
+    </div>
+
+    <script>
+        // 1. SISTEM DETEKSI ERROR GLOBAL
+        window.onerror = function(msg, url, line) {
+            alert("🚨 WEBSITE CRASH DI BARIS " + line + ":\n" + msg);
+        };
+
+        // 2. KONEKSI SUPABASE
+        const supabaseUrl = 'https://odarliliqtnliiwayyhe.supabase.co';
+        const supabaseKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        alert("SISTEM AKTIF: File undangan.html berhasil dimuat!");
+
+        // 3. FUNGSI SIMPAN TAMU
+        async function simpanTamu() {
+            alert("TAHAP 1: Tombol ditekan!");
+            try {
+                const btn = document.getElementById('btnSubmit');
+                const name = document.getElementById('guestName').value.trim();
+                const side = document.getElementById('guestSide').value;
+                const category = document.getElementById('guestCategory').value;
+                const is_vip = document.getElementById('guestVip').checked;
+
+                if(!name) { alert("Nama tidak boleh kosong!"); return; }
+
+                btn.innerText = "MENYIMPAN...";
+                btn.disabled = true;
+
+                alert("TAHAP 2: Mengirim " + name + " ke database...");
+
+                const { data, error } = await supabase
+                    .from('guests')
+                    .insert([{ name, side, category, is_vip }]);
+
+                btn.innerText = "SIMPAN DATA KE CLOUD";
+                btn.disabled = false;
+
+                if (error) {
+                    alert("🚨 GAGAL DATABASE: " + error.message);
+                } else {
+                    alert("✅ SUKSES MASUK CLOUD!");
+                    document.getElementById('guestName').value = '';
+                    tampilkanData();
+                }
+            } catch (err) {
+                alert("🚨 GAGAL SISTEM: " + err.message);
+            }
+        }
+
+        // 4. FUNGSI TAMPILKAN DATA
+        async function tampilkanData() {
+            const { data, error } = await supabase.from('guests').select('*').order('created_at', { ascending: false });
+            if (error) return alert("Gagal tarik data: " + error.message);
+            
+            document.getElementById('guestList').innerHTML = data.map(g => 
+                `<div class="guest-item">
+                    <b>${g.name}</b> <span>${g.side} - ${g.category}</span>
+                </div>`
+            ).join('');
+        }
+
+        tampilkanData();
+    </script>
+</body>
+</html>
