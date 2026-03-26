@@ -19,108 +19,108 @@
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--ios-bg); color: var(--ios-text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; -webkit-font-smoothing: antialiased; }
+        body { background-color: var(--ios-bg); color: var(--ios-text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-        /* SPLASH SCREEN ANIMATION (THE FLEX) */
+        /* SPLASH SCREEN INTERAKTIF (Smart Autoplay Bypass) */
         #splashScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 99999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: opacity 0.8s ease-in-out;
+            background: #111; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            cursor: pointer;
         }
-        .splash-title {
-            color: var(--wed-gold); font-family: 'Playfair Display', serif; font-size: 2.5rem;
-            margin-bottom: 10px; opacity: 0; transform: translateY(20px);
-            animation: fadeUp 1s forwards 0.5s;
+        .splash-title { color: var(--wed-gold); font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; }
+        .splash-subtitle { color: #fff; font-size: 0.85rem; font-family: monospace; letter-spacing: 2px; }
+        .splash-instruction { 
+            margin-top: 40px; color: #fff; font-size: 0.9rem; border: 1px solid var(--wed-gold);
+            padding: 8px 20px; border-radius: 20px; animation: pulse 1.5s infinite; 
+            background: rgba(212, 175, 55, 0.1);
         }
-        .splash-subtitle {
-            color: #fff; font-size: 0.9rem; font-family: monospace; letter-spacing: 2px;
-            opacity: 0; animation: fadeUp 1s forwards 1.2s;
-        }
-        .splash-loader {
-            margin-top: 30px; width: 50px; height: 2px; background: #333; position: relative; overflow: hidden;
-            opacity: 0; animation: fadeUp 1s forwards 1.5s;
-        }
-        .splash-loader::after {
-            content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 50%;
-            background: var(--wed-gold); animation: loadingBar 1s infinite ease-in-out alternate;
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,175,55,0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(212,175,55,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,175,55,0); } }
+
+        /* EFEK DEDAUNAN GUGUR (AUTUMN LEAVES) */
+        #leaves-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99; overflow: hidden; }
+        .leaf-item { position: absolute; top: -20px; animation: fall linear infinite; opacity: 0; }
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(30px); opacity: 0; }
         }
 
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes loadingBar { 0% { left: -50%; } 100% { left: 100%; } }
+        /* MUSIC PLAYER BUTTON */
+        .music-btn {
+            position: fixed; bottom: 25px; right: 25px; z-index: 1000;
+            width: 50px; height: 50px; border-radius: 50%; background: var(--wed-gold);
+            color: white; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; transition: 0.3s;
+        }
+        .music-btn.playing { animation: spinDisk 4s linear infinite; }
+        .music-btn.paused { background: #8e8e93; border-color: #e5e5ea; }
+        @keyframes spinDisk { 100% { transform: rotate(360deg); } }
 
-        /* UI STYLES */
-        .ios-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--ios-separator); padding: 15px 20px; text-align: center; }
+        /* Sisa UI Styles */
+        .ios-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--ios-separator); padding: 15px 20px; text-align: center; }
         .wed-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--wed-gold); margin: 0; }
         .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.65rem; font-weight: 700; color: #34c759; background: #e8f9ee; padding: 4px 10px; border-radius: 20px; margin-top: 5px; text-transform: uppercase; }
-
-        .container { max-width: 800px; margin: 0 auto; padding: 15px; }
-
+        .container { max-width: 800px; margin: 0 auto; padding: 15px; position: relative; z-index: 100; }
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat-card { background: var(--ios-surface); border-radius: var(--radius-md); padding: 15px; border: 0.5px solid var(--ios-separator); position: relative; overflow: hidden; transition: transform 0.2s; }
-        .stat-card:active { transform: scale(0.95); }
+        .stat-card { background: var(--ios-surface); border-radius: var(--radius-md); padding: 15px; border: 0.5px solid var(--ios-separator); position: relative; overflow: hidden; }
         .stat-num { font-size: 1.5rem; font-weight: 700; display: block; }
         .stat-label { font-size: 0.7rem; font-weight: 600; color: var(--ios-text-sec); text-transform: uppercase; }
         .stat-icon { position: absolute; right: -10px; bottom: -10px; font-size: 3rem; opacity: 0.05; transform: rotate(-15deg); }
-
         .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px; scrollbar-width: none; }
         .filter-scroll::-webkit-scrollbar { display: none; }
         .filter-pill { white-space: nowrap; padding: 8px 16px; border-radius: 20px; background: #e5e5ea; color: #3a3a3c; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .filter-pill.active { background: var(--wed-gold); color: white; transform: scale(1.05); box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); }
-
         .ios-card { background: var(--ios-surface); border-radius: var(--radius-lg); margin-bottom: 20px; border: 0.5px solid var(--ios-separator); box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; }
         .card-header { padding: 15px 20px; background: #f9f9f9; border-bottom: 0.5px solid var(--ios-separator); font-weight: 700; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
-        
         .ios-row { padding: 14px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
         .ios-row:focus-within { background: #fdfbf7; }
         .ios-row:last-child { border-bottom: none; }
-        
         .ios-input, .ios-select { border: none; background: transparent; font-size: 1rem; color: var(--ios-text); width: 100%; outline: none; }
         .ios-select { text-align: right; direction: rtl; font-weight: 600; color: var(--wed-gold); }
-
         .btn-ios { background: var(--wed-gold); color: #fff; border: none; padding: 18px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
         .btn-ios:active { background: #b5952f; }
         .btn-export { background: #34c759; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; transition: transform 0.2s; }
-        .btn-export:active { transform: scale(0.9); }
-
         .guest-list { list-style: none; padding: 0; margin: 0; }
-        
-        /* STAGGERED LIST ANIMATION */
-        .guest-item { 
-            padding: 15px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; justify-content: space-between; align-items: center;
-            opacity: 0; transform: translateY(15px); animation: slideIn 0.4s ease forwards;
-        }
+        .guest-item { padding: 15px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; justify-content: space-between; align-items: center; opacity: 0; transform: translateY(15px); animation: slideIn 0.4s ease forwards; }
         @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
-        
         .badge { padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; }
         .side-Viola { background: #ffe4e8; color: var(--wed-pink); }
         .side-Farhan { background: #e0f2fe; color: var(--wed-blue); }
         .badge-vip { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; margin-left: 5px; }
         .vip-item { border-left: 4px solid var(--wed-gold); background: #fffdf5; }
         .btn-del { background: #ff3b3015; color: #ff3b30; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: background 0.2s; }
-        .btn-del:active { background: #ff3b3030; }
-
         .search-container { position: sticky; top: 70px; z-index: 90; padding: 10px 15px; background: var(--ios-bg); margin-bottom: 5px; }
         .search-box { background: #e3e3e8; border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; transition: box-shadow 0.2s; }
         .search-box:focus-within { box-shadow: 0 0 0 2px var(--wed-gold); background: #fff; }
         .search-box input { border: none; background: transparent; width: 100%; outline: none; font-size: 0.95rem; }
-
         .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e5ea; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 2px; bottom: 2px; background-color: white; transition: .4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         input:checked + .slider { background-color: #34c759; }
         input:checked + .slider:before { transform: translateX(22px); }
-
         .signature-footer { text-align: center; padding: 20px; font-size: 0.75rem; color: var(--ios-text-sec); font-weight: 500; }
-        .signature-footer i { color: var(--wed-pink); animation: pulse 1.5s infinite; }
     </style>
 </head>
 <body>
 
-    <div id="splashScreen">
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=romantic-piano-110034.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicToggle" class="music-btn paused" onclick="toggleMusic()">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <div id="leaves-container"></div>
+
+    <div id="splashScreen" onclick="startApp()">
         <div class="splash-title">Viola & Farhan</div>
-        <div class="splash-subtitle">SYSTEM ENGINEERED BY AYOGI AKBAR</div>
-        <div class="splash-loader"></div>
+        <div class="splash-subtitle">SYSTEM ENGINEERED BY NAMA ANDA DISINI</div>
+        <div class="splash-instruction"><i class="fas fa-envelope-open-text me-2"></i> Ketuk Layar Untuk Membuka</div>
     </div>
 
     <div class="ios-header">
@@ -169,7 +169,8 @@
                     <span>Kategori Hubungan</span>
                     <select id="guestCategory" class="ios-select" required>
                         <option value="Keluarga Inti">Keluarga Inti</option>
-                        <option value="Kakek / Nenek">Kakek / Nenek</option> <option value="Om / Tante">Om / Tante</option>
+                        <option value="Kakek / Nenek">Kakek / Nenek</option>
+                        <option value="Om / Tante">Om / Tante</option>
                         <option value="Sepupu">Sepupu</option>
                         <option value="Teman">Teman</option>
                         <option value="Rekan Kerja">Rekan Kerja</option>
@@ -214,21 +215,86 @@
         </div>
 
         <div class="signature-footer">
-            Crafted with <i class="fas fa-heart"></i> for Viola & Farhan
+            Crafted with <i class="fas fa-heart" style="color:var(--wed-pink); animation:pulse 1.5s infinite;"></i> for Viola & Farhan
         </div>
     </div>
 
     <script>
-        // MENGHILANGKAN SPLASH SCREEN SETELAH 2.5 DETIK
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.style.opacity = '0';
-                setTimeout(() => splash.style.display = 'none', 800);
-            }, 2500);
-        });
+        // --- 1. SYSTEM AUDIO & SPLASH SCREEN ---
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        let isMusicPlaying = false;
 
-        // CONFIG NATIVE API
+        function startApp() {
+            const splash = document.getElementById('splashScreen');
+            splash.style.transform = 'translateY(-100%)'; // Animasi geser ke atas
+            splash.style.opacity = '0';
+            
+            setTimeout(() => {
+                splash.style.display = 'none';
+                createLeaves(); // Mulai efek daun setelah masuk
+            }, 1000);
+
+            // Coba Play Lagu
+            bgMusic.volume = 0.5; // Set volume 50%
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isMusicPlaying = true;
+                    updateMusicBtn();
+                }).catch(error => {
+                    console.log("Autoplay dicegah oleh browser. Pengguna harus menekan tombol Play secara manual.");
+                });
+            }
+        }
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play();
+                isMusicPlaying = true;
+            }
+            updateMusicBtn();
+        }
+
+        function updateMusicBtn() {
+            if (isMusicPlaying) {
+                musicBtn.classList.add('playing');
+                musicBtn.classList.remove('paused');
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            } else {
+                musicBtn.classList.add('paused');
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+        }
+
+        // --- 2. SISTEM PARTIKEL DEDAUNAN GUGUR (LEAVES ENGINE) ---
+        function createLeaves() {
+            const container = document.getElementById('leaves-container');
+            const leafColors = ['#d4af37', '#e8c45d', '#ffdf80', '#b5952f']; // Tema Gold/Autumn
+            
+            setInterval(() => {
+                const leaf = document.createElement('i');
+                // Menggunakan random ikon (daun biasa atau daun maple)
+                leaf.className = Math.random() > 0.5 ? 'fas fa-leaf leaf-item' : 'fab fa-canadian-maple-leaf leaf-item';
+                
+                // Posisi dan properti acak
+                leaf.style.left = Math.random() * 100 + 'vw';
+                leaf.style.color = leafColors[Math.floor(Math.random() * leafColors.length)];
+                leaf.style.animationDuration = (Math.random() * 3 + 5) + 's'; // Jatuh selama 5-8 detik
+                leaf.style.fontSize = (Math.random() * 10 + 12) + 'px'; // Ukuran 12-22px
+                
+                container.appendChild(leaf);
+                
+                // Hapus daun setelah sampai bawah agar memori (RAM) tidak penuh
+                setTimeout(() => { leaf.remove(); }, 8000);
+            }, 500); // 1 daun baru setiap 0.5 detik
+        }
+
+        // --- 3. KONEKSI SUPABASE ---
         const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
         const apiKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
         const headers = {
@@ -241,15 +307,12 @@
         let fullData = [];
         let currentFilter = 'all';
 
-        // 1. FETCH DATA
         async function fetchData() {
             try {
                 const response = await fetch(apiUrl + '?select=*&order=created_at.desc', { method: 'GET', headers: headers });
                 if (!response.ok) throw new Error("Gagal");
-                
                 fullData = await response.json() || [];
                 updateUI();
-                
                 document.getElementById('syncStatus').style.color = '#34c759';
                 document.getElementById('syncStatus').innerHTML = '<i class="fas fa-circle fa-beat" style="font-size: 0.5rem;"></i> System Online';
             } catch (err) {
@@ -258,87 +321,59 @@
             }
         }
 
-        // 2. LOGIKA CERDAS: AUTO FORMAT & SIMPAN DATA
+        // --- 4. LOGIKA FORM (AUTO CAPITALS & DUPLICATE CHECK) ---
         document.getElementById('guestForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
             
-            // SMART FEATURE: Auto Title Case (pak wo -> Pak Wo)
             let rawName = document.getElementById('guestName').value.trim();
             let formattedName = rawName.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-
-            // SMART FEATURE: Cek Duplikat Cerdas (Fuzzy Search ringan)
             const isDuplicate = fullData.some(g => g.name.toLowerCase() === formattedName.toLowerCase());
             
             if (isDuplicate) {
                 const confirm = await Swal.fire({
                     title: 'Nama Sudah Terdaftar!',
-                    text: `Tamu dengan nama "${formattedName}" sudah ada di database. Apakah Anda yakin ini orang yang berbeda?`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d4af37',
-                    cancelButtonColor: '#ff3b30',
-                    confirmButtonText: 'Ya, Tetap Simpan',
-                    cancelButtonText: 'Batal'
+                    text: `Tamu dengan nama "${formattedName}" sudah ada di database. Yakin ini orang yang berbeda?`,
+                    icon: 'warning', showCancelButton: true, confirmButtonColor: '#d4af37',
+                    cancelButtonColor: '#ff3b30', confirmButtonText: 'Ya, Tetap Simpan', cancelButtonText: 'Batal'
                 });
-                if (!confirm.isConfirmed) return; // Hentikan jika batal
+                if (!confirm.isConfirmed) return;
             }
 
             const payload = {
-                name: formattedName,
-                side: document.getElementById('guestSide').value,
-                category: document.getElementById('guestCategory').value,
-                is_vip: document.getElementById('guestVip').checked
+                name: formattedName, side: document.getElementById('guestSide').value,
+                category: document.getElementById('guestCategory').value, is_vip: document.getElementById('guestVip').checked
             };
 
-            btn.disabled = true;
-            btn.innerText = 'MENYIMPAN...';
+            btn.disabled = true; btn.innerText = 'MENYIMPAN...';
 
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error("Gagal terkirim ke server");
-                
-                // Toast Alert yang elegan (tidak menutupi layar)
-                Swal.fire({ 
-                    toast: true, position: 'top-end', icon: 'success', 
-                    title: `${formattedName} ditambahkan!`, 
-                    showConfirmButton: false, timer: 2000 
-                });
-                
-                e.target.reset();
-                fetchData();
+                const response = await fetch(apiUrl, { method: 'POST', headers: headers, body: JSON.stringify(payload) });
+                if (!response.ok) throw new Error("Gagal terkirim");
+                Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: `${formattedName} ditambahkan!`, showConfirmButton: false, timer: 2000 });
+                e.target.reset(); fetchData();
             } catch (err) {
                 Swal.fire('Error', err.message, 'error');
             } finally {
-                btn.disabled = false;
-                btn.innerText = 'SIMPAN DATA KE CLOUD';
+                btn.disabled = false; btn.innerText = 'SIMPAN DATA KE CLOUD';
             }
         };
 
-        // 3. HAPUS DATA
+        // --- 5. HAPUS & FILTER ---
         async function deleteGuest(id, name) {
             const confirm = await Swal.fire({
                 title: 'Hapus Tamu?', text: `Anda akan menghapus ${name}?`, icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#ff3b30'
             });
-
             if (confirm.isConfirmed) {
                 try {
                     await fetch(apiUrl + '?id=eq.' + id, { method: 'DELETE', headers: headers });
                     fetchData();
                     Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Terhapus!', showConfirmButton: false, timer: 1500 });
-                } catch (err) {
-                    Swal.fire('Error', 'Gagal menghapus data', 'error');
-                }
+                } catch (err) { Swal.fire('Error', 'Gagal menghapus data', 'error'); }
             }
         }
 
-        // 4. UPDATE UI & ANIMASI LIST
         function updateUI() {
             const list = document.getElementById('guestList');
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -356,9 +391,7 @@
             document.getElementById('liveCount').innerText = filtered.length;
 
             if (filtered.length === 0) {
-                list.innerHTML = '';
-                document.getElementById('noData').style.display = 'block';
-                return;
+                list.innerHTML = ''; document.getElementById('noData').style.display = 'block'; return;
             }
 
             document.getElementById('noData').style.display = 'none';
@@ -382,13 +415,12 @@
         function setFilter(filter, btn) {
             currentFilter = filter;
             document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-            btn.classList.add('active');
-            updateUI();
+            btn.classList.add('active'); updateUI();
         }
 
         function filterData() { updateUI(); }
 
-        // 5. EXPORT EXCEL
+        // --- 6. EXCEL EXPORT ---
         function exportData() {
             if (fullData.length === 0) return Swal.fire('Data Kosong', '', 'info');
             const exportItems = fullData.map((g, i) => ({
