@@ -19,7 +19,7 @@
             --primary-border: rgba(179, 36, 65, 0.4);
             
             --rose: #d93658;
-            --serenity-blue: #4a709e;
+            --azure: #4a709e;
             
             /* Latar belakang gelap elegan */
             --bg-main: #111113;
@@ -205,22 +205,23 @@
         }
         .stat-card:hover { border-color: var(--primary-border); background: var(--bg-hover); }
         .stat-icon-bg {
-            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; opacity: 0.08; transform: rotate(-10deg);
+            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg);
         }
         .stat-label { font-size: 0.65rem; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
         .stat-value { font-size: 2rem; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
         
+        /* Pewarnaan Spesifik Card & Ikon */
         .stat-card.primary { border-top: 2px solid var(--primary); }
         .stat-card.primary .stat-value { color: var(--primary); }
         .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
 
         .stat-card.rose { border-top: 2px solid var(--rose); }
-        .stat-card.rose .stat-value { color: var(--text); }
-        .stat-card.rose .fa-heart { color: var(--rose); opacity: 0.15; }
+        .stat-card.rose .stat-value { color: var(--rose); }
+        .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; } /* BOLD COLOR UNTUK LOVE */
 
-        .stat-card.serenity-blue { border-top: 2px solid var(--serenity-blue); }
-        .stat-card.serenity-blue .stat-value { color: var(--text); }
-        .stat-card.serenity-blue .fa-ring { color: var(--serenity-blue); opacity: 0.15; }
+        .stat-card.azure { border-top: 2px solid var(--azure); }
+        .stat-card.azure .stat-value { color: var(--azure); }
+        .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; } /* BOLD COLOR UNTUK CINCIN */
 
         /* Form Elements */
         .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -279,6 +280,7 @@
         .search-inner input::placeholder { color: var(--text-muted); }
         .search-icon { color: var(--text-dim); font-size: 0.85rem; }
 
+        /* Perbaikan Filter Area agar bisa di scroll ke samping dengan mulus */
         .filter-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: none; }
         .filter-strip::-webkit-scrollbar { display: none; }
         .filter-pill {
@@ -305,9 +307,9 @@
         .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; }
         .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); }
         
-        /* Update tag colors to use rich fa-colors */
-        .tag-viola { color: #fff; background: #d93658; border-color: #d93658; } 
-        .tag-serenity-blue { color: #fff; background: #4a709e; border-color: #4a709e; }
+        /* Tag dengan Warna Solid / Bold */
+        .tag-viola { color: #fff; background: var(--rose); border-color: var(--rose); } 
+        .tag-farhan { color: #fff; background: var(--azure); border-color: var(--azure); }
         
         .tag-vip { background: var(--primary); color: #fff; border-color: var(--primary); }
         .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.03); }
@@ -368,7 +370,7 @@
             <div class="stat-card primary"><span class="stat-label">Total Tamu</span><span class="stat-value" id="countAll">—</span><i class="fas fa-users stat-icon-bg"></i></div>
             <div class="stat-card primary"><span class="stat-label">Tamu VIP</span><span class="stat-value" id="countVip">—</span><i class="fas fa-crown stat-icon-bg"></i></div>
             <div class="stat-card rose"><span class="stat-label">Pihak Viola</span><span class="stat-value" id="countViola">—</span><i class="fas fa-heart stat-icon-bg"></i></div>
-            <div class="stat-card serenity-blue"><span class="stat-label">Pihak Farhan</span><span class="stat-value" id="countFarhan">—</span><i class="fas fa-serenity-blue fa-ring stat-icon-bg"></i></div>
+            <div class="stat-card azure"><span class="stat-label">Pihak Farhan</span><span class="stat-value" id="countFarhan">—</span><i class="fas fa-ring stat-icon-bg"></i></div>
         </div>
 
         <div class="luxury-card">
@@ -406,11 +408,15 @@
             <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
             <div class="filter-strip">
                 <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
-                <button class="filter-pill" onclick="setFilter('vip',this)">VIP</button>
+                <button class="filter-pill" onclick="setFilter('vip',this)">VIP ✨</button>
                 <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
                 <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
                 <button class="filter-pill" onclick="setFilter('Keluarga Inti',this)">Keluarga Inti</button>
                 <button class="filter-pill" onclick="setFilter('Teman',this)">Teman</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ayah Viola',this)">Tamu Ayah Viola</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ibu Viola',this)">Tamu Ibu Viola</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ayah Farhan',this)">Tamu Ayah Farhan</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ibu Farhan',this)">Tamu Ibu Farhan</button>
             </div>
         </div>
 
@@ -530,7 +536,7 @@
             <div class="guest-item" style="animation-delay:${Math.min(i*0.03, 0.3)}s">
                 <div>
                     <div class="guest-name">${g.name} ${g.is_vip ? '<i class="fas fa-crown" style="color:var(--primary); font-size:0.75rem; margin-left:4px;"></i>' : ''}</div>
-                    <div class="guest-meta"><span class="tag tag-${g.side === 'Farhan' ? 'serenity-blue' : 'viola'}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
+                    <div class="guest-meta"><span class="tag tag-${g.side.toLowerCase()}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
                 </div>
                 <button class="btn-delete" onclick="deleteGuest(${g.id}, '${g.name.replace(/'/g,"\\'")}')"><i class="fas fa-times"></i></button>
             </div>
@@ -545,7 +551,7 @@
         let name = rawName.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
         
         if (fullData.some(g => g.name.toLowerCase() === name.toLowerCase())) {
-            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Tetap simpan?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan', cancelButtonText: 'Batal' });
+            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Apakah anda yakin itu bukan orang yang sama?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan', cancelButtonText: 'Batal' });
             if (!conf.isConfirmed) return;
         }
         btn.disabled = true; btn.innerText = 'Menyimpan...';
