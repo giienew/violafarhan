@@ -19,7 +19,7 @@
             --primary-border: rgba(179, 36, 65, 0.4);
             
             --rose: #d93658;
-            --azure: #4a709e;
+            --serenity-blue: #4a709e;
             
             /* Latar belakang gelap elegan */
             --bg-main: #111113;
@@ -212,10 +212,15 @@
         
         .stat-card.primary { border-top: 2px solid var(--primary); }
         .stat-card.primary .stat-value { color: var(--primary); }
+        .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
+
         .stat-card.rose { border-top: 2px solid var(--rose); }
-        .stat-card.rose .stat-value { color: var(--rose); }
-        .stat-card.azure { border-top: 2px solid var(--azure); }
-        .stat-card.azure .stat-value { color: var(--azure); }
+        .stat-card.rose .stat-value { color: var(--text); }
+        .stat-card.rose .fa-heart { color: var(--rose); opacity: 0.15; }
+
+        .stat-card.serenity-blue { border-top: 2px solid var(--serenity-blue); }
+        .stat-card.serenity-blue .stat-value { color: var(--text); }
+        .stat-card.serenity-blue .fa-ring { color: var(--serenity-blue); opacity: 0.15; }
 
         /* Form Elements */
         .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -299,8 +304,11 @@
         .guest-name { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; }
         .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); }
-        .tag-viola { color: var(--rose); background: rgba(217, 54, 88, 0.1); border-color: rgba(217, 54, 88, 0.2); } 
-        .tag-farhan { color: var(--azure); background: rgba(74, 112, 158, 0.1); border-color: rgba(74, 112, 158, 0.2); }
+        
+        /* Update tag colors to use rich fa-colors */
+        .tag-viola { color: #fff; background: #d93658; border-color: #d93658; } 
+        .tag-serenity-blue { color: #fff; background: #4a709e; border-color: #4a709e; }
+        
         .tag-vip { background: var(--primary); color: #fff; border-color: var(--primary); }
         .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.03); }
 
@@ -341,7 +349,7 @@
         <div class="splash-ornament"><div class="splash-monogram">V&F</div></div>
         <div class="splash-names">Viola & Farhan</div>
         <div class="splash-subtitle">Wedding Guest Management</div>
-        <div class="splash-cta"><span>Tap Open List</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
+        <div class="splash-cta"><span>Buka Undangan</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
     </div>
 
     <div id="particles"></div>
@@ -360,7 +368,7 @@
             <div class="stat-card primary"><span class="stat-label">Total Tamu</span><span class="stat-value" id="countAll">—</span><i class="fas fa-users stat-icon-bg"></i></div>
             <div class="stat-card primary"><span class="stat-label">Tamu VIP</span><span class="stat-value" id="countVip">—</span><i class="fas fa-crown stat-icon-bg"></i></div>
             <div class="stat-card rose"><span class="stat-label">Pihak Viola</span><span class="stat-value" id="countViola">—</span><i class="fas fa-heart stat-icon-bg"></i></div>
-            <div class="stat-card azure"><span class="stat-label">Pihak Farhan</span><span class="stat-value" id="countFarhan">—</span><i class="fas fa-ring stat-icon-bg"></i></div>
+            <div class="stat-card serenity-blue"><span class="stat-label">Pihak Farhan</span><span class="stat-value" id="countFarhan">—</span><i class="fas fa-serenity-blue fa-ring stat-icon-bg"></i></div>
         </div>
 
         <div class="luxury-card">
@@ -522,7 +530,7 @@
             <div class="guest-item" style="animation-delay:${Math.min(i*0.03, 0.3)}s">
                 <div>
                     <div class="guest-name">${g.name} ${g.is_vip ? '<i class="fas fa-crown" style="color:var(--primary); font-size:0.75rem; margin-left:4px;"></i>' : ''}</div>
-                    <div class="guest-meta"><span class="tag tag-${g.side.toLowerCase()}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
+                    <div class="guest-meta"><span class="tag tag-${g.side === 'Farhan' ? 'serenity-blue' : 'viola'}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
                 </div>
                 <button class="btn-delete" onclick="deleteGuest(${g.id}, '${g.name.replace(/'/g,"\\'")}')"><i class="fas fa-times"></i></button>
             </div>
