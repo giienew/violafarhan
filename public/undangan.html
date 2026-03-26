@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wedding Preparation — Viola & Farhan</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,400;0,600;0,700;1,400;1,600&family=Outfit:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         :root {
@@ -81,7 +80,7 @@
         .color-dot:hover { transform: scale(1.2); border-color: #fff; }
 
         /* ═══════════════════════════════════════
-           SPLASH SCREEN + NEW PHOTO
+           SPLASH SCREEN
         ═══════════════════════════════════════ */
         #splashScreen {
             position: fixed; inset: 0; z-index: 10000;
@@ -90,53 +89,27 @@
             cursor: pointer; transition: opacity 1.2s ease, transform 1.2s ease;
         }
         .splash-ornament {
-            width: 180px; height: 180px; border: 1px solid var(--primary-border);
+            width: 160px; height: 160px; border: 1px solid var(--primary-border);
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
             position: relative; margin-bottom: 30px;
             transition: border-color 0.8s;
             background: var(--primary-dim);
-            animation: orb-pulse 3s ease-in-out infinite;
         }
         .splash-ornament::before {
-            content: ''; position: absolute; inset: 10px;
+            content: ''; position: absolute; inset: 8px;
             border: 1px solid rgba(255,255,255,0.1); border-radius: 50%;
         }
-        @keyframes orb-pulse {
-            0%, 100% { box-shadow: 0 0 0 0 var(--primary-dim); }
-            50% { box-shadow: 0 0 30px 10px var(--primary-dim); }
-        }
-
-        /* Bingkai Foto Melingkar di Splash Screen */
-        .couple-photo-frame {
-            width: 130px; height: 130px;
-            border-radius: 50%; overflow: hidden;
-            position: absolute; z-index: 10;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-        }
-        .couple-photo-img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: sepia(30%) brightness(110%) contrast(100%); /* Warm Elegant Filter */
-        }
-        .photo-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(17,17,19,0.9), transparent 60%); /* Dark gradient for text visibility */
-            z-index: 11;
-        }
-
         .splash-monogram {
             font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-style: italic;
             color: var(--primary); line-height: 1; transition: color 0.8s;
-            z-index: 20; position: relative; display: none; /* Sembunyikan monogram lama agar fokus ke foto */
         }
         .splash-names {
             font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 500;
             color: var(--text); letter-spacing: 2px; text-align: center; margin-bottom: 8px;
-            z-index: 20; position: relative;
         }
         .splash-subtitle {
             font-size: 0.65rem; letter-spacing: 5px; color: var(--text-dim);
             text-transform: uppercase; margin-bottom: 40px;
-            z-index: 20; position: relative;
         }
         .splash-cta {
             display: flex; align-items: center; gap: 10px;
@@ -144,7 +117,6 @@
             padding: 12px 26px; border-radius: 40px;
             font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #fff;
             animation: float 3s ease-in-out infinite; transition: 0.5s;
-            z-index: 20; position: relative;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -214,7 +186,7 @@
         .status-dot { width: 6px; height: 6px; background: #8ce19e; border-radius: 50%; animation: blink 2s infinite; }
 
         /* ═══════════════════════════════════════
-           LUXURY GLASS CARDS (Stat Grid & Forms)
+           LUXURY GLASS CARDS
         ═══════════════════════════════════════ */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
         .luxury-card {
@@ -231,9 +203,7 @@
             box-shadow: var(--shadow-elegant); transition: 0.3s;
         }
         .stat-card:hover { border-color: var(--primary-border); background: var(--bg-hover); }
-        .stat-icon-bg {
-            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; trasform: rotate(-10deg);
-        }
+        .stat-icon-bg { position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg); }
         .stat-label { font-size: 0.65rem; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
         .stat-value { font-size: 2rem; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
         
@@ -242,12 +212,12 @@
         .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
 
         .stat-card.rose { border-top: 2px solid var(--rose); }
-        .stat-card.rose .stat-value { color: var(--rose); }
-        .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; } /* BOLD COLOR UNTUK LOVE */
+        .stat-card.rose .stat-value { color: var(--text); }
+        .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; }
 
         .stat-card.azure { border-top: 2px solid var(--azure); }
-        .stat-card.azure .stat-value { color: var(--azure); }
-        .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; } /* BOLD COLOR UNTUK CINCIN */
+        .stat-card.azure .stat-value { color: var(--text); }
+        .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; }
 
         /* Form Elements */
         .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -273,7 +243,6 @@
         }
         .vip-label { font-size: 0.85rem; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 8px; }
 
-        /* Custom Toggle */
         .toggle-wrap { position: relative; width: 46px; height: 26px; }
         .toggle-wrap input { opacity: 0; width: 0; height: 0; }
         .toggle-track {
@@ -319,7 +288,7 @@
         .list-header { padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .list-title { font-size: 0.7rem; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; font-weight: 600; }
         .btn-export { background: transparent; border: 1px solid var(--glass-border); color: var(--text-dim); padding: 6px 14px; border-radius: 8px; font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
-        .btn-export:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+        .btn-export:hover { background: rgba(255,255,255,0.08); color: var(--text); border-color: var(--primary); }
 
         .guest-item {
             padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -342,14 +311,32 @@
         .empty-state { padding: 40px 20px; text-align: center; display: none; }
         .empty-icon { font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px; }
         
+        /* ═══════════════════════════════════════
+           LIVE CHAT CUSTOM STYLES
+        ═══════════════════════════════════════ */
+        #chatBox::-webkit-scrollbar { width: 4px; }
+        #chatBox::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        
+        .chat-bubble-wrap { display: flex; flex-direction: column; margin-bottom: 12px; animation: revealItem 0.3s ease forwards; }
+        .chat-sender { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 4px; padding: 0 4px; font-weight: 500; letter-spacing: 0.5px; }
+        .chat-bubble { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
+        
+        .chat-me { align-items: flex-end; }
+        .chat-me .chat-bubble { background: var(--primary); color: #fff; border-bottom-right-radius: 4px; border: 1px solid var(--primary-light); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        
+        .chat-other { align-items: flex-start; }
+        .chat-other .chat-bubble { background: var(--bg-hover); color: var(--text); border-bottom-left-radius: 4px; border: 1px solid var(--glass-border); }
+
         .royal-footer { text-align: center; padding: 20px; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; }
 
-        /* Custom SweetAlert Elegan & Bold */
+        /* SweetAlert Elegan */
         .swal2-popup { background: rgba(25, 25, 28, 0.98) !important; backdrop-filter: blur(20px) !important; color: var(--text) !important; border: 1px solid var(--glass-border) !important; border-radius: 20px !important; box-shadow: var(--shadow-elegant) !important; }
         .swal2-title { color: var(--primary) !important; font-family: 'Cormorant Garamond', serif !important; font-size: 1.8rem !important; font-style: italic; font-weight: 600 !important;}
         .swal2-html-container { color: var(--text-dim) !important; font-family: 'Outfit', sans-serif !important; font-size: 0.95rem !important;}
         .swal2-confirm { background: var(--primary) !important; color: #fff !important; border-radius: 12px !important; font-family: 'Outfit', sans-serif !important; font-weight: 600 !important; letter-spacing: 1px !important; }
         .swal2-cancel { background: transparent !important; color: var(--text-dim) !important; border: 1px solid var(--glass-border) !important; font-family: 'Outfit', sans-serif !important; font-weight: 500 !important; }
+        .swal2-input { background: var(--bg-main) !important; border: 1px solid var(--glass-border) !important; color: var(--text) !important; border-radius: 12px !important; font-family: 'Outfit', sans-serif !important; }
+        .swal2-input:focus { border-color: var(--primary) !important; box-shadow: 0 0 0 2px var(--primary-dim) !important; }
     </style>
 </head>
 <body>
@@ -370,12 +357,7 @@
     </div>
 
     <div id="splashScreen" onclick="openApp()">
-        <div class="splash-ornament">
-            <div class="couple-photo-frame">
-                <img src="IMG-20260327-WA0119.jpg" alt="Viola & Farhan" class="couple-photo-img">
-                <div class="photo-overlay"></div> </div>
-            <div class="splash-monogram">V&F</div>
-        </div>
+        <div class="splash-ornament"><div class="splash-monogram">V&F</div></div>
         <div class="splash-names">Viola & Farhan</div>
         <div class="splash-subtitle">Wedding Guest Management</div>
         <div class="splash-cta"><span>Buka Undangan</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
@@ -450,13 +432,28 @@
         <div class="luxury-card" style="padding:18px 22px;">
             <div class="list-header">
                 <span class="list-title">Daftar (<span id="liveCount">0</span>)</span>
-                <button class="btn-export" onclick="exportExcel()"><i class="fas fa-download"></i> Export</button>
+                <button class="btn-export" onclick="exportText()"><i class="fas fa-file-alt"></i> Export Text</button>
             </div>
             <div id="guestList"></div>
             <div id="emptyState" class="empty-state">
                 <div class="empty-icon"><i class="fas fa-book-open"></i></div>
-                <div style="font-size:0.85rem; color:var(--text-muted)">Belum ada data</div>
+                <div style="font-size:0.85rem; color:var(--text-muted)">Belum ada data tamu</div>
             </div>
+        </div>
+
+        <div class="luxury-card" style="padding:18px 22px;">
+            <div class="list-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 5px;">
+                <span class="list-title"><i class="fas fa-comments" style="margin-right: 6px;"></i> Live Chat & Ucapan</span>
+            </div>
+            
+            <div id="chatBox" style="height: 320px; overflow-y: auto; display: flex; flex-direction: column; padding: 10px 5px; margin-bottom: 15px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;">Memuat pesan...</div>
+            </div>
+            
+            <form id="chatForm" onsubmit="sendChat(event)" style="display: flex; gap: 10px;">
+                <input type="text" id="chatInput" class="luxury-input" style="flex: 1; padding: 14px 16px; background: var(--bg-main); border-radius: 12px; border: 1px solid var(--glass-border); text-align: left;" placeholder="Tulis ucapan selamat..." autocomplete="off">
+                <button type="submit" id="btnSendChat" style="background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: 0 20px; cursor: pointer; transition: 0.3s;"><i class="fas fa-paper-plane"></i></button>
+            </form>
         </div>
 
         <div class="royal-footer">Powered by <strong>Ayogi Akbar</strong><br>for <strong>Farhan & Viola</strong></div>
@@ -464,7 +461,7 @@
 
     <script>
     // ═══════════════════════════════════════════
-    // THEME SYSTEM (JEWEL & BOLD TONES)
+    // THEME SYSTEM
     // ═══════════════════════════════════════════
     const themes = {
         maroon: { main: '#b32441', light: '#d93658', dim: 'rgba(179, 36, 65, 0.15)', border: 'rgba(179, 36, 65, 0.4)' },
@@ -487,7 +484,7 @@
     const savedTheme = localStorage.getItem('weddingTheme'); if(savedTheme) setTheme(savedTheme);
 
     // ═══════════════════════════════════════════
-    // SPLASH & MULTI-PARTICLES
+    // SPLASH & PARTICLES
     // ═══════════════════════════════════════════
     const audio = document.getElementById('bgMusic'); let isPlaying = false;
     function openApp() {
@@ -502,7 +499,6 @@
         isPlaying = !isPlaying;
     }
 
-    // Partikel Campur (Elegan & Beragam)
     function startParticles() {
         const c = document.getElementById('particles');
         const icons = ['fas fa-leaf', 'fas fa-seedling', 'fas fa-star', 'fas fa-spa', 'fas fa-sparkles', 'fab fa-pagelines'];
@@ -525,9 +521,10 @@
     }
 
     // ═══════════════════════════════════════════
-    // SUPABASE LOGIC
+    // SUPABASE GUESTS LOGIC
     // ═══════════════════════════════════════════
     const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
+    const chatApiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/messages'; // Endpoint untuk Chat
     const apiKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
     const headers = { 'apikey': apiKey, 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
     
@@ -563,7 +560,7 @@
             <div class="guest-item" style="animation-delay:${Math.min(i*0.03, 0.3)}s">
                 <div>
                     <div class="guest-name">${g.name} ${g.is_vip ? '<i class="fas fa-crown" style="color:var(--primary); font-size:0.75rem; margin-left:4px;"></i>' : ''}</div>
-                    <div class="guest-meta"><span class="tag tag-${g.side.toLowerCase()}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
+                    <div class="guest-meta"><span class="tag tag-${g.side.toLowerCase() === 'farhan' ? 'farhan' : 'viola'}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
                 </div>
                 <button class="btn-delete" onclick="deleteGuest(${g.id}, '${g.name.replace(/'/g,"\\'")}')"><i class="fas fa-times"></i></button>
             </div>
@@ -578,7 +575,7 @@
         let name = rawName.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
         
         if (fullData.some(g => g.name.toLowerCase() === name.toLowerCase())) {
-            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Tetap simpan?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan', cancelButtonText: 'Batal' });
+            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Apakah yakin itu orang yang berbeda?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan', cancelButtonText: 'Batal' });
             if (!conf.isConfirmed) return;
         }
         btn.disabled = true; btn.innerText = 'Menyimpan...';
@@ -595,13 +592,134 @@
         try { await fetch(apiUrl + '?id=eq.' + id, { method: 'DELETE', headers }); fetchData(); } catch {}
     }
 
-    function exportExcel() {
+    // ═══════════════════════════════════════════
+    // EXPORT TO TEXT (.TXT)
+    // ═══════════════════════════════════════════
+    function exportText() {
         if (fullData.length === 0) return Swal.fire({ toast: true, position:'top', title: 'Data Kosong', icon: 'info', showConfirmButton:false, timer:2000, background: 'rgba(25, 25, 28, 0.98)', color: activeThemeHex });
-        const ws = XLSX.utils.json_to_sheet(fullData.map((g, i) => ({ 'No': i+1, 'Nama': g.name, 'Pihak': g.side, 'Kategori': g.category, 'VIP': g.is_vip ? 'Ya' : 'Tidak' })));
-        XLSX.writeFile(XLSX.utils.book_append_sheet(XLSX.utils.book_new(), ws, 'Undangan'), 'Undangan_ViolaFarhan.xlsx');
+        
+        let textContent = "DAFTAR UNDANGAN VIOLA & FARHAN\n";
+        textContent += "=========================================\n\n";
+        
+        fullData.forEach((g, i) => {
+            textContent += `${i + 1}. ${g.name}\n`;
+            textContent += `   ▪ Pihak    : ${g.side}\n`;
+            textContent += `   ▪ Kategori : ${g.category}\n`;
+            textContent += `   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n`;
+            textContent += `-----------------------------------------\n`;
+        });
+
+        const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'Undangan_ViolaFarhan.txt';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
     }
 
-    fetchData(); setInterval(fetchData, 5000);
+    // ═══════════════════════════════════════════
+    // LIVE CHAT PUBLIK LOGIC
+    // ═══════════════════════════════════════════
+    let myChatName = localStorage.getItem('guestChatName');
+
+    async function fetchChat() {
+        try {
+            // Ambil maksimal 100 pesan terbaru untuk performa
+            const res = await fetch(chatApiUrl + '?select=*&order=created_at.desc&limit=100', { headers });
+            if (!res.ok) return;
+            const data = await res.json();
+            
+            // Filter pesan yang HANYA dari 3 HARI terakhir (Hapus 3 hari sekali secara visual)
+            const threeDaysAgo = new Date();
+            threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+            
+            const recentChats = data.filter(m => new Date(m.created_at) >= threeDaysAgo).reverse(); // Reverse agar yg lama di atas
+            const chatBox = document.getElementById('chatBox');
+            
+            // Deteksi jika user sedang scroll, jangan auto-scroll ke bawah saat fetch baru
+            const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 30;
+
+            if (recentChats.length === 0) {
+                chatBox.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;"><i class="fas fa-comment-dots" style="font-size:2rem; margin-bottom:10px; opacity:0.5;"></i><br>Jadilah yang pertama mengirim ucapan!</div>`;
+                return;
+            }
+
+            chatBox.innerHTML = recentChats.map(m => {
+                const isMe = m.sender_name === myChatName;
+                return `
+                    <div class="chat-bubble-wrap ${isMe ? 'chat-me' : 'chat-other'}">
+                        <span class="chat-sender">${isMe ? 'Anda' : m.sender_name}</span>
+                        <div class="chat-bubble">${m.message}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Auto scroll ke pesan terbaru jika sebelumnya ada di bawah
+            if (isScrolledToBottom) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        } catch (e) {
+            console.log("Chat fetch error");
+        }
+    }
+
+    async function sendChat(e) {
+        e.preventDefault();
+        const input = document.getElementById('chatInput');
+        const btnSend = document.getElementById('btnSendChat');
+        const msg = input.value.trim();
+        
+        if (!msg) return;
+
+        // Minta Nama jika belum pernah chat (Simpan di LocalStorage)
+        if (!myChatName) {
+            const { value: inputName } = await Swal.fire({
+                title: 'Nama Kamu?',
+                text: 'Masukkan namamu agar teman lain tahu siapa yang mengirim ucapan.',
+                input: 'text',
+                inputPlaceholder: 'Contoh: Ayogi Akbar',
+                background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
+                confirmButtonColor: 'var(--primary)',
+                showCancelButton: true, cancelButtonText: 'Batal'
+            });
+            if (!inputName || !inputName.trim()) return;
+            myChatName = inputName.trim();
+            localStorage.setItem('guestChatName', myChatName); // Simpan nama selamanya di browser HP
+        }
+
+        // Kunci input sementara
+        input.value = ''; input.disabled = true; btnSend.disabled = true;
+        btnSend.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+        
+        try {
+            // Kirim ke database
+            await fetch(chatApiUrl, { 
+                method: 'POST', 
+                headers, 
+                body: JSON.stringify({ sender_name: myChatName, message: msg }) 
+            });
+            
+            // Reload chat dan paksa scroll ke bawah
+            await fetchChat();
+            setTimeout(() => {
+                const chatBox = document.getElementById('chatBox');
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 300);
+        } catch (e) {
+            Swal.fire({ toast: true, position: 'top', icon: 'error', title: 'Pesan Gagal Terkirim', showConfirmButton: false, timer: 2000, background: 'rgba(25, 25, 28, 0.98)', color: activeThemeHex });
+        } finally {
+            input.disabled = false; btnSend.disabled = false;
+            btnSend.innerHTML = '<i class="fas fa-paper-plane"></i>';
+            input.focus(); // Kembalikan keyboard
+        }
+    }
+
+    // INIT ALL
+    fetchData(); 
+    fetchChat();
+    // Update data setiap 5 detik
+    setInterval(() => {
+        fetchData();
+        fetchChat();
+    }, 5000);
     </script>
 </body>
 </html>
