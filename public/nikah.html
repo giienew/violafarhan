@@ -232,43 +232,43 @@
         }
 
         // 3. TAMBAH DATA
+        // 3. TAMBAH DATA (VERSI DEBUGGING)
         document.getElementById('guestForm').onsubmit = async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btnSubmit');
-            const name = document.getElementById('guestName').value.trim();
-            const side = document.getElementById('guestSide').value;
-            const category = document.getElementById('guestCategory').value;
-            const is_vip = document.getElementById('guestVip').checked;
+            alert("TAHAP 1: Tombol berhasil diklik!");
+            
+            try {
+                const btn = document.getElementById('btnSubmit');
+                const name = document.getElementById('guestName').value.trim();
+                const side = document.getElementById('guestSide').value;
+                const category = document.getElementById('guestCategory').value;
+                const is_vip = document.getElementById('guestVip').checked;
 
-            // Cek duplikat cerdas
-            const duplicate = checkDuplicate(name);
-            if (duplicate) {
-                const confirm = await Swal.fire({
-                    title: 'Kemungkinan Duplikat!',
-                    text: `Nama "${name}" mirip dengan "${duplicate.name}" yang sudah ada. Tetap simpan?`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Tetap Simpan',
-                    cancelButtonText: 'Cek Lagi'
-                });
-                if (!confirm.isConfirmed) return;
-            }
+                alert("TAHAP 2: Membaca nama: " + name);
+                
+                btn.disabled = true;
+                btn.innerText = 'MENYIMPAN...';
 
-            btn.disabled = true;
-            btn.innerText = 'MENYIMPAN...';
+                alert("TAHAP 3: Mulai mengirim data ke Supabase...");
+                
+                // Proses Insert
+                const { data, error } = await supabase
+                    .from('guests')
+                    .insert([{ name, side, category, is_vip }])
+                    .select();
 
-            const { error } = await supabase
-                .from('guests')
-                .insert([{ name, side, category, is_vip }]);
+                btn.disabled = false;
+                btn.innerText = 'SIMPAN DATA KE CLOUD';
 
-            btn.disabled = false;
-            btn.innerText = 'SIMPAN DATA KE CLOUD';
-
-            if (error) {
-                Swal.fire('Gagal!', error.message, 'error');
-            } else {
-                Swal.fire({ icon: 'success', title: 'Tersimpan!', timer: 1000, showConfirmButton: false });
-                e.target.reset();
+                if (error) {
+                    alert("🚨 ERROR DARI SUPABASE: " + error.message);
+                } else {
+                    alert("✅ BERHASIL! Data berhasil masuk ke Database.");
+                    e.target.reset();
+                    fetchData(); // Paksa tarik data terbaru
+                }
+            } catch (err) {
+                alert("🚨 ERROR DARI JAVASCRIPT: " + err.message);
             }
         };
 
