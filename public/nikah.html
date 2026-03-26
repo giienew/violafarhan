@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Buku Tamu VIP - Viola & Farhan</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* CSS PERSIS DARI FILE YANG ANDA UNGGAH */
+        :root {
+            --ios-bg: #f2f2f7; --ios-surface: #ffffff; --ios-text: #000000;
+            --ios-text-sec: #8e8e93; --ios-separator: #c6c6c8;
+            --wed-gold: #d4af37; --wed-pink: #ff2d55; --wed-blue: #007aff;
+            --radius-lg: 20px; --radius-md: 12px;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--ios-bg); color: var(--ios-text); font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding-bottom: 50px; -webkit-font-smoothing: antialiased; }
+        .ios-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--ios-separator); padding: 20px; text-align: center; }
+        .wed-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--wed-gold); margin: 0; line-height: 1.2; }
+        .wed-subtitle { font-size: 0.8rem; font-weight: 600; color: var(--ios-text-sec); letter-spacing: 1px; text-transform: uppercase; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .stat-card { background: var(--ios-surface); border-radius: 16px; padding: 15px 5px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 0.5px solid var(--ios-separator); }
+        .stat-num { font-size: 1.5rem; font-weight: 700; font-family: 'Playfair Display', serif; margin-bottom: 2px; }
+        .stat-label { font-size: 0.65rem; font-weight: 600; color: var(--ios-text-sec); text-transform: uppercase; }
+        .ios-card { background: var(--ios-surface); border-radius: var(--radius-lg); margin-bottom: 25px; overflow: hidden; border: 0.5px solid var(--ios-separator); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .card-header { padding: 15px 20px; background: #f9f9f9; border-bottom: 0.5px solid var(--ios-separator); font-weight: 600; font-size: 0.9rem; color: var(--ios-text-sec); text-transform: uppercase; letter-spacing: 0.5px; }
+        .ios-row { padding: 12px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; align-items: center; justify-content: space-between; gap: 10px;}
+        .ios-row:last-child { border-bottom: none; }
+        .ios-input, .ios-select { border: none; background: transparent; font-size: 1rem; color: var(--ios-text); width: 100%; outline: none; font-family: 'Inter', sans-serif; }
+        .ios-select { text-align: right; direction: rtl; color: var(--wed-gold); font-weight: 500; appearance: none; }
+        .btn-ios { background: var(--wed-gold); color: #fff; border: none; padding: 16px; width: 100%; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .guest-item { padding: 15px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; justify-content: space-between; align-items: center; }
+        .g-name { font-weight: 600; font-size: 1.05rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;}
+        .badge { padding: 3px 8px; border-radius: 6px; font-weight: 600; font-size: 0.7rem; }
+        .side-viola { background: #ffe4e8; color: var(--wed-pink); }
+        .side-farhan { background: #e0f2fe; color: var(--wed-blue); }
+        .badge-vip { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e5ea; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
+        input:checked + .slider { background-color: var(--wed-gold); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        .btn-del { background: #ff3b3015; color: #ff3b30; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="ios-header">
+        <div class="wed-subtitle">Wedding Preparation</div>
+        <div class="wed-title">Viola & Farhan</div>
+        <div style="font-size:0.75rem; font-weight:600; color:#34c759; margin-top:8px;">
+            <i class="fas fa-cloud"></i> TERSIMPAN DI SUPABASE CLOUD
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-num" id="countAll" style="color: var(--wed-gold);">0</div><div class="stat-label">Total Tamu</div></div>
+            <div class="stat-card"><div class="stat-num" id="countViola" style="color: var(--wed-pink);">0</div><div class="stat-label">Pihak Viola</div></div>
+            <div class="stat-card"><div class="stat-num" id="countFarhan" style="color: var(--wed-blue);">0</div><div class="stat-label">Pihak Farhan</div></div>
+            <div class="stat-card" style="grid-column: span 3; display: flex; justify-content: space-around; padding: 10px;">
+                <div style="font-size: 0.8rem; font-weight: 600; color: #b45309;"><i class="fas fa-crown"></i> Total VIP: <span id="countVip">0</span></div>
+            </div>
+        </div>
+
+        <form id="guestForm" class="ios-card">
+            <div class="card-header"><i class="fas fa-user-plus"></i> Tambah Undangan</div>
+            <div class="ios-row"><input type="text" id="guestName" class="ios-input" placeholder="Nama Lengkap Tamu..." required autocomplete="off"></div>
+            <div class="ios-row"><span>Keluarga Pihak</span><select id="guestSide" class="ios-select" required><option value="Viola">Viola</option><option value="Farhan">Farhan</option></select></div>
+            <div class="ios-row"><span>Kategori</span><select id="guestCategory" class="ios-select" required>
+                <option value="Keluarga Inti">Keluarga Inti</option>
+                <option value="Kakek / Nenek">Kakek / Nenek</option>
+                <option value="Om / Tante">Om / Tante</option>
+                <option value="Sepupu">Sepupu</option>
+                <option value="Keponakan">Keponakan</option>
+                <option value="Teman">Teman</option>
+                <option value="Rekan Kerja">Rekan Kerja</option>
+                <option value="Lainnya">Lainnya</option>
+            </select></div>
+            <div class="ios-row"><span>VIP <i class="fas fa-crown"></i></span><label class="switch"><input type="checkbox" id="guestVip"><span class="slider"></span></label></div>
+            <button type="submit" class="btn-ios" id="btnSubmit">Simpan Tamu</button>
+        </form>
+
+        <div class="ios-card">
+            <div class="card-header d-flex justify-content-between"><span>Daftar Tamu</span><button onclick="fetchGuests()" style="background:none; border:none; color:var(--wed-gold); cursor:pointer;"><i class="fas fa-sync-alt"></i></button></div>
+            <ul class="guest-list" id="guestList"></ul>
+        </div>
+    </div>
+
+    <script>
+        // KREDENSIAL SUPABASE ANDA
+        const supabase = window.supabase.createClient('https://hwtqcikabecpwdschviu.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3dHFjaWthYmVjcHdkc2Nodml1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MDExMzYsImV4cCI6MjA3NTk3NzEzNn0.VsefjeWgfmsdcnNAKjypOXlRo6F5MgrQgUt28coW-NE');
+
+        let guestsData = [];
+
+        async function fetchGuests() {
+            const { data } = await supabase.from('guests').select('*').order('created_at', { ascending: false });
+            if (data) {
+                guestsData = data;
+                renderList();
+            }
+        }
+
+        document.getElementById('guestForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById('guestName').value,
+                side: document.getElementById('guestSide').value,
+                category: document.getElementById('guestCategory').value,
+                is_vip: document.getElementById('guestVip').checked
+            };
+            const { error } = await supabase.from('guests').insert([payload]);
+            if (!error) {
+                Swal.fire({ icon: 'success', title: 'Tersimpan!', timer: 1000, showConfirmButton: false });
+                document.getElementById('guestName').value = '';
+                fetchGuests();
+            }
+        };
+
+        async function deleteGuest(id) {
+            if (confirm('Hapus tamu ini?')) {
+                await supabase.from('guests').delete().eq('id', id);
+                fetchGuests();
+            }
+        }
+
+        function renderList() {
+            const list = document.getElementById('guestList');
+            list.innerHTML = guestsData.map(g => `
+                <li class="guest-item">
+                    <div>
+                        <div class="g-name">${g.name} ${g.is_vip ? '<span class="badge badge-vip">VIP</span>' : ''}</div>
+                        <div style="font-size:0.75rem; color:#8e8e93;"><span class="badge ${g.side==='Viola'?'side-viola':'side-farhan'}">${g.side}</span> • ${g.category}</div>
+                    </div>
+                    <button class="btn-del" onclick="deleteGuest(${g.id})"><i class="fas fa-trash"></i></button>
+                </li>
+            `).join('');
+            
+            document.getElementById('countAll').innerText = guestsData.length;
+            document.getElementById('countViola').innerText = guestsData.filter(x => x.side === 'Viola').length;
+            document.getElementById('countFarhan').innerText = guestsData.filter(x => x.side === 'Farhan').length;
+            document.getElementById('countVip').innerText = guestsData.filter(x => x.is_vip).length;
+        }
+
+        fetchGuests();
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+  "routes": [
+    { "src": "/nikah", "dest": "public/nikah.html" },
+    { "src": "/(.*)", "dest": "index.js" }
+  ]
+}
