@@ -205,17 +205,23 @@
         }
         .stat-card:hover { border-color: var(--primary-border); background: var(--bg-hover); }
         .stat-icon-bg {
-            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; opacity: 0.08; transform: rotate(-10deg);
+            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg);
         }
         .stat-label { font-size: 0.65rem; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
         .stat-value { font-size: 2rem; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
         
+        /* Pewarnaan Spesifik Card & Ikon */
         .stat-card.primary { border-top: 2px solid var(--primary); }
         .stat-card.primary .stat-value { color: var(--primary); }
+        .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
+
         .stat-card.rose { border-top: 2px solid var(--rose); }
         .stat-card.rose .stat-value { color: var(--rose); }
+        .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; } /* BOLD COLOR UNTUK LOVE */
+
         .stat-card.azure { border-top: 2px solid var(--azure); }
         .stat-card.azure .stat-value { color: var(--azure); }
+        .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; } /* BOLD COLOR UNTUK CINCIN */
 
         /* Form Elements */
         .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -274,6 +280,7 @@
         .search-inner input::placeholder { color: var(--text-muted); }
         .search-icon { color: var(--text-dim); font-size: 0.85rem; }
 
+        /* Perbaikan Filter Area agar bisa di scroll ke samping dengan mulus */
         .filter-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: none; }
         .filter-strip::-webkit-scrollbar { display: none; }
         .filter-pill {
@@ -299,8 +306,11 @@
         .guest-name { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; }
         .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); }
-        .tag-viola { color: var(--rose); background: rgba(217, 54, 88, 0.1); border-color: rgba(217, 54, 88, 0.2); } 
-        .tag-farhan { color: var(--azure); background: rgba(74, 112, 158, 0.1); border-color: rgba(74, 112, 158, 0.2); }
+        
+        /* Tag dengan Warna Solid / Bold */
+        .tag-viola { color: #fff; background: var(--rose); border-color: var(--rose); } 
+        .tag-farhan { color: #fff; background: var(--azure); border-color: var(--azure); }
+        
         .tag-vip { background: var(--primary); color: #fff; border-color: var(--primary); }
         .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.03); }
 
@@ -341,7 +351,7 @@
         <div class="splash-ornament"><div class="splash-monogram">V&F</div></div>
         <div class="splash-names">Viola & Farhan</div>
         <div class="splash-subtitle">Wedding Guest Management</div>
-        <div class="splash-cta"><span>Open List</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
+        <div class="splash-cta"><span>Tambahkan Tamu</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
     </div>
 
     <div id="particles"></div>
@@ -398,11 +408,15 @@
             <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
             <div class="filter-strip">
                 <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
-                <button class="filter-pill" onclick="setFilter('vip',this)">VIP</button>
+                <button class="filter-pill" onclick="setFilter('vip',this)">VIP ✨</button>
                 <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
                 <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
                 <button class="filter-pill" onclick="setFilter('Keluarga Inti',this)">Keluarga Inti</button>
                 <button class="filter-pill" onclick="setFilter('Teman',this)">Teman</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ayah Viola',this)">Tamu Ayah Viola</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ibu Viola',this)">Tamu Ibu Viola</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ayah Farhan',this)">Tamu Ayah Farhan</button>
+                <button class="filter-pill" onclick="setFilter('Tamu Ibu Farhan',this)">Tamu Ibu Farhan</button>
             </div>
         </div>
 
