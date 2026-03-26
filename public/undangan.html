@@ -47,7 +47,7 @@
         }
 
         /* ═══════════════════════════════════════
-           THEME SWITCHER WIDGET (Lebih Ramping)
+           THEME SWITCHER WIDGET
         ═══════════════════════════════════════ */
         .theme-switcher-wrap {
             position: fixed; right: 20px; bottom: 90px; z-index: 1000;
@@ -171,7 +171,7 @@
         .royal-title {
             font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-style: italic; font-weight: 500;
             color: var(--primary); margin: 0 0 4px; line-height: 1; transition: color 0.8s;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Subtle text shadow, not neon */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .royal-subtitle {
             font-size: 0.65rem; letter-spacing: 4px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 15px;
@@ -193,7 +193,7 @@
             background: var(--bg-card); border: 1px solid var(--glass-border);
             border-radius: 20px; padding: 18px; position: relative; overflow: hidden;
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-elegant);
+            box-shadow: var(--shadow-elegant); margin-bottom: 24px;
         }
         .stat-card {
             display: flex; flex-direction: column;
@@ -217,7 +217,7 @@
         .stat-card.azure .stat-value { color: var(--azure); }
 
         /* Form Elements */
-        .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; }
+        .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         .card-title { font-size: 0.65rem; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 
         .form-row { padding: 14px 0; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; }
@@ -254,7 +254,7 @@
 
         .btn-royal {
             display: block; width: 100%; margin-top: 15px; border: none; padding: 16px; border-radius: 14px;
-            background: var(--primary); color: #fff; font-family: 'Outfit', sans-serif;
+            background: var(--primary); color: #111; font-family: 'Outfit', sans-serif;
             font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
             cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
@@ -264,6 +264,7 @@
         /* ═══════════════════════════════════════
            SEARCH & LIST
         ═══════════════════════════════════════ */
+        .search-wrap { position: sticky; top: 0; z-index: 90; padding: 10px 0 14px; background: var(--bg-main); }
         .search-inner {
             background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 16px;
             display: flex; align-items: center; gap: 10px; margin-bottom: 12px; backdrop-filter: blur(10px);
@@ -289,15 +290,17 @@
         .guest-item {
             padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
             display: flex; justify-content: space-between; align-items: center;
-            animation: revealItem 0.4s ease forwards;
+            animation: revealItem 0.4s ease forwards; opacity: 0; transform: translateY(10px);
         }
+        @keyframes revealItem { to { opacity: 1; transform: translateY(0); } }
         .guest-item:last-child { border-bottom: none; }
         .guest-name { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
         .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; }
         .tag { font-size: 0.55rem; font-weight: 500; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); }
-        .tag-viola { color: var(--rose); } .tag-farhan { color: var(--azure); }
+        .tag-viola { color: var(--rose); background: rgba(224, 159, 156, 0.1); } 
+        .tag-farhan { color: var(--azure); background: rgba(161, 181, 200, 0.1); }
         .tag-vip { background: var(--primary-dim); color: var(--primary); border-color: var(--primary-border); }
-        .tag-cat { color: var(--text-dim); }
+        .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.02); }
 
         .btn-delete { background: transparent; border: none; color: var(--text-muted); padding: 8px; cursor: pointer; transition: 0.2s; font-size: 0.8rem; }
         .btn-delete:hover { color: #ff5e5e; }
@@ -311,13 +314,15 @@
         .swal2-popup { background: rgba(25, 25, 28, 0.95) !important; backdrop-filter: blur(20px) !important; color: var(--text) !important; border: 1px solid var(--glass-border) !important; border-radius: 20px !important; box-shadow: var(--shadow-elegant) !important; }
         .swal2-title { color: var(--primary) !important; font-family: 'Cormorant Garamond', serif !important; font-size: 1.6rem !important; font-style: italic; font-weight: 500 !important;}
         .swal2-html-container { color: var(--text-dim) !important; font-family: 'Outfit', sans-serif !important; font-size: 0.9rem !important;}
-        .swal2-confirm { background: var(--primary) !important; color: #fff !important; border-radius: 10px !important; font-family: 'Outfit', sans-serif !important; font-weight: 500 !important; }
+        .swal2-confirm { background: var(--primary) !important; color: #111 !important; border-radius: 10px !important; font-family: 'Outfit', sans-serif !important; font-weight: 600 !important; }
         .swal2-cancel { background: transparent !important; color: var(--text-dim) !important; border: 1px solid var(--glass-border) !important; font-family: 'Outfit', sans-serif !important; }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop><source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="theme-switcher-wrap">
         <div class="theme-toggle-btn"><i class="fas fa-palette"></i></div>
@@ -357,12 +362,19 @@
         </div>
 
         <div class="luxury-card">
-            <div class="card-header"><div class="card-title">Tambah Tamu Baru</div></div>
+            <div class="card-header">
+                <div class="card-title"><i class="fas fa-plus"></i> Tambah Tamu Baru</div>
+            </div>
             <form id="guestForm" onsubmit="submitGuest(event)">
-                <div class="form-row"><input type="text" id="guestName" class="luxury-input" placeholder="Nama Lengkap Tamu…" required autocomplete="off"></div>
+                <div class="form-row">
+                    <input type="text" id="guestName" class="luxury-input" placeholder="Nama Lengkap Tamu…" required autocomplete="off">
+                </div>
                 <div class="form-row">
                     <span class="form-label">Keluarga Pihak</span>
-                    <select id="guestSide" class="luxury-select"><option value="Viola">Viola (Perempuan)</option><option value="Farhan">Farhan (Laki-laki)</option></select>
+                    <select id="guestSide" class="luxury-select">
+                        <option value="Viola">Viola (Perempuan)</option>
+                        <option value="Farhan">Farhan (Laki-laki)</option>
+                    </select>
                 </div>
                 <div class="form-row">
                     <span class="form-label">Kategori</span>
@@ -380,14 +392,16 @@
             </form>
         </div>
 
-        <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
-        <div class="filter-strip">
-            <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
-            <button class="filter-pill" onclick="setFilter('vip',this)">VIP</button>
-            <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
-            <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
-            <button class="filter-pill" onclick="setFilter('Keluarga Inti',this)">Keluarga Inti</button>
-            <button class="filter-pill" onclick="setFilter('Teman',this)">Teman</button>
+        <div class="search-wrap">
+            <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
+            <div class="filter-strip">
+                <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
+                <button class="filter-pill" onclick="setFilter('vip',this)">VIP</button>
+                <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
+                <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
+                <button class="filter-pill" onclick="setFilter('Keluarga Inti',this)">Keluarga Inti</button>
+                <button class="filter-pill" onclick="setFilter('Teman',this)">Teman</button>
+            </div>
         </div>
 
         <div class="luxury-card" style="padding:18px 22px;">
@@ -396,10 +410,13 @@
                 <button class="btn-export" onclick="exportExcel()"><i class="fas fa-download"></i> Export</button>
             </div>
             <div id="guestList"></div>
-            <div id="emptyState" class="empty-state"><div class="empty-icon"><i class="fas fa-book-open"></i></div><div style="font-size:0.8rem; color:var(--text-muted)">Belum ada data</div></div>
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon"><i class="fas fa-book-open"></i></div>
+                <div style="font-size:0.8rem; color:var(--text-muted)">Belum ada data</div>
+            </div>
         </div>
 
-        <div class="royal-footer">Powered by Ayogi Akbar<br>for Farhan & Viola</div>
+        <div class="royal-footer">Powered by <strong>Ayogi Akbar</strong><br>for <strong>Farhan & Viola</strong></div>
     </div>
 
     <script>
@@ -414,11 +431,14 @@
         lilac: { main: '#c0b3c8', light: '#d5cbe0', dim: 'rgba(192, 179, 200, 0.15)', border: 'rgba(192, 179, 200, 0.4)' }
     };
 
+    let activeThemeHex = '#d8a4a5';
+
     function setTheme(themeName) {
         const t = themes[themeName]; if(!t) return;
         const root = document.documentElement;
         root.style.setProperty('--primary', t.main); root.style.setProperty('--primary-light', t.light);
         root.style.setProperty('--primary-dim', t.dim); root.style.setProperty('--primary-border', t.border);
+        activeThemeHex = t.main;
         localStorage.setItem('weddingTheme', themeName);
     }
     const savedTheme = localStorage.getItem('weddingTheme'); if(savedTheme) setTheme(savedTheme);
@@ -465,7 +485,9 @@
     // SUPABASE LOGIC
     // ═══════════════════════════════════════════
     const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
-    const headers = { 'apikey': 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU', 'Authorization': 'Bearer sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU', 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+    const apiKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
+    const headers = { 'apikey': apiKey, 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+    
     let fullData = []; let currentFilter = 'all';
 
     async function fetchData() {
@@ -509,27 +531,29 @@
 
     async function submitGuest(e) {
         e.preventDefault(); const btn = document.getElementById('btnSubmit');
-        let name = document.getElementById('guestName').value.trim().replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
+        let rawName = document.getElementById('guestName').value.trim();
+        let name = rawName.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
+        
         if (fullData.some(g => g.name.toLowerCase() === name.toLowerCase())) {
-            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b>${name}</b> sudah terdaftar. Tetap simpan?`, showCancelButton: true, confirmButtonText: 'Ya, Simpan' });
+            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Tetap simpan?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan', cancelButtonText: 'Batal' });
             if (!conf.isConfirmed) return;
         }
         btn.disabled = true; btn.innerText = 'Menyimpan...';
         try {
             await fetch(apiUrl, { method: 'POST', headers, body: JSON.stringify({ name, side: document.getElementById('guestSide').value, category: document.getElementById('guestCategory').value, is_vip: document.getElementById('guestVip').checked }) });
-            Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Tersimpan', showConfirmButton: false, timer: 2000 });
+            Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Tersimpan', showConfirmButton: false, timer: 2000, background: 'rgba(25, 25, 28, 0.95)', color: activeThemeHex });
             e.target.reset(); fetchData();
         } catch { Swal.fire('Error', 'Gagal menyimpan', 'error'); } finally { btn.disabled = false; btn.innerText = 'Simpan Data'; }
     }
 
     async function deleteGuest(id, name) {
-        const conf = await Swal.fire({ title: 'Hapus Tamu', html: `Hapus <b>${name}</b> dari daftar?`, showCancelButton: true, confirmButtonText: 'Hapus' });
+        const conf = await Swal.fire({ title: 'Hapus Tamu', html: `Hapus <b style="color:var(--primary)">${name}</b> dari daftar?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Hapus', cancelButtonText: 'Batal' });
         if (!conf.isConfirmed) return;
         try { await fetch(apiUrl + '?id=eq.' + id, { method: 'DELETE', headers }); fetchData(); } catch {}
     }
 
     function exportExcel() {
-        if (fullData.length === 0) return Swal.fire({ toast: true, position:'top', title: 'Data Kosong', icon: 'info', showConfirmButton:false, timer:2000 });
+        if (fullData.length === 0) return Swal.fire({ toast: true, position:'top', title: 'Data Kosong', icon: 'info', showConfirmButton:false, timer:2000, background: 'rgba(25, 25, 28, 0.95)', color: activeThemeHex });
         const ws = XLSX.utils.json_to_sheet(fullData.map((g, i) => ({ 'No': i+1, 'Nama': g.name, 'Pihak': g.side, 'Kategori': g.category, 'VIP': g.is_vip ? 'Ya' : 'Tidak' })));
         XLSX.writeFile(XLSX.utils.book_append_sheet(XLSX.utils.book_new(), ws, 'Undangan'), 'Undangan_ViolaFarhan.xlsx');
     }
