@@ -633,18 +633,17 @@
                 </div>
 
                 <div class="form-row">
-                    <span class="form-label">Kategori</span>
-                    <select id="guestCategory" class="luxury-select">
-                        <option value="Keluarga Inti">Keluarga Inti</option>
-                        <option value="Kakek / Nenek">Kakek / Nenek</option>
-                        <option value="Om / Tante">Om / Tante</option>
-                        <option value="Sepupu">Sepupu</option>
-                        <option value="Teman">Teman</option>
-                        <option value="Rekan Kerja">Rekan Kerja</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
-                </div>
-
+    <span class="form-label">Kategori</span>
+    <select id="guestCategory" class="luxury-select">
+        <option value="Keluarga Inti">Keluarga Inti</option>
+        <option value="Tamu Ayah Viola">Tamu Ayah Viola</option> <option value="Tamu Ibu Viola">Tamu Ibu Viola</option>   <option value="Tamu Ayah Farhan">Tamu Ayah Farhan</option> <option value="Tamu Mama Farhan">Tamu Mama Farhan</option> <option value="Kakek / Nenek">Kakek / Nenek</option>
+        <option value="Om / Tante">Om / Tante</option>
+        <option value="Sepupu">Sepupu</option>
+        <option value="Teman">Teman</option>
+        <option value="Rekan Kerja">Rekan Kerja</option>
+        <option value="Lainnya">Lainnya</option>
+    </select>
+</div>
                 <div class="vip-row">
                     <span class="vip-label">
                         <i class="fas fa-crown"></i> Prioritas VIP
@@ -798,11 +797,17 @@
     }
 
     function updateStats() {
-        document.getElementById('countAll').innerText   = fullData.length;
-        document.getElementById('countVip').innerText   = fullData.filter(g => g.is_vip).length;
-        document.getElementById('countViola').innerText = fullData.filter(g => g.side === 'Viola').length;
-        document.getElementById('countFarhan').innerText= fullData.filter(g => g.side === 'Farhan').length;
-    }
+    document.getElementById('countAll').innerText   = fullData.length;
+    document.getElementById('countVip').innerText   = fullData.filter(g => g.is_vip).length;
+    document.getElementById('countViola').innerText = fullData.filter(g => g.side === 'Viola').length;
+    document.getElementById('countFarhan').innerText= fullData.filter(g => g.side === 'Farhan').length;
+
+    // Perhitungan Tambahan untuk Orang Tua:
+    document.getElementById('countAyahViola').innerText  = fullData.filter(g => g.category === 'Tamu Ayah Viola').length;
+    document.getElementById('countIbuViola').innerText   = fullData.filter(g => g.category === 'Tamu Ibu Viola').length;
+    document.getElementById('countAyahFarhan').innerText = fullData.filter(g => g.category === 'Tamu Ayah Farhan').length;
+    document.getElementById('countMamaFarhan').innerText = fullData.filter(g => g.category === 'Tamu Mama Farhan').length;
+}
 
     // ═══════════════════════════════════════════
     // 5. RENDER LIST
