@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viola & Farhan - Royal Guest Management</title>
+    <title>The Royal Wedding List - Viola & Farhan</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -13,21 +13,17 @@
 
     <style>
         :root {
-            --gold-primary: #d4af37;
-            --gold-light: #f1d592;
-            --gold-dark: #b5952f;
-            --dark-bg: #0c0c0e;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --ios-red: #ff3b30;
-            --ios-green: #34c759;
+            --royal-gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #b5952f 100%);
+            --deep-dark: #0a0a0b;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background: var(--dark-bg);
-            background-image: radial-gradient(circle at top right, #1a1a1d, #0c0c0e);
+            background: var(--deep-dark);
             color: #fff;
             font-family: 'Inter', sans-serif;
             margin: 0;
@@ -36,113 +32,102 @@
             min-height: 100vh;
         }
 
-        /* --- LUXURY SPLASH SCREEN --- */
+        /* --- LUXURY ANIMATIONS --- */
+        @keyframes shine { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* --- THE ULTIMATE SPLASH SCREEN --- */
         #splashScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; cursor: pointer;
-            transition: all 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: all 1.5s cubic-bezier(0.8, 0, 0.2, 1); cursor: pointer;
         }
-        .splash-envelope {
-            width: 120px; height: 120px; background: var(--gold-primary);
-            border-radius: 15px; position: relative; margin-bottom: 30px;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.4);
-            animation: float 3s infinite ease-in-out;
+        .splash-logo {
+            font-family: 'Playfair Display', serif; font-size: 3rem;
+            background: var(--gold-gradient); background-size: 200% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite; margin-bottom: 20px;
         }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        
-        .splash-text { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold-primary); text-align: center; }
-        .tap-msg { margin-top: 50px; color: rgba(255,255,255,0.5); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        .start-btn {
+            border: 1px solid var(--royal-gold); color: var(--royal-gold);
+            padding: 12px 40px; border-radius: 30px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem;
+            margin-top: 40px; transition: 0.3s;
+        }
 
         /* --- PARTICLE SYSTEM --- */
-        #particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .p-leaf { position: absolute; animation: fall linear infinite; filter: drop-shadow(0 0 2px var(--gold-primary)); opacity: 0.6; }
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(50px); }
-        }
+        #leaves-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+        .leaf { position: absolute; top: -10vh; animation: falling linear infinite; opacity: 0.5; }
+        @keyframes falling { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(50px, 110vh) rotate(360deg); } }
 
-        /* --- HEADER & NAVIGATION --- */
-        .glass-header {
-            position: sticky; top: 0; z-index: 1000;
-            background: rgba(12, 12, 14, 0.7);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 0; text-align: center;
-        }
-        .main-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold-primary); margin: 0; }
-
-        /* --- CONTENT CARDS --- */
+        /* --- DASHBOARD & UI --- */
         .container { max-width: 500px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
         
-        .luxury-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 25px; margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .header-section { text-align: center; padding: 40px 0; }
+        .royal-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--royal-gold); margin: 0; }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+        .stat-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 20px; text-align: center;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .stat-card:hover { transform: translateY(-5px); border-color: var(--royal-gold); }
+        .stat-val { font-size: 2rem; font-weight: 800; display: block; color: var(--royal-gold); }
+        .stat-lbl { font-size: 0.6rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .stat-item { padding: 15px; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); text-align: center; }
-        .stat-val { font-size: 1.8rem; font-weight: 800; display: block; color: var(--gold-primary); }
-        .stat-lbl { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; }
-
-        /* --- FORM STYLING --- */
-        .input-group { margin-bottom: 20px; }
-        .input-lbl { display: block; font-size: 0.75rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 8px; text-transform: uppercase; }
+        /* --- LUXURY FORM --- */
+        .luxury-form {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            border-radius: 30px; padding: 30px; margin-bottom: 30px;
+        }
+        .input-box { margin-bottom: 25px; }
+        .input-box label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--royal-gold); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .luxury-input {
-            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
-            padding: 15px; border-radius: 12px; color: #fff; font-size: 1rem; outline: none;
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            padding: 16px; border-radius: 15px; color: #fff; font-size: 1rem; outline: none;
             transition: 0.3s;
         }
-        .luxury-input:focus { border-color: var(--gold-primary); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        .luxury-input:focus { border-color: var(--royal-gold); box-shadow: 0 0 15px rgba(212,175,55,0.2); }
 
-        /* --- THE SHIMMER BUTTON --- */
-        .btn-shimmer {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-            width: 100%; padding: 18px; border: none; border-radius: 15px;
-            color: #000; font-weight: 800; font-size: 1rem; cursor: pointer;
-            position: relative; overflow: hidden; transition: 0.3s;
+        .btn-royal {
+            background: var(--gold-gradient); width: 100%; padding: 20px;
+            border: none; border-radius: 18px; color: #000; font-weight: 900;
+            font-size: 1rem; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .btn-shimmer::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 2.5s infinite;
-        }
-        @keyframes shimmer { 100% { left: 150%; } }
-        .btn-shimmer:active { transform: scale(0.97); }
+        .btn-royal:active { transform: scale(0.96); }
 
-        /* --- GUEST LIST ITEM --- */
-        .guest-item {
-            background: rgba(255,255,255,0.03); border-radius: 16px; padding: 15px;
-            margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
-            border-left: 3px solid var(--gold-primary); animation: slideIn 0.5s ease-out forwards;
+        /* --- GUEST LIST DESIGN --- */
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 5px; }
+        .btn-excel { background: #34c759; color: #fff; border: none; padding: 8px 15px; border-radius: 10px; font-weight: 700; font-size: 0.7rem; cursor: pointer; }
+
+        .guest-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 18px; margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            animation: slideUp 0.6s ease-out forwards; opacity: 0;
         }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        .guest-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
-        .guest-meta { font-size: 0.7rem; color: rgba(255,255,255,0.5); font-weight: 600; }
-        .vip-tag { color: var(--gold-primary); font-size: 0.65rem; background: rgba(212,175,55,0.1); padding: 2px 8px; border-radius: 4px; margin-left: 5px; border: 1px solid var(--gold-primary); }
+        .guest-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; }
+        .tag-pill { font-size: 0.6rem; padding: 4px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; margin-right: 5px; }
+        .tag-laki { background: rgba(0, 122, 255, 0.15); color: #007aff; }
+        .tag-wanita { background: rgba(255, 45, 85, 0.15); color: #ff2d55; }
+        .tag-inti { background: rgba(212, 175, 55, 0.15); color: var(--royal-gold); }
 
         /* --- MUSIC DISC --- */
-        .music-disc {
-            position: fixed; bottom: 25px; left: 25px; z-index: 1000;
-            width: 45px; height: 45px; border-radius: 50%; background: #222;
-            border: 2px solid var(--gold-primary); display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5); cursor: pointer;
+        .music-player {
+            position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+            width: 55px; height: 55px; background: #000; border: 2px solid var(--royal-gold);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); cursor: pointer;
         }
-        .music-disc.playing { animation: rotate 4s linear infinite; }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-
-        /* --- EXCEL BUTTON --- */
-        .btn-excel {
-            background: var(--ios-green); color: #fff; padding: 8px 15px;
-            border-radius: 10px; border: none; font-size: 0.75rem; font-weight: 700;
-            cursor: pointer; transition: 0.3s;
-        }
+        .music-player i { color: var(--royal-gold); font-size: 1.2rem; }
+        .spinning { animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -151,204 +136,206 @@
         <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="splashScreen" onclick="startApp()">
-        <div class="splash-envelope"><i class="fas fa-heart fa-3x" style="color:#000;"></i></div>
-        <div class="splash-text">Viola & Farhan</div>
-        <div style="color:var(--gold-primary); font-weight:600; font-size:0.7rem; margin-top:10px; letter-spacing:3px;">SYSTEM BY EXSALA API</div>
-        <div class="tap-msg">Klik Untuk Membuka Undangan</div>
+    <div id="splashScreen" onclick="initiateSystem()">
+        <div class="splash-logo">Viola & Farhan</div>
+        <div style="color:rgba(255,255,255,0.4); letter-spacing:6px; font-size:0.6rem;">ROYAL LEGACY SYSTEM</div>
+        <div class="start-btn">Buka Undangan</div>
     </div>
 
-    <div id="particle-container"></div>
+    <div id="leaves-container"></div>
 
-    <div class="music-disc" id="musicToggle" onclick="toggleMusic()">
-        <i class="fas fa-music" style="color:var(--gold-primary);"></i>
-    </div>
-
-    <div class="glass-header">
-        <h1 class="main-title">Viola & Farhan</h1>
-        <div style="font-size:0.6rem; letter-spacing:2px; color:rgba(255,255,255,0.4); margin-top:5px;">MANAGEMENT SYSTEM v3.0</div>
+    <div class="music-player" id="musicBtn" onclick="toggleAudio()">
+        <i class="fas fa-compact-disc"></i>
     </div>
 
     <div class="container">
+        <header class="header-section">
+            <h1 class="royal-title">Guest Registry</h1>
+            <div style="font-size:0.6rem; letter-spacing:4px; opacity:0.5; margin-top:5px;">VIOLA & FARHAN WEDDING</div>
+        </header>
+
         <div class="stat-grid">
-            <div class="stat-item glass">
-                <span class="stat-lbl">Tamu Terdaftar</span>
-                <span class="stat-val" id="totalTamu">0</span>
+            <div class="stat-card">
+                <span class="stat-lbl">Tamu Inti</span>
+                <span class="stat-val" id="stat-inti">0</span>
             </div>
-            <div class="stat-item glass">
-                <span class="stat-lbl">Tamu VIP</span>
-                <span class="stat-val" id="totalVip">0</span>
+            <div class="stat-card" style="border-color: var(--royal-gold);">
+                <span class="stat-lbl">VIP Status</span>
+                <span class="stat-val" id="stat-vip">0</span>
+            </div>
+            <div class="stat-card" style="border-bottom: 3px solid #007aff;">
+                <span class="stat-lbl">Pihak Laki-Laki</span>
+                <span class="stat-val" id="stat-laki">0</span>
+            </div>
+            <div class="stat-card" style="border-bottom: 3px solid #ff2d55;">
+                <span class="stat-lbl">Pihak Wanita</span>
+                <span class="stat-val" id="stat-wanita">0</span>
             </div>
         </div>
 
-        <div class="luxury-card glass">
-            <form id="guestForm">
-                <div class="input-group">
-                    <label class="input-lbl">Nama Lengkap Tamu</label>
-                    <input type="text" id="guestName" class="luxury-input" placeholder="Contoh: Pak De Hendra" required autocomplete="off">
+        <div class="luxury-form">
+            <form id="royalForm">
+                <div class="input-box">
+                    <label>Nama Lengkap Tamu</label>
+                    <input type="text" id="inName" class="luxury-input" placeholder="Masukkan Nama..." required autocomplete="off">
                 </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
-                    <div class="input-group">
-                        <label class="input-lbl">Pihak Keluarga</label>
-                        <select id="guestSide" class="luxury-input" style="appearance: none;">
-                            <option value="Viola">Viola (Pr)</option>
-                            <option value="Farhan">Farhan (Lk)</option>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:25px;">
+                    <div class="input-box">
+                        <label>Pihak Keluarga</label>
+                        <select id="inSide" class="luxury-input">
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Wanita">Wanita</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label class="input-lbl">Kategori</label>
-                        <select id="guestCat" class="luxury-input" style="appearance: none;">
-                            <option value="Keluarga Inti">Keluarga</option>
-                            <option value="Kakek / Nenek">Kakek/Nenek</option>
-                            <option value="Rekan Kerja">Rekan</option>
-                            <option value="Teman">Teman</option>
+                    <div class="input-box">
+                        <label>Kategori</label>
+                        <select id="inCat" class="luxury-input">
+                            <option value="Tamu Inti">Tamu Inti</option>
+                            <option value="Tamu VIP">Tamu VIP</option>
+                            <option value="Keluarga Besar">Keluarga Besar</option>
+                            <option value="Rekan / Teman">Rekan / Teman</option>
                         </select>
                     </div>
                 </div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; padding: 0 5px;">
-                    <span style="font-weight:700; font-size:0.9rem; color:var(--gold-primary);">AKSES VIP ✨</span>
-                    <input type="checkbox" id="guestVip" style="width:20px; height:20px; accent-color:var(--gold-primary);">
+
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(212,175,55,0.08); padding:18px; border-radius:15px; margin-bottom:30px; border: 1px dashed var(--royal-gold);">
+                    <span style="font-weight:700; color:var(--royal-gold); font-size:0.9rem;">SET SEBAGAI PRIORITAS VIP ✨</span>
+                    <input type="checkbox" id="inVip" style="width:24px; height:24px; accent-color:var(--royal-gold);">
                 </div>
-                <button type="submit" class="btn-shimmer" id="btnSubmit">SIMPAN DATA KE CLOUD</button>
+
+                <button type="submit" class="btn-royal" id="btnSubmit">SINKRONISASI KE CLOUD</button>
             </form>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding:0 5px;">
-            <div style="font-weight:800; font-size:0.9rem; letter-spacing:1px;">DAFTAR TAMU</div>
-            <button class="btn-excel" onclick="exportData()"><i class="fas fa-file-excel"></i> EKSPOR</button>
+        <div class="list-header">
+            <div style="font-weight:800; font-size:1rem; letter-spacing:1px; color:var(--royal-gold);">DATA TERKINI</div>
+            <button class="btn-excel" onclick="exportData()"><i class="fas fa-file-excel"></i> UNDUH EXCEL</button>
         </div>
 
-        <div id="guestList"></div>
-        <div id="emptyMsg" style="text-align:center; padding:50px; opacity:0.3; display:none;">
-            <i class="fas fa-folder-open fa-3x"></i><br>Data Masih Kosong
-        </div>
+        <div id="mainList"></div>
     </div>
 
     <script>
-        // --- 1. SYSTEM INITIALIZATION ---
-        const bgMusic = document.getElementById('bgMusic');
+        const audio = document.getElementById('bgMusic');
         let isMusicPlaying = false;
 
-        function startApp() {
-            const splash = document.getElementById('splashScreen');
-            splash.style.opacity = '0';
-            splash.style.transform = 'scale(1.1)';
+        // --- 1. CORE SYSTEM ---
+        function initiateSystem() {
+            document.getElementById('splashScreen').style.opacity = '0';
+            document.getElementById('splashScreen').style.transform = 'scale(1.2)';
             setTimeout(() => {
-                splash.style.display = 'none';
-                initParticles();
-                bgMusic.play();
+                document.getElementById('splashScreen').style.display = 'none';
+                startAmbientEffects();
+                audio.play();
                 isMusicPlaying = true;
-                document.getElementById('musicToggle').classList.add('playing');
+                document.getElementById('musicBtn').classList.add('spinning');
             }, 1200);
         }
 
-        function toggleMusic() {
-            if(isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; }
-            else { bgMusic.play(); isMusicPlaying = true; }
-            document.getElementById('musicToggle').classList.toggle('playing');
+        function toggleAudio() {
+            if(isMusicPlaying) { audio.pause(); isMusicPlaying = false; }
+            else { audio.play(); isMusicPlaying = true; }
+            document.getElementById('musicBtn').classList.toggle('spinning');
         }
 
-        function initParticles() {
-            const container = document.getElementById('particle-container');
+        function startAmbientEffects() {
+            const container = document.getElementById('leaves-container');
+            const icons = ['fa-leaf', 'fa-sparkles', 'fa-crown'];
             setInterval(() => {
-                const p = document.createElement('i');
-                const isSparkle = Math.random() > 0.4;
-                p.className = isSparkle ? 'fas fa-sparkles p-leaf' : 'fas fa-leaf p-leaf';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.color = isSparkle ? '#fff' : '#d4af37';
-                p.style.fontSize = (Math.random() * 10 + 5) + 'px';
-                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                container.appendChild(p);
-                setTimeout(() => p.remove(), 10000);
+                const i = document.createElement('i');
+                const type = icons[Math.floor(Math.random() * icons.length)];
+                i.className = `fas ${type} leaf`;
+                i.style.left = Math.random() * 100 + 'vw';
+                i.style.color = Math.random() > 0.5 ? '#d4af37' : '#fff';
+                i.style.fontSize = Math.random() * 15 + 10 + 'px';
+                i.style.animationDuration = Math.random() * 5 + 5 + 's';
+                container.appendChild(i);
+                setTimeout(() => i.remove(), 10000);
             }, 800);
         }
 
-        // --- 2. SUPABASE LOGIC (NATIVE FETCH) ---
-        const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
-        const apiKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
-        const headers = { 'apikey': apiKey, 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+        // --- 2. DATABASE ENGINE (Supabase Native) ---
+        const API_URL = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
+        const API_KEY = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
+        const HEADERS = { 'apikey': API_KEY, 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
 
-        let currentData = [];
+        let localStore = [];
 
-        async function fetchGuests() {
+        async function syncData() {
             try {
-                const res = await fetch(apiUrl + '?select=*&order=created_at.desc', { method: 'GET', headers: headers });
-                currentData = await res.json() || [];
+                const res = await fetch(`${API_URL}?select=*&order=created_at.desc`, { method: 'GET', headers: HEADERS });
+                localStore = await res.json() || [];
                 renderUI();
-            } catch (err) { console.error("Sync Error", err); }
+            } catch(e) { console.error("Cloud Connection Lost"); }
         }
 
-        document.getElementById('guestForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmit');
-            const rawName = document.getElementById('guestName').value.trim();
-            const formattedName = rawName.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-
-            btn.disabled = true; btn.innerText = "SINKRONISASI...";
-
-            const payload = {
-                name: formattedName,
-                side: document.getElementById('guestSide').value,
-                category: document.getElementById('guestCat').value,
-                is_vip: document.getElementById('guestVip').checked
-            };
-
-            try {
-                const res = await fetch(apiUrl, { method: 'POST', headers: headers, body: JSON.stringify(payload) });
-                if(res.ok) {
-                    Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Tamu Berhasil Disimpan', showConfirmButton: false, timer: 1500 });
-                    e.target.reset();
-                    fetchGuests();
-                }
-            } finally { btn.disabled = false; btn.innerText = "SIMPAN DATA KE CLOUD"; }
-        };
-
         function renderUI() {
-            const list = document.getElementById('guestList');
-            const empty = document.getElementById('emptyMsg');
+            const list = document.getElementById('mainList');
             
-            document.getElementById('totalTamu').innerText = currentData.length;
-            document.getElementById('totalVip').innerText = currentData.filter(g => g.is_vip).length;
+            // Stats Calculation
+            document.getElementById('stat-inti').innerText = localStore.filter(g => g.category === 'Tamu Inti').length;
+            document.getElementById('stat-vip').innerText = localStore.filter(g => g.is_vip).length;
+            document.getElementById('stat-laki').innerText = localStore.filter(g => g.side === 'Laki-Laki').length;
+            document.getElementById('stat-wanita').innerText = localStore.filter(g => g.side === 'Wanita').length;
 
-            if(currentData.length === 0) { empty.style.display = 'block'; list.innerHTML = ''; return; }
-            empty.style.display = 'none';
-
-            list.innerHTML = currentData.map((g, i) => `
-                <div class="guest-item" style="animation-delay: ${i * 0.1}s">
+            list.innerHTML = localStore.map((g, i) => `
+                <div class="guest-card" style="animation-delay: ${i * 0.1}s; ${g.is_vip ? 'border-left: 4px solid var(--royal-gold);' : ''}">
                     <div>
-                        <div class="guest-name">${g.name} ${g.is_vip ? '<span class="vip-tag">VIP</span>' : ''}</div>
-                        <div class="guest-meta">${g.side.toUpperCase()} • ${g.category}</div>
+                        <div class="guest-name">${g.name} ${g.is_vip ? '✨' : ''}</div>
+                        <div style="display:flex;">
+                            <span class="tag-pill tag-${g.side === 'Laki-Laki' ? 'laki' : 'wanita'}">${g.side}</span>
+                            <span class="tag-pill tag-inti">${g.category}</span>
+                        </div>
                     </div>
-                    <button onclick="deleteGuest(${g.id})" style="border:none; background:none; color:var(--ios-red); cursor:pointer;">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
+                    <button onclick="removeItem(${g.id})" style="background:none; border:none; color:#ff3b30; cursor:pointer; font-size:1.2rem;"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `).join('');
         }
 
-        async function deleteGuest(id) {
-            Swal.fire({
-                title: 'Hapus Data?', text: "Data tidak bisa dikembalikan!", icon: 'warning',
-                showCancelButton: true, confirmButtonColor: '#ff3b30', confirmButtonText: 'Ya, Hapus'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    await fetch(`${apiUrl}?id=eq.${id}`, { method: 'DELETE', headers: headers });
-                    fetchGuests();
-                }
-            });
+        // --- 3. LOGIC HANDLERS ---
+        document.getElementById('royalForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const rawName = document.getElementById('inName').value.trim();
+            // SMART FEATURE: Auto Title Case
+            const cleanName = rawName.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
+
+            btn.disabled = true; btn.innerText = "AUTHENTICATING...";
+
+            const payload = {
+                name: cleanName,
+                side: document.getElementById('inSide').value,
+                category: document.getElementById('inCat').value,
+                is_vip: document.getElementById('inVip').checked
+            };
+
+            const res = await fetch(API_URL, { method: 'POST', headers: HEADERS, body: JSON.stringify(payload) });
+            if(res.ok) {
+                Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Data Berhasil Disinkronkan', showConfirmButton: false, timer: 2000 });
+                e.target.reset();
+                syncData();
+            }
+            btn.disabled = false; btn.innerText = "SINKRONISASI KE CLOUD";
+        }
+
+        async function removeItem(id) {
+            if(confirm('Hapus data tamu ini secara permanen?')) {
+                await fetch(`${API_URL}?id=eq.${id}`, { method: 'DELETE', headers: HEADERS });
+                syncData();
+            }
         }
 
         function exportData() {
-            if (currentData.length === 0) return;
-            const ws = XLSX.utils.json_to_sheet(currentData.map(g => ({ 'Nama': g.name, 'Keluarga': g.side, 'Kategori': g.category, 'Status': g.is_vip ? 'VIP' : 'Normal' })));
+            if (localStore.length === 0) return;
+            const ws = XLSX.utils.json_to_sheet(localStore.map(g => ({ 'NAMA': g.name, 'PIHAK': g.side, 'KATEGORI': g.category, 'VIP': g.is_vip ? 'YES' : 'NO' })));
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Tamu");
-            XLSX.writeFile(wb, "GuestList_ViolaFarhan.xlsx");
+            XLSX.writeFile(wb, "Daftar_Tamu_RoyalWedding.xlsx");
         }
 
-        // Jalankan fetch awal & interval 10 detik
-        fetchGuests();
-        setInterval(fetchGuests, 10000);
+        syncData();
+        setInterval(syncData, 8000); // Sinkronisasi otomatis setiap 8 detik
     </script>
 </body>
 </html>
