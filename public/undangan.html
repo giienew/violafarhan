@@ -2,109 +2,119 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Guest Management - Viola & Farhan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viola & Farhan - Sistem Inti</title>
     <style>
-        /* Desain minimal agar fokus pada fungsi */
-        body { background-color: #f2f2f7; font-family: 'Inter', sans-serif; padding: 20px; }
-        .ios-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .ios-input, .ios-select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
-        .btn-ios { background: #d4af37; color: #fff; border: none; padding: 15px; width: 100%; font-size: 1rem; font-weight: 700; border-radius: 10px; cursor: pointer; }
-        .guest-item { padding: 15px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+        .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ccc; }
+        input, select, button { width: 100%; padding: 12px; margin-top: 10px; box-sizing: border-box; font-size: 16px; border-radius: 8px; border: 1px solid #aaa; }
+        button { background: #d4af37; color: white; border: none; font-weight: bold; cursor: pointer; }
+        /* KOTAK MONITOR DEBUGGING */
+        #debugBox { background: black; color: lime; padding: 15px; font-family: monospace; font-size: 13px; border-radius: 5px; margin-bottom: 20px; min-height: 80px; word-wrap: break-word; }
     </style>
 </head>
 <body>
 
-    <h2 style="text-align: center; color: #d4af37; font-family: 'Playfair Display', serif;">Viola & Farhan</h2>
+    <div id="debugBox">STATUS: Memulai sistem...</div>
 
-    <div class="ios-card">
+    <div class="card">
         <h3>Tambah Tamu</h3>
-        <input type="text" id="guestName" class="ios-input" placeholder="Nama Lengkap Tamu...">
-        <select id="guestSide" class="ios-select">
-            <option value="Viola">Viola (Perempuan)</option>
-            <option value="Farhan">Farhan (Laki-laki)</option>
+        <input type="text" id="guestName" placeholder="Ketik Nama Tamu di sini...">
+        <select id="guestSide">
+            <option value="Viola">Pihak Viola</option>
+            <option value="Farhan">Pihak Farhan</option>
         </select>
-        <select id="guestCategory" class="ios-select">
+        <select id="guestCategory">
             <option value="Keluarga Inti">Keluarga Inti</option>
             <option value="Teman">Teman</option>
         </select>
-        <label><input type="checkbox" id="guestVip"> Prioritas VIP</label>
-        <br><br>
-        <button type="button" class="btn-ios" id="btnSubmit" onclick="simpanTamu()">SIMPAN DATA KE CLOUD</button>
+        <button onclick="simpanData()" id="btnSimpan">SIMPAN DATA</button>
     </div>
 
-    <div class="ios-card">
-        <h3>Daftar Tamu</h3>
-        <div id="guestList"></div>
+    <div class="card">
+        <h3>Daftar Tamu Tersimpan</h3>
+        <div id="listTamu">Sedang memuat data dari database...</div>
     </div>
 
     <script>
-        // 1. SISTEM DETEKSI ERROR GLOBAL
-        window.onerror = function(msg, url, line) {
-            alert("🚨 WEBSITE CRASH DI BARIS " + line + ":\n" + msg);
-        };
+        const debugBox = document.getElementById('debugBox');
+        function log(msg) {
+            debugBox.innerHTML += "<br>> " + msg;
+            console.log(msg);
+        }
 
-        // 2. KONEKSI SUPABASE
-        const supabaseUrl = 'https://odarliliqtnliiwayyhe.supabase.co';
-        const supabaseKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        // Jika tulisan ini tidak muncul, berarti Vercel Anda belum update!
+        log("JAVASCRIPT BERHASIL BERJALAN!");
 
-        alert("SISTEM AKTIF: File undangan.html berhasil dimuat!");
+        // Kredensial Supabase Langsung
+        const url = "https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests";
+        const key = "sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU";
 
-        // 3. FUNGSI SIMPAN TAMU
-        async function simpanTamu() {
-            alert("TAHAP 1: Tombol ditekan!");
+        async function simpanData() {
+            const btn = document.getElementById('btnSimpan');
+            const name = document.getElementById('guestName').value;
+            const side = document.getElementById('guestSide').value;
+            const category = document.getElementById('guestCategory').value;
+
+            if(!name) { log("GAGAL: Nama tamu belum diisi!"); return; }
+
+            btn.innerText = "MENYIMPAN...";
+            log("Mencoba kirim data: " + name);
+
             try {
-                const btn = document.getElementById('btnSubmit');
-                const name = document.getElementById('guestName').value.trim();
-                const side = document.getElementById('guestSide').value;
-                const category = document.getElementById('guestCategory').value;
-                const is_vip = document.getElementById('guestVip').checked;
+                // JALUR API LANGSUNG (Bypass Library)
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': key,
+                        'Authorization': 'Bearer ' + key,
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify({ name: name, side: side, category: category, is_vip: false })
+                });
 
-                if(!name) { alert("Nama tidak boleh kosong!"); return; }
+                const result = await response.json();
+                log("Respon Database (Kode): " + response.status);
 
-                btn.innerText = "MENYIMPAN...";
-                btn.disabled = true;
-
-                alert("TAHAP 2: Mengirim " + name + " ke database...");
-
-                const { data, error } = await supabase
-                    .from('guests')
-                    .insert([{ name, side, category, is_vip }]);
-
-                btn.innerText = "SIMPAN DATA KE CLOUD";
-                btn.disabled = false;
-
-                if (error) {
-                    alert("🚨 GAGAL DATABASE: " + error.message);
+                if (!response.ok) {
+                    log("🔴 DATABASE MENOLAK: " + JSON.stringify(result));
                 } else {
-                    alert("✅ SUKSES MASUK CLOUD!");
-                    document.getElementById('guestName').value = '';
-                    tampilkanData();
+                    log("🟢 SUKSES! Data tersimpan di Cloud.");
+                    document.getElementById('guestName').value = ""; // Bersihkan kolom
+                    muatData(); // Refresh list
                 }
-            } catch (err) {
-                alert("🚨 GAGAL SISTEM: " + err.message);
+            } catch (e) {
+                log("🔴 ERROR KRITIS: " + e.message);
+            }
+            btn.innerText = "SIMPAN DATA";
+        }
+
+        async function muatData() {
+            log("Menarik data tamu dari Cloud...");
+            try {
+                const response = await fetch(url + "?select=*", {
+                    method: 'GET',
+                    headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
+                });
+                const data = await response.json();
+                
+                if(!response.ok) {
+                     log("🔴 GAGAL TARIK DATA: " + JSON.stringify(data));
+                     return;
+                }
+
+                document.getElementById('listTamu').innerHTML = data.map(g => 
+                    "<p><b>" + g.name + "</b> - Pihak " + g.side + " (" + g.category + ")</p>"
+                ).join('');
+                log("Tarik data selesai. Total: " + data.length + " tamu.");
+            } catch (e) {
+                log("🔴 GAGAL KONEKSI: " + e.message);
             }
         }
 
-        // 4. FUNGSI TAMPILKAN DATA
-        async function tampilkanData() {
-            const { data, error } = await supabase.from('guests').select('*').order('created_at', { ascending: false });
-            if (error) return alert("Gagal tarik data: " + error.message);
-            
-            document.getElementById('guestList').innerHTML = data.map(g => 
-                `<div class="guest-item">
-                    <b>${g.name}</b> <span>${g.side} - ${g.category}</span>
-                </div>`
-            ).join('');
-        }
-
-        tampilkanData();
+        // Panggil fungsi saat web dibuka
+        muatData();
     </script>
 </body>
 </html>
