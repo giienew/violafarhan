@@ -3,106 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Guest Management - Viola & Farhan</title>
+    <title>Viola & Farhan - Royal Guest Management</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         :root {
-            --ios-bg: #f2f2f7; --ios-surface: #ffffff; --ios-text: #000000;
-            --ios-text-sec: #8e8e93; --ios-separator: #c6c6c8;
-            --wed-gold: #d4af37; --wed-pink: #ff2d55; --wed-blue: #007aff;
-            --radius-lg: 20px; --radius-md: 12px;
+            --gold-primary: #d4af37;
+            --gold-light: #f1d592;
+            --gold-dark: #b5952f;
+            --dark-bg: #0c0c0e;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --ios-red: #ff3b30;
+            --ios-green: #34c759;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--ios-bg); color: var(--ios-text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        
+        body { 
+            background: var(--dark-bg);
+            background-image: radial-gradient(circle at top right, #1a1a1d, #0c0c0e);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-        /* SPLASH SCREEN INTERAKTIF (Smart Autoplay Bypass) */
+        /* --- LUXURY SPLASH SCREEN --- */
         #splashScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #111; z-index: 99999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-            cursor: pointer;
+            background: #000; z-index: 10000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; cursor: pointer;
+            transition: all 1.2s cubic-bezier(0.8, 0, 0.2, 1);
         }
-        .splash-title { color: var(--wed-gold); font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; }
-        .splash-subtitle { color: #fff; font-size: 0.85rem; font-family: monospace; letter-spacing: 2px; }
-        .splash-instruction { 
-            margin-top: 40px; color: #fff; font-size: 0.9rem; border: 1px solid var(--wed-gold);
-            padding: 8px 20px; border-radius: 20px; animation: pulse 1.5s infinite; 
-            background: rgba(212, 175, 55, 0.1);
+        .splash-envelope {
+            width: 120px; height: 120px; background: var(--gold-primary);
+            border-radius: 15px; position: relative; margin-bottom: 30px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.4);
+            animation: float 3s infinite ease-in-out;
         }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,175,55,0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(212,175,55,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,175,55,0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        
+        .splash-text { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold-primary); text-align: center; }
+        .tap-msg { margin-top: 50px; color: rgba(255,255,255,0.5); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 
-        /* EFEK DEDAUNAN GUGUR (AUTUMN LEAVES) */
-        #leaves-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99; overflow: hidden; }
-        .leaf-item { position: absolute; top: -20px; animation: fall linear infinite; opacity: 0; }
+        /* --- PARTICLE SYSTEM --- */
+        #particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .p-leaf { position: absolute; animation: fall linear infinite; filter: drop-shadow(0 0 2px var(--gold-primary)); opacity: 0.6; }
         @keyframes fall {
-            0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(30px); opacity: 0; }
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(50px); }
         }
 
-        /* MUSIC PLAYER BUTTON */
-        .music-btn {
-            position: fixed; bottom: 25px; right: 25px; z-index: 1000;
-            width: 50px; height: 50px; border-radius: 50%; background: var(--wed-gold);
-            color: white; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem; transition: 0.3s;
+        /* --- HEADER & NAVIGATION --- */
+        .glass-header {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(12, 12, 14, 0.7);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0; text-align: center;
         }
-        .music-btn.playing { animation: spinDisk 4s linear infinite; }
-        .music-btn.paused { background: #8e8e93; border-color: #e5e5ea; }
-        @keyframes spinDisk { 100% { transform: rotate(360deg); } }
+        .main-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold-primary); margin: 0; }
 
-        /* Sisa UI Styles */
-        .ios-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--ios-separator); padding: 15px 20px; text-align: center; }
-        .wed-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--wed-gold); margin: 0; }
-        .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.65rem; font-weight: 700; color: #34c759; background: #e8f9ee; padding: 4px 10px; border-radius: 20px; margin-top: 5px; text-transform: uppercase; }
-        .container { max-width: 800px; margin: 0 auto; padding: 15px; position: relative; z-index: 100; }
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat-card { background: var(--ios-surface); border-radius: var(--radius-md); padding: 15px; border: 0.5px solid var(--ios-separator); position: relative; overflow: hidden; }
-        .stat-num { font-size: 1.5rem; font-weight: 700; display: block; }
-        .stat-label { font-size: 0.7rem; font-weight: 600; color: var(--ios-text-sec); text-transform: uppercase; }
-        .stat-icon { position: absolute; right: -10px; bottom: -10px; font-size: 3rem; opacity: 0.05; transform: rotate(-15deg); }
-        .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px; scrollbar-width: none; }
-        .filter-scroll::-webkit-scrollbar { display: none; }
-        .filter-pill { white-space: nowrap; padding: 8px 16px; border-radius: 20px; background: #e5e5ea; color: #3a3a3c; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .filter-pill.active { background: var(--wed-gold); color: white; transform: scale(1.05); box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); }
-        .ios-card { background: var(--ios-surface); border-radius: var(--radius-lg); margin-bottom: 20px; border: 0.5px solid var(--ios-separator); box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; }
-        .card-header { padding: 15px 20px; background: #f9f9f9; border-bottom: 0.5px solid var(--ios-separator); font-weight: 700; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
-        .ios-row { padding: 14px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
-        .ios-row:focus-within { background: #fdfbf7; }
-        .ios-row:last-child { border-bottom: none; }
-        .ios-input, .ios-select { border: none; background: transparent; font-size: 1rem; color: var(--ios-text); width: 100%; outline: none; }
-        .ios-select { text-align: right; direction: rtl; font-weight: 600; color: var(--wed-gold); }
-        .btn-ios { background: var(--wed-gold); color: #fff; border: none; padding: 18px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-        .btn-ios:active { background: #b5952f; }
-        .btn-export { background: #34c759; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; transition: transform 0.2s; }
-        .guest-list { list-style: none; padding: 0; margin: 0; }
-        .guest-item { padding: 15px 20px; border-bottom: 0.5px solid var(--ios-separator); display: flex; justify-content: space-between; align-items: center; opacity: 0; transform: translateY(15px); animation: slideIn 0.4s ease forwards; }
-        @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
-        .badge { padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; }
-        .side-Viola { background: #ffe4e8; color: var(--wed-pink); }
-        .side-Farhan { background: #e0f2fe; color: var(--wed-blue); }
-        .badge-vip { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; margin-left: 5px; }
-        .vip-item { border-left: 4px solid var(--wed-gold); background: #fffdf5; }
-        .btn-del { background: #ff3b3015; color: #ff3b30; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: background 0.2s; }
-        .search-container { position: sticky; top: 70px; z-index: 90; padding: 10px 15px; background: var(--ios-bg); margin-bottom: 5px; }
-        .search-box { background: #e3e3e8; border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; transition: box-shadow 0.2s; }
-        .search-box:focus-within { box-shadow: 0 0 0 2px var(--wed-gold); background: #fff; }
-        .search-box input { border: none; background: transparent; width: 100%; outline: none; font-size: 0.95rem; }
-        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e5ea; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 2px; bottom: 2px; background-color: white; transition: .4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: #34c759; }
-        input:checked + .slider:before { transform: translateX(22px); }
-        .signature-footer { text-align: center; padding: 20px; font-size: 0.75rem; color: var(--ios-text-sec); font-weight: 500; }
+        /* --- CONTENT CARDS --- */
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
+        
+        .luxury-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 25px; margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .stat-item { padding: 15px; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); text-align: center; }
+        .stat-val { font-size: 1.8rem; font-weight: 800; display: block; color: var(--gold-primary); }
+        .stat-lbl { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+        /* --- FORM STYLING --- */
+        .input-group { margin-bottom: 20px; }
+        .input-lbl { display: block; font-size: 0.75rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 8px; text-transform: uppercase; }
+        .luxury-input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            padding: 15px; border-radius: 12px; color: #fff; font-size: 1rem; outline: none;
+            transition: 0.3s;
+        }
+        .luxury-input:focus { border-color: var(--gold-primary); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+
+        /* --- THE SHIMMER BUTTON --- */
+        .btn-shimmer {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            width: 100%; padding: 18px; border: none; border-radius: 15px;
+            color: #000; font-weight: 800; font-size: 1rem; cursor: pointer;
+            position: relative; overflow: hidden; transition: 0.3s;
+        }
+        .btn-shimmer::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+        @keyframes shimmer { 100% { left: 150%; } }
+        .btn-shimmer:active { transform: scale(0.97); }
+
+        /* --- GUEST LIST ITEM --- */
+        .guest-item {
+            background: rgba(255,255,255,0.03); border-radius: 16px; padding: 15px;
+            margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+            border-left: 3px solid var(--gold-primary); animation: slideIn 0.5s ease-out forwards;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .guest-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+        .guest-meta { font-size: 0.7rem; color: rgba(255,255,255,0.5); font-weight: 600; }
+        .vip-tag { color: var(--gold-primary); font-size: 0.65rem; background: rgba(212,175,55,0.1); padding: 2px 8px; border-radius: 4px; margin-left: 5px; border: 1px solid var(--gold-primary); }
+
+        /* --- MUSIC DISC --- */
+        .music-disc {
+            position: fixed; bottom: 25px; left: 25px; z-index: 1000;
+            width: 45px; height: 45px; border-radius: 50%; background: #222;
+            border: 2px solid var(--gold-primary); display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); cursor: pointer;
+        }
+        .music-disc.playing { animation: rotate 4s linear infinite; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        /* --- EXCEL BUTTON --- */
+        .btn-excel {
+            background: var(--ios-green); color: #fff; padding: 8px 15px;
+            border-radius: 10px; border: none; font-size: 0.75rem; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -111,331 +151,204 @@
         <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" type="audio/mpeg">
     </audio>
 
-    <button id="musicToggle" class="music-btn paused" onclick="toggleMusic()">
-        <i class="fas fa-music"></i>
-    </button>
-
-    <div id="leaves-container"></div>
-
     <div id="splashScreen" onclick="startApp()">
-        <div class="splash-title">Viola & Farhan</div>
-        <div class="splash-subtitle">SYSTEM ENGINEERED BY NAMA ANDA DISINI</div>
-        <div class="splash-instruction"><i class="fas fa-envelope-open-text me-2"></i> Ketuk Layar Untuk Membuka</div>
+        <div class="splash-envelope"><i class="fas fa-heart fa-3x" style="color:#000;"></i></div>
+        <div class="splash-text">Viola & Farhan</div>
+        <div style="color:var(--gold-primary); font-weight:600; font-size:0.7rem; margin-top:10px; letter-spacing:3px;">SYSTEM BY EXSALA API</div>
+        <div class="tap-msg">Klik Untuk Membuka Undangan</div>
     </div>
 
-    <div class="ios-header">
-        <div class="wed-title">Viola & Farhan</div>
-        <div class="status-badge" id="syncStatus">
-            <i class="fas fa-circle fa-beat" style="font-size: 0.5rem;"></i> System Online
-        </div>
+    <div id="particle-container"></div>
+
+    <div class="music-disc" id="musicToggle" onclick="toggleMusic()">
+        <i class="fas fa-music" style="color:var(--gold-primary);"></i>
+    </div>
+
+    <div class="glass-header">
+        <h1 class="main-title">Viola & Farhan</h1>
+        <div style="font-size:0.6rem; letter-spacing:2px; color:rgba(255,255,255,0.4); margin-top:5px;">MANAGEMENT SYSTEM v3.0</div>
     </div>
 
     <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-label">Total Tamu</span>
-                <span class="stat-num" id="countAll">0</span>
-                <i class="fas fa-users stat-icon"></i>
+        <div class="stat-grid">
+            <div class="stat-item glass">
+                <span class="stat-lbl">Tamu Terdaftar</span>
+                <span class="stat-val" id="totalTamu">0</span>
             </div>
-            <div class="stat-card" style="border-bottom: 2px solid var(--wed-gold);">
-                <span class="stat-label">Tamu VIP</span>
-                <span class="stat-num" id="countVip" style="color: var(--wed-gold);">0</span>
-                <i class="fas fa-crown stat-icon"></i>
-            </div>
-            <div class="stat-card" style="border-left: 3px solid var(--wed-pink);">
-                <span class="stat-label">Pihak Viola</span>
-                <span class="stat-num" id="countViola">0</span>
-            </div>
-            <div class="stat-card" style="border-left: 3px solid var(--wed-blue);">
-                <span class="stat-label">Pihak Farhan</span>
-                <span class="stat-num" id="countFarhan">0</span>
+            <div class="stat-item glass">
+                <span class="stat-lbl">Tamu VIP</span>
+                <span class="stat-val" id="totalVip">0</span>
             </div>
         </div>
 
-        <div class="ios-card">
-            <div class="card-header"><span><i class="fas fa-plus-circle"></i> TAMBAH UNDANGAN</span></div>
+        <div class="luxury-card glass">
             <form id="guestForm">
-                <div class="ios-row">
-                    <input type="text" id="guestName" class="ios-input" placeholder="Nama Lengkap Tamu..." required autocomplete="off">
+                <div class="input-group">
+                    <label class="input-lbl">Nama Lengkap Tamu</label>
+                    <input type="text" id="guestName" class="luxury-input" placeholder="Contoh: Pak De Hendra" required autocomplete="off">
                 </div>
-                <div class="ios-row">
-                    <span>Keluarga Pihak</span>
-                    <select id="guestSide" class="ios-select" required>
-                        <option value="Viola">Viola (Perempuan)</option>
-                        <option value="Farhan">Farhan (Laki-laki)</option>
-                    </select>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
+                    <div class="input-group">
+                        <label class="input-lbl">Pihak Keluarga</label>
+                        <select id="guestSide" class="luxury-input" style="appearance: none;">
+                            <option value="Viola">Viola (Pr)</option>
+                            <option value="Farhan">Farhan (Lk)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-lbl">Kategori</label>
+                        <select id="guestCat" class="luxury-input" style="appearance: none;">
+                            <option value="Keluarga Inti">Keluarga</option>
+                            <option value="Kakek / Nenek">Kakek/Nenek</option>
+                            <option value="Rekan Kerja">Rekan</option>
+                            <option value="Teman">Teman</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="ios-row">
-                    <span>Kategori Hubungan</span>
-                    <select id="guestCategory" class="ios-select" required>
-                        <option value="Keluarga Inti">Keluarga Inti</option>
-                        <option value="Kakek / Nenek">Kakek / Nenek</option>
-                        <option value="Om / Tante">Om / Tante</option>
-                        <option value="Sepupu">Sepupu</option>
-                        <option value="Teman">Teman</option>
-                        <option value="Rekan Kerja">Rekan Kerja</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; padding: 0 5px;">
+                    <span style="font-weight:700; font-size:0.9rem; color:var(--gold-primary);">AKSES VIP ✨</span>
+                    <input type="checkbox" id="guestVip" style="width:20px; height:20px; accent-color:var(--gold-primary);">
                 </div>
-                <div class="ios-row">
-                    <span style="font-weight: 600;">Prioritas VIP <i class="fas fa-crown" style="color: var(--wed-gold);"></i></span>
-                    <label class="switch">
-                        <input type="checkbox" id="guestVip">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <button type="submit" class="btn-ios" id="btnSubmit">SIMPAN DATA KE CLOUD</button>
+                <button type="submit" class="btn-shimmer" id="btnSubmit">SIMPAN DATA KE CLOUD</button>
             </form>
         </div>
 
-        <div class="search-container">
-            <div class="search-box">
-                <i class="fas fa-search" style="color: var(--ios-text-sec);"></i>
-                <input type="text" id="searchInput" placeholder="Cari nama atau kategori tamu..." onkeyup="filterData()">
-            </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding:0 5px;">
+            <div style="font-weight:800; font-size:0.9rem; letter-spacing:1px;">DAFTAR TAMU</div>
+            <button class="btn-excel" onclick="exportData()"><i class="fas fa-file-excel"></i> EKSPOR</button>
         </div>
 
-        <div class="filter-scroll">
-            <button class="filter-pill active" onclick="setFilter('all', this)">Semua</button>
-            <button class="filter-pill" onclick="setFilter('VIP', this)">VIP Only ✨</button>
-            <button class="filter-pill" onclick="setFilter('Viola', this)">Viola Side</button>
-            <button class="filter-pill" onclick="setFilter('Farhan', this)">Farhan Side</button>
-        </div>
-
-        <div class="ios-card">
-            <div class="card-header">
-                <span><i class="fas fa-list"></i> DAFTAR TAMU (<span id="liveCount">0</span>)</span>
-                <button class="btn-export" onclick="exportData()"><i class="fas fa-file-excel"></i> EXCEL</button>
-            </div>
-            <ul class="guest-list" id="guestList"></ul>
-            <div id="noData" style="display:none; padding:40px; text-align:center; color:var(--ios-text-sec);">
-                <i class="fas fa-folder-open" style="font-size:2.5rem; margin-bottom:10px; opacity:0.3;"></i>
-                <p>Belum ada data tamu.</p>
-            </div>
-        </div>
-
-        <div class="signature-footer">
-            Crafted with <i class="fas fa-heart" style="color:var(--wed-pink); animation:pulse 1.5s infinite;"></i> for Viola & Farhan
+        <div id="guestList"></div>
+        <div id="emptyMsg" style="text-align:center; padding:50px; opacity:0.3; display:none;">
+            <i class="fas fa-folder-open fa-3x"></i><br>Data Masih Kosong
         </div>
     </div>
 
     <script>
-        // --- 1. SYSTEM AUDIO & SPLASH SCREEN ---
+        // --- 1. SYSTEM INITIALIZATION ---
         const bgMusic = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicToggle');
         let isMusicPlaying = false;
 
         function startApp() {
             const splash = document.getElementById('splashScreen');
-            splash.style.transform = 'translateY(-100%)'; // Animasi geser ke atas
             splash.style.opacity = '0';
-            
+            splash.style.transform = 'scale(1.1)';
             setTimeout(() => {
                 splash.style.display = 'none';
-                createLeaves(); // Mulai efek daun setelah masuk
-            }, 1000);
-
-            // Coba Play Lagu
-            bgMusic.volume = 0.5; // Set volume 50%
-            const playPromise = bgMusic.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isMusicPlaying = true;
-                    updateMusicBtn();
-                }).catch(error => {
-                    console.log("Autoplay dicegah oleh browser. Pengguna harus menekan tombol Play secara manual.");
-                });
-            }
+                initParticles();
+                bgMusic.play();
+                isMusicPlaying = true;
+                document.getElementById('musicToggle').classList.add('playing');
+            }, 1200);
         }
 
         function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                isMusicPlaying = false;
-            } else {
-                bgMusic.play();
-                isMusicPlaying = true;
-            }
-            updateMusicBtn();
+            if(isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; }
+            else { bgMusic.play(); isMusicPlaying = true; }
+            document.getElementById('musicToggle').classList.toggle('playing');
         }
 
-        function updateMusicBtn() {
-            if (isMusicPlaying) {
-                musicBtn.classList.add('playing');
-                musicBtn.classList.remove('paused');
-                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
-            } else {
-                musicBtn.classList.add('paused');
-                musicBtn.classList.remove('playing');
-                musicBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            }
-        }
-
-        // --- 2. SISTEM PARTIKEL DEDAUNAN GUGUR (LEAVES ENGINE) ---
-        function createLeaves() {
-            const container = document.getElementById('leaves-container');
-            const leafColors = ['#d4af37', '#e8c45d', '#ffdf80', '#b5952f']; // Tema Gold/Autumn
-            
+        function initParticles() {
+            const container = document.getElementById('particle-container');
             setInterval(() => {
-                const leaf = document.createElement('i');
-                // Menggunakan random ikon (daun biasa atau daun maple)
-                leaf.className = Math.random() > 0.5 ? 'fas fa-leaf leaf-item' : 'fab fa-canadian-maple-leaf leaf-item';
-                
-                // Posisi dan properti acak
-                leaf.style.left = Math.random() * 100 + 'vw';
-                leaf.style.color = leafColors[Math.floor(Math.random() * leafColors.length)];
-                leaf.style.animationDuration = (Math.random() * 3 + 5) + 's'; // Jatuh selama 5-8 detik
-                leaf.style.fontSize = (Math.random() * 10 + 12) + 'px'; // Ukuran 12-22px
-                
-                container.appendChild(leaf);
-                
-                // Hapus daun setelah sampai bawah agar memori (RAM) tidak penuh
-                setTimeout(() => { leaf.remove(); }, 8000);
-            }, 500); // 1 daun baru setiap 0.5 detik
+                const p = document.createElement('i');
+                const isSparkle = Math.random() > 0.4;
+                p.className = isSparkle ? 'fas fa-sparkles p-leaf' : 'fas fa-leaf p-leaf';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.color = isSparkle ? '#fff' : '#d4af37';
+                p.style.fontSize = (Math.random() * 10 + 5) + 'px';
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 10000);
+            }, 800);
         }
 
-        // --- 3. KONEKSI SUPABASE ---
+        // --- 2. SUPABASE LOGIC (NATIVE FETCH) ---
         const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
         const apiKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
-        const headers = {
-            'apikey': apiKey,
-            'Authorization': 'Bearer ' + apiKey,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
-        };
+        const headers = { 'apikey': apiKey, 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
 
-        let fullData = [];
-        let currentFilter = 'all';
+        let currentData = [];
 
-        async function fetchData() {
+        async function fetchGuests() {
             try {
-                const response = await fetch(apiUrl + '?select=*&order=created_at.desc', { method: 'GET', headers: headers });
-                if (!response.ok) throw new Error("Gagal");
-                fullData = await response.json() || [];
-                updateUI();
-                document.getElementById('syncStatus').style.color = '#34c759';
-                document.getElementById('syncStatus').innerHTML = '<i class="fas fa-circle fa-beat" style="font-size: 0.5rem;"></i> System Online';
-            } catch (err) {
-                document.getElementById('syncStatus').style.color = 'red';
-                document.getElementById('syncStatus').innerHTML = '<i class="fas fa-times"></i> Connection Error';
-            }
+                const res = await fetch(apiUrl + '?select=*&order=created_at.desc', { method: 'GET', headers: headers });
+                currentData = await res.json() || [];
+                renderUI();
+            } catch (err) { console.error("Sync Error", err); }
         }
 
-        // --- 4. LOGIKA FORM (AUTO CAPITALS & DUPLICATE CHECK) ---
         document.getElementById('guestForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
-            
-            let rawName = document.getElementById('guestName').value.trim();
-            let formattedName = rawName.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-            const isDuplicate = fullData.some(g => g.name.toLowerCase() === formattedName.toLowerCase());
-            
-            if (isDuplicate) {
-                const confirm = await Swal.fire({
-                    title: 'Nama Sudah Terdaftar!',
-                    text: `Tamu dengan nama "${formattedName}" sudah ada di database. Yakin ini orang yang berbeda?`,
-                    icon: 'warning', showCancelButton: true, confirmButtonColor: '#d4af37',
-                    cancelButtonColor: '#ff3b30', confirmButtonText: 'Ya, Tetap Simpan', cancelButtonText: 'Batal'
-                });
-                if (!confirm.isConfirmed) return;
-            }
+            const rawName = document.getElementById('guestName').value.trim();
+            const formattedName = rawName.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+
+            btn.disabled = true; btn.innerText = "SINKRONISASI...";
 
             const payload = {
-                name: formattedName, side: document.getElementById('guestSide').value,
-                category: document.getElementById('guestCategory').value, is_vip: document.getElementById('guestVip').checked
+                name: formattedName,
+                side: document.getElementById('guestSide').value,
+                category: document.getElementById('guestCat').value,
+                is_vip: document.getElementById('guestVip').checked
             };
 
-            btn.disabled = true; btn.innerText = 'MENYIMPAN...';
-
             try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: headers, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error("Gagal terkirim");
-                Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: `${formattedName} ditambahkan!`, showConfirmButton: false, timer: 2000 });
-                e.target.reset(); fetchData();
-            } catch (err) {
-                Swal.fire('Error', err.message, 'error');
-            } finally {
-                btn.disabled = false; btn.innerText = 'SIMPAN DATA KE CLOUD';
-            }
+                const res = await fetch(apiUrl, { method: 'POST', headers: headers, body: JSON.stringify(payload) });
+                if(res.ok) {
+                    Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Tamu Berhasil Disimpan', showConfirmButton: false, timer: 1500 });
+                    e.target.reset();
+                    fetchGuests();
+                }
+            } finally { btn.disabled = false; btn.innerText = "SIMPAN DATA KE CLOUD"; }
         };
 
-        // --- 5. HAPUS & FILTER ---
-        async function deleteGuest(id, name) {
-            const confirm = await Swal.fire({
-                title: 'Hapus Tamu?', text: `Anda akan menghapus ${name}?`, icon: 'warning',
-                showCancelButton: true, confirmButtonColor: '#ff3b30'
-            });
-            if (confirm.isConfirmed) {
-                try {
-                    await fetch(apiUrl + '?id=eq.' + id, { method: 'DELETE', headers: headers });
-                    fetchData();
-                    Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Terhapus!', showConfirmButton: false, timer: 1500 });
-                } catch (err) { Swal.fire('Error', 'Gagal menghapus data', 'error'); }
-            }
-        }
-
-        function updateUI() {
+        function renderUI() {
             const list = document.getElementById('guestList');
-            const search = document.getElementById('searchInput').value.toLowerCase();
+            const empty = document.getElementById('emptyMsg');
             
-            let filtered = fullData.filter(g => {
-                const matchesSearch = g.name.toLowerCase().includes(search) || g.category.toLowerCase().includes(search);
-                const matchesPill = currentFilter === 'all' || (currentFilter === 'VIP' && g.is_vip) || (currentFilter === g.side);
-                return matchesSearch && matchesPill;
-            });
+            document.getElementById('totalTamu').innerText = currentData.length;
+            document.getElementById('totalVip').innerText = currentData.filter(g => g.is_vip).length;
 
-            document.getElementById('countAll').innerText = fullData.length;
-            document.getElementById('countVip').innerText = fullData.filter(g => g.is_vip).length;
-            document.getElementById('countViola').innerText = fullData.filter(g => g.side === 'Viola').length;
-            document.getElementById('countFarhan').innerText = fullData.filter(g => g.side === 'Farhan').length;
-            document.getElementById('liveCount').innerText = filtered.length;
+            if(currentData.length === 0) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+            empty.style.display = 'none';
 
-            if (filtered.length === 0) {
-                list.innerHTML = ''; document.getElementById('noData').style.display = 'block'; return;
-            }
-
-            document.getElementById('noData').style.display = 'none';
-            list.innerHTML = filtered.map((g, index) => `
-                <li class="guest-item ${g.is_vip ? 'vip-item' : ''}" style="animation-delay: ${index * 0.05}s">
+            list.innerHTML = currentData.map((g, i) => `
+                <div class="guest-item" style="animation-delay: ${i * 0.1}s">
                     <div>
-                        <div style="font-weight:600; margin-bottom:4px; font-size:1.05rem;">
-                            ${g.name} ${g.is_vip ? '<span class="badge badge-vip"><i class="fas fa-crown"></i> VIP</span>' : ''}
-                        </div>
-                        <div style="font-size:0.75rem; color:#8e8e93;">
-                            <span class="badge side-${g.side}">Pihak ${g.side}</span> • <span style="font-weight:500;">${g.category}</span>
-                        </div>
+                        <div class="guest-name">${g.name} ${g.is_vip ? '<span class="vip-tag">VIP</span>' : ''}</div>
+                        <div class="guest-meta">${g.side.toUpperCase()} • ${g.category}</div>
                     </div>
-                    <button class="btn-del" onclick="deleteGuest(${g.id}, '${g.name.replace(/'/g, "\\'")}')">
+                    <button onclick="deleteGuest(${g.id})" style="border:none; background:none; color:var(--ios-red); cursor:pointer;">
                         <i class="fas fa-trash-alt"></i>
                     </button>
-                </li>
+                </div>
             `).join('');
         }
 
-        function setFilter(filter, btn) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-            btn.classList.add('active'); updateUI();
+        async function deleteGuest(id) {
+            Swal.fire({
+                title: 'Hapus Data?', text: "Data tidak bisa dikembalikan!", icon: 'warning',
+                showCancelButton: true, confirmButtonColor: '#ff3b30', confirmButtonText: 'Ya, Hapus'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await fetch(`${apiUrl}?id=eq.${id}`, { method: 'DELETE', headers: headers });
+                    fetchGuests();
+                }
+            });
         }
 
-        function filterData() { updateUI(); }
-
-        // --- 6. EXCEL EXPORT ---
         function exportData() {
-            if (fullData.length === 0) return Swal.fire('Data Kosong', '', 'info');
-            const exportItems = fullData.map((g, i) => ({
-                'No': i + 1, 'Nama Lengkap': g.name, 'Keluarga Pihak': g.side,
-                'Hubungan / Kategori': g.category, 'Prioritas VIP': g.is_vip ? 'VIP' : 'Reguler',
-                'Tanggal Input': new Date(g.created_at).toLocaleString('id-ID')
-            }));
-            const ws = XLSX.utils.json_to_sheet(exportItems);
+            if (currentData.length === 0) return;
+            const ws = XLSX.utils.json_to_sheet(currentData.map(g => ({ 'Nama': g.name, 'Keluarga': g.side, 'Kategori': g.category, 'Status': g.is_vip ? 'VIP' : 'Normal' })));
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Undangan");
-            XLSX.writeFile(wb, `Undangan_ViolaFarhan.xlsx`);
+            XLSX.utils.book_append_sheet(wb, ws, "Tamu");
+            XLSX.writeFile(wb, "GuestList_ViolaFarhan.xlsx");
         }
 
-        fetchData();
-        setInterval(fetchData, 5000); 
+        // Jalankan fetch awal & interval 10 detik
+        fetchGuests();
+        setInterval(fetchGuests, 10000);
     </script>
 </body>
 </html>
