@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // RUTE TANPA LOGIN UNTUK KELUARGA
-app.get("/nikah", (req, res) => {
+app.get("/list-tamu", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "nikah.html"));
 });
 
