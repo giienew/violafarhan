@@ -281,32 +281,36 @@
     <div id="particles"></div>
     <div id="musicBtn" onclick="toggleMusic()"><i class="fas fa-music" style="color:var(--text-dim);"></i></div>
 
-    <div class="container">
+<div class="container">
         <div class="royal-header">
             <div class="header-divider"><span class="header-divider-icon">✦</span><span style="font-size:0.55rem; letter-spacing:4px; color:var(--text-dim);">THE WEDDING</span><span class="header-divider-icon">✦</span></div>
             <h1 class="royal-title">Viola & Farhan</h1>
             <p class="royal-subtitle">Daftar Tamu</p>
+            
             <div id="statusPill" class="status-pill">
+                <span class="status-dot"></span> System Online
+            </div>
+            
             <div class="countdown-wrapper">
-            <div class="countdown-box">
-                <span class="count-num" id="cd-days">00</span>
-                <span class="count-label">Hari</span>
+                <div class="countdown-box">
+                    <span class="count-num" id="cd-days">00</span>
+                    <span class="count-label">Hari</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="count-num" id="cd-hours">00</span>
+                    <span class="count-label">Jam</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="count-num" id="cd-minutes">00</span>
+                    <span class="count-label">Menit</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="count-num" id="cd-seconds">00</span>
+                    <span class="count-label">Detik</span>
+                </div>
             </div>
-            <div class="countdown-box">
-                <span class="count-num" id="cd-hours">00</span>
-                <span class="count-label">Jam</span>
             </div>
-            <div class="countdown-box">
-                <span class="count-num" id="cd-minutes">00</span>
-                <span class="count-label">Menit</span>
-            </div>
-            <div class="countdown-box">
-                <span class="count-num" id="cd-seconds">00</span>
-                <span class="count-label">Detik</span>
-            </div>
-        </div><span class="status-dot"></span> System Online</div>
-        </div>
-        
+
 
         <div class="stat-grid">
             <div class="stat-card primary"><span class="stat-label">Total Tamu</span><span class="stat-value" id="countAll">—</span><i class="fas fa-users stat-icon-bg"></i></div>
@@ -703,9 +707,7 @@
             setTimeout(() => { const cb = document.getElementById('chatBox'); cb.scrollTop = cb.scrollHeight; }, 300);
         } catch (e) {} finally { input.disabled = false; btnSend.disabled = false; btnSend.innerHTML = '<i class="fas fa-paper-plane"></i>'; input.focus(); }
     }
-
-    // INIT ALL
-    // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
     // COUNTDOWN TIMER LOGIC
     // ═══════════════════════════════════════════
     function initCountdown() {
@@ -740,6 +742,7 @@
         }, 1000);
     }
     initCountdown(); // Jalankan fungsi
+    // INIT ALL
     fetchData(); fetchChat();
     setInterval(() => { fetchData(); fetchChat(); }, 5000);
     </script>
