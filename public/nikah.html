@@ -146,7 +146,7 @@
         .btn-royal { display: block; width: 100%; margin-top: 15px; border: none; padding: 16px; border-radius: 14px; background: var(--primary); color: #fff; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .btn-royal:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
 
-        /* LIST & SEARCH */
+        /* LIST & SEARCH & FILTER */
         .search-wrap { position: sticky; top: 0; z-index: 90; padding: 10px 0 14px; background: var(--bg-main); }
         .search-inner { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; backdrop-filter: blur(10px); }
         .search-inner input { background: none; border: none; outline: none; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.95rem; width: 100%; } .search-inner input::placeholder { color: var(--text-muted); }
@@ -164,23 +164,26 @@
         #guestList { max-height: 350px; overflow-y: auto; padding-right: 5px; margin-top: 10px; }
         #guestList::-webkit-scrollbar { width: 5px; } #guestList::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; } #guestList::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
 
-        /* Long press visual hint via class */
+        /* LIST ITEM */
         .guest-item { padding: 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; animation: revealItem 0.4s ease forwards; opacity: 0; transform: translateY(10px); transition: background 0.3s; border-radius: 12px; cursor: pointer; }
         .guest-item:active { background: var(--bg-hover); }
         @keyframes revealItem { to { opacity: 1; transform: translateY(0); } }
         .guest-name { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; }
-        .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); }
+        .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        
+        .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); display: inline-flex; align-items: center;}
         .tag-viola { color: #fff; background: var(--rose); border-color: var(--rose); } 
         .tag-farhan { color: #fff; background: var(--azure); border-color: var(--azure); }
-        .tag-vip { background: var(--primary); color: #fff; border-color: var(--primary); }
         .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.03); }
+        .tag-terkirim { color: #8ce19e; background: rgba(52,199,89,0.1); border-color: rgba(52,199,89,0.3); }
+        .tag-belum { color: #ff6b6b; background: rgba(255,59,48,0.1); border-color: rgba(255,59,48,0.25); }
+
         .btn-delete { background: transparent; border: none; color: var(--text-muted); padding: 8px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
         .empty-state { padding: 40px 20px; text-align: center; display: none; }
         .empty-icon { font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px; }
         
         /* ═══════════════════════════════════════
-           LIVE CHAT CUSTOM STYLES (UPDATED)
+           LIVE CHAT CUSTOM STYLES
         ═══════════════════════════════════════ */
         #chatBox { height: 350px; overflow-y: auto; display: flex; flex-direction: column; padding: 10px 5px; margin-bottom: 15px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
         #chatBox::-webkit-scrollbar { width: 5px; } #chatBox::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; } #chatBox::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
@@ -201,7 +204,7 @@
         
         .chat-time { font-size: 0.55rem; opacity: 0.6; align-self: flex-end; margin-top: 5px; letter-spacing: 0.5px; }
         .chat-action-hint { font-size: 0.5rem; color: rgba(255,255,255,0.6); margin-top: 2px; text-align: right; display: none; }
-        .chat-me .chat-bubble:hover .chat-action-hint { display: block; } /* Hint klik untuk edit */
+        .chat-me .chat-bubble:hover .chat-action-hint { display: block; }
 
         .royal-footer { text-align: center; padding: 20px; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; }
 
@@ -285,6 +288,8 @@
             <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
             <div class="filter-strip">
                 <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
+                <button class="filter-pill" onclick="setFilter('terkirim',this)">✅ Terkirim</button>
+                <button class="filter-pill" onclick="setFilter('belum',this)">⏳ Belum</button>
                 <button class="filter-pill" onclick="setFilter('vip',this)">VIP ✨</button>
                 <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
                 <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
@@ -302,7 +307,7 @@
                 <span class="list-title">Daftar (<span id="liveCount">0</span>)</span>
                 <button class="btn-export" onclick="exportText()"><i class="fas fa-file-alt"></i> Export Text</button>
             </div>
-            <div style="font-size:0.6rem; color:var(--text-muted); text-align:center; margin-bottom:5px;">💡 Tahan (Long-Press) nama tamu untuk Edit/Centang</div>
+            <div style="font-size:0.6rem; color:var(--text-muted); text-align:center; margin-bottom:5px;">💡 Tahan (Long-Press) nama tamu untuk Edit / Tandai Terkirim</div>
             <div id="guestList"></div>
             <div id="emptyState" class="empty-state"><div class="empty-icon"><i class="fas fa-book-open"></i></div><div style="font-size:0.85rem; color:var(--text-muted)">Belum ada data tamu</div></div>
         </div>
@@ -399,7 +404,17 @@
 
     function renderList() {
         const search = document.getElementById('searchInput').value.toLowerCase();
-        let filtered = fullData.filter(g => (g.name.toLowerCase().includes(search) || g.category.toLowerCase().includes(search)) && (currentFilter === 'all' ? true : currentFilter === 'vip' ? g.is_vip : g.side === currentFilter || g.category === currentFilter));
+        let filtered = fullData.filter(g => {
+            const matchSearch = g.name.toLowerCase().includes(search) || g.category.toLowerCase().includes(search);
+            let matchFilter = true;
+            if (currentFilter === 'all') matchFilter = true;
+            else if (currentFilter === 'vip') matchFilter = g.is_vip;
+            else if (currentFilter === 'terkirim') matchFilter = g.is_invited === true;
+            else if (currentFilter === 'belum') matchFilter = g.is_invited !== true;
+            else matchFilter = (g.side === currentFilter || g.category === currentFilter);
+            return matchSearch && matchFilter;
+        });
+
         document.getElementById('liveCount').innerText = filtered.length;
         const list = document.getElementById('guestList'), empty = document.getElementById('emptyState');
         if (filtered.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
@@ -411,9 +426,14 @@
                     <div class="guest-name">
                         ${g.name} 
                         ${g.is_vip ? '<i class="fas fa-crown" style="color:var(--primary); font-size:0.75rem; margin-left:4px;"></i>' : ''}
-                        ${g.is_invited ? '<i class="fas fa-check-circle" style="color:#8ce19e; font-size:0.85rem; margin-left:6px;" title="Undangan Terkirim"></i>' : ''}
                     </div>
-                    <div class="guest-meta"><span class="tag tag-${g.side.toLowerCase() === 'farhan' ? 'farhan' : 'viola'}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
+                    <div class="guest-meta">
+                        <span class="tag tag-${g.side.toLowerCase() === 'farhan' ? 'farhan' : 'viola'}">${g.side}</span>
+                        <span class="tag tag-cat">${g.category}</span>
+                        ${g.is_invited 
+                            ? '<span class="tag tag-terkirim"><i class="fas fa-check-circle" style="margin-right:4px;"></i> Terkirim</span>' 
+                            : '<span class="tag tag-belum"><i class="fas fa-clock" style="margin-right:4px;"></i> Belum</span>'}
+                    </div>
                 </div>
                 <button class="btn-delete" onclick="deleteGuest(event, ${g.id}, '${g.name.replace(/'/g,"\\'")}')"><i class="fas fa-times"></i></button>
             </div>
@@ -472,7 +492,7 @@
             html: `<span style="color:var(--primary); font-size:1.3rem; font-weight:600;">${g.name}</span><br><br><span style="font-size:0.85rem">Pilih tindakan untuk tamu ini:</span>`,
             showDenyButton: true, showCancelButton: true,
             confirmButtonText: '✏️ Edit Data',
-            denyButtonText: g.is_invited ? '❌ Hapus Centang' : '✅ Tandai Terkirim',
+            denyButtonText: g.is_invited ? '❌ Hapus Status Terkirim' : '✅ Tandai Terkirim',
             cancelButtonText: 'Tutup',
             background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
             confirmButtonColor: 'var(--azure)', denyButtonColor: g.is_invited ? '#ff6b6b' : '#8ce19e'
@@ -509,7 +529,7 @@
                     <option value="Lainnya" ${g.category==='Lainnya'?'selected':''}>Lainnya</option>
                 </select>
             `,
-            showCancelButton: true, confirmButtonText: 'Simpan',
+            showCancelButton: true, confirmButtonText: 'Simpan Perubahan',
             background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
             preConfirm: () => {
                 return {
@@ -530,7 +550,7 @@
         if (fullData.length === 0) return;
         let textContent = "DAFTAR UNDANGAN VIOLA & FARHAN\n=========================================\n\n";
         fullData.forEach((g, i) => {
-            textContent += `${i + 1}. ${g.name} ${g.is_invited ? '(✅ Terkirim)' : ''}\n   ▪ Pihak    : ${g.side}\n   ▪ Kategori : ${g.category}\n   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n-----------------------------------------\n`;
+            textContent += `${i + 1}. ${g.name} ${g.is_invited ? '(✅ Terkirim)' : '(⏳ Belum)'}\n   ▪ Pihak    : ${g.side}\n   ▪ Kategori : ${g.category}\n   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n-----------------------------------------\n`;
         });
         const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Undangan_ViolaFarhan.txt';
@@ -561,7 +581,6 @@
             chatBox.innerHTML = recentChats.map(m => {
                 const isMe = m.sender_name === myChatName;
                 const timeStr = new Date(m.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                // Pass pesan yg aman untuk JS onclick
                 const safeMsg = encodeURIComponent(m.message);
                 
                 return `
@@ -584,8 +603,7 @@
     async function chatOptions(id, msgRaw) {
         const msg = decodeURIComponent(msgRaw);
         const res = await Swal.fire({
-            title: 'Opsi Pesan',
-            text: 'Apa yang ingin kamu lakukan?',
+            title: 'Opsi Pesan', text: 'Apa yang ingin kamu lakukan?',
             showDenyButton: true, showCancelButton: true,
             confirmButtonText: '✏️ Edit', denyButtonText: '🗑️ Hapus', cancelButtonText: 'Batal',
             background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)'
@@ -613,7 +631,7 @@
 
         if (!myChatName) {
             const { value: inputName } = await Swal.fire({
-                title: 'Nama Kamu?', text: 'Masukkan namamu agar teman lain tahu siapa yang mengirim pesan.',
+                title: 'Nama Kamu?', text: 'Masukkan namamu agar teman lain tahu.',
                 input: 'text', inputPlaceholder: 'Contoh: Ayogi', background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
                 showCancelButton: true
             });
