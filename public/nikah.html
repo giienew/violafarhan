@@ -220,6 +220,38 @@
         .swal2-cancel, .swal2-deny { background: transparent !important; color: var(--text-dim) !important; border: 1px solid var(--glass-border) !important; font-family: 'Outfit', sans-serif !important; font-weight: 500 !important; border-radius: 12px !important; }
         .swal2-input, .swal2-select { background: var(--bg-main) !important; border: 1px solid var(--glass-border) !important; color: var(--text) !important; border-radius: 12px !important; font-family: 'Outfit', sans-serif !important; }
         .swal2-input:focus, .swal2-select:focus { border-color: var(--primary) !important; box-shadow: 0 0 0 2px var(--primary-dim) !important; }
+        /* ═══════════════════════════════════════
+           COUNTDOWN TIMER KEREN
+        ═══════════════════════════════════════ */
+        .countdown-wrapper {
+            display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px 0;
+        }
+        .countdown-box {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            border-radius: 14px; padding: 12px 10px; min-width: 65px;
+            text-align: center; backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-elegant);
+            position: relative; overflow: hidden;
+        }
+        /* Animasi garis cahaya jalan di atas kotak */
+        .countdown-box::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scanline 2.5s infinite;
+        }
+        @keyframes scanline {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        .count-num {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700;
+            color: var(--primary); display: block; line-height: 1; margin-bottom: 4px;
+            text-shadow: 0 2px 10px var(--primary-dim); transition: color 0.5s;
+        }
+        .count-label {
+            font-size: 0.55rem; letter-spacing: 2px; color: var(--text-dim);
+            text-transform: uppercase; font-weight: 600; display: block;
+        }
     </style>
 </head>
 <body>
@@ -254,8 +286,27 @@
             <div class="header-divider"><span class="header-divider-icon">✦</span><span style="font-size:0.55rem; letter-spacing:4px; color:var(--text-dim);">THE WEDDING</span><span class="header-divider-icon">✦</span></div>
             <h1 class="royal-title">Viola & Farhan</h1>
             <p class="royal-subtitle">Daftar Tamu</p>
-            <div id="statusPill" class="status-pill"><span class="status-dot"></span> System Online</div>
+            <div id="statusPill" class="status-pill">
+            <div class="countdown-wrapper">
+            <div class="countdown-box">
+                <span class="count-num" id="cd-days">00</span>
+                <span class="count-label">Hari</span>
+            </div>
+            <div class="countdown-box">
+                <span class="count-num" id="cd-hours">00</span>
+                <span class="count-label">Jam</span>
+            </div>
+            <div class="countdown-box">
+                <span class="count-num" id="cd-minutes">00</span>
+                <span class="count-label">Menit</span>
+            </div>
+            <div class="countdown-box">
+                <span class="count-num" id="cd-seconds">00</span>
+                <span class="count-label">Detik</span>
+            </div>
+        </div><span class="status-dot"></span> System Online</div>
         </div>
+        
 
         <div class="stat-grid">
             <div class="stat-card primary"><span class="stat-label">Total Tamu</span><span class="stat-value" id="countAll">—</span><i class="fas fa-users stat-icon-bg"></i></div>
@@ -654,6 +705,41 @@
     }
 
     // INIT ALL
+    // ═══════════════════════════════════════════
+    // COUNTDOWN TIMER LOGIC
+    // ═══════════════════════════════════════════
+    function initCountdown() {
+        // Atur tanggal pelaksanaan di sini (03 April 2026, Jam 08:00 Pagi)
+        const weddingDate = new Date("April 3, 2026 08:00:00").getTime();
+
+        const interval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            // Jika waktu sudah lewat
+            if (distance < 0) {
+                clearInterval(interval);
+                document.getElementById("cd-days").innerText = "00";
+                document.getElementById("cd-hours").innerText = "00";
+                document.getElementById("cd-minutes").innerText = "00";
+                document.getElementById("cd-seconds").innerText = "00";
+                return;
+            }
+
+            // Perhitungan hari, jam, menit, detik
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Menambahkan angka '0' di depan jika angkanya di bawah 10 (biar selalu 2 digit)
+            document.getElementById("cd-days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("cd-hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("cd-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("cd-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+    }
+    initCountdown(); // Jalankan fungsi
     fetchData(); fetchChat();
     setInterval(() => { fetchData(); fetchChat(); }, 5000);
     </script>
