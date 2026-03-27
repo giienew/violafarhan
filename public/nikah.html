@@ -392,13 +392,24 @@
     // ═══════════════════════════════════════════
     // THEME SYSTEM
     // ═══════════════════════════════════════════
-    const themes = {
-        maroon: { main: '#b32441', light: '#d93658', dim: 'rgba(179, 36, 65, 0.15)', border: 'rgba(179, 36, 65, 0.4)' },
-        gold: { main: '#cda453', light: '#e5c073', dim: 'rgba(205, 164, 83, 0.15)', border: 'rgba(205, 164, 83, 0.4)' },
-        emerald: { main: '#427a5b', light: '#5ba37a', dim: 'rgba(66, 122, 91, 0.15)', border: 'rgba(66, 122, 91, 0.4)' },
-        sapphire: { main: '#4a709e', light: '#6b96cc', dim: 'rgba(74, 112, 158, 0.15)', border: 'rgba(74, 112, 158, 0.4)' },
-        plum: { main: '#864c73', light: '#b06a98', dim: 'rgba(134, 76, 115, 0.15)', border: 'rgba(134, 76, 115, 0.4)' }
-    };
+const themes = {
+    // Original Themes
+    maroon: { main: '#b32441', light: '#d93658', dim: 'rgba(179, 36, 65, 0.15)', border: 'rgba(179, 36, 65, 0.4)' },
+    gold: { main: '#cda453', light: '#e5c073', dim: 'rgba(205, 164, 83, 0.15)', border: 'rgba(205, 164, 83, 0.4)' },
+    emerald: { main: '#427a5b', light: '#5ba37a', dim: 'rgba(66, 122, 91, 0.15)', border: 'rgba(66, 122, 91, 0.4)' },
+    sapphire: { main: '#4a709e', light: '#6b96cc', dim: 'rgba(74, 112, 158, 0.15)', border: 'rgba(74, 112, 158, 0.4)' },
+    plum: { main: '#864c73', light: '#b06a98', dim: 'rgba(134, 76, 115, 0.15)', border: 'rgba(134, 76, 115, 0.4)' },
+    
+    // New Trendy & Nusantara-Inspired Themes
+    terracotta: { main: '#c95c47', light: '#e37e6b', dim: 'rgba(201, 92, 71, 0.15)', border: 'rgba(201, 92, 71, 0.4)' },
+    ocean: { main: '#28598a', light: '#4a80b8', dim: 'rgba(40, 89, 138, 0.15)', border: 'rgba(40, 89, 138, 0.4)' },
+    pandan: { main: '#729c54', light: '#92c272', dim: 'rgba(114, 156, 84, 0.15)', border: 'rgba(114, 156, 84, 0.4)' },
+    kunyit: { main: '#d49a37', light: '#edb85c', dim: 'rgba(212, 154, 55, 0.15)', border: 'rgba(212, 154, 55, 0.4)' },
+    kecubung: { main: '#7c5295', light: '#9c76b5', dim: 'rgba(124, 82, 149, 0.15)', border: 'rgba(124, 82, 149, 0.4)' },
+    arang: { main: '#434b57', light: '#656f7d', dim: 'rgba(67, 75, 87, 0.15)', border: 'rgba(67, 75, 87, 0.4)' },
+    kopi: { main: '#5c4033', light: '#805f4e', dim: 'rgba(92, 64, 51, 0.15)', border: 'rgba(92, 64, 51, 0.4)' },
+    senja: { main: '#e07a5f', light: '#f29e88', dim: 'rgba(224, 122, 95, 0.15)', border: 'rgba(224, 122, 95, 0.4)' }
+};
     let activeThemeHex = '#b32441';
 
     function togglePalette() { document.querySelector('.theme-palette').classList.toggle('show'); }
