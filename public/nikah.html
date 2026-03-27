@@ -327,7 +327,10 @@
             </form>
         </div>
 
-        <div class="royal-footer">Powered by <strong>Ayogi Akbar</strong><br>for <strong>Farhan & Viola</strong></div>
+        <div class="royal-footer">
+            Powered by <strong>Ayogi Akbar</strong><br>for <strong>Farhan & Viola</strong><br>
+            <span style="font-size:0.5rem; opacity:0.3; display:block; margin-top:5px;">v2.1</span>
+        </div>
     </div>
 
     <script>
@@ -434,7 +437,7 @@
                     <div class="guest-meta">
                         <span class="tag tag-${g.side.toLowerCase() === 'farhan' ? 'farhan' : 'viola'}">${g.side}</span>
                         <span class="tag tag-cat">${g.category}</span>
-                        ${g.is_invited 
+                        ${(g.is_invited === true) 
                             ? '<span class="tag tag-terkirim" title="Undangan Terkirim"><i class="fas fa-check-circle"></i></span>' 
                             : '<span class="tag tag-belum" title="Belum Terkirim"><i class="fas fa-clock"></i></span>'}
                     </div>
