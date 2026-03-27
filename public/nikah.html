@@ -46,7 +46,7 @@
         }
 
         /* ═══════════════════════════════════════
-           THEME SWITCHER WIDGET
+           THEME SWITCHER WIDGET (SISTEM KLIK)
         ═══════════════════════════════════════ */
         .theme-switcher-wrap {
             position: fixed; right: 20px; bottom: 90px; z-index: 1000;
@@ -60,7 +60,8 @@
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
         }
-        .theme-switcher-wrap:hover .theme-palette {
+        /* Class ini ditambahkan via JS saat tombol palet diklik */
+        .theme-palette.show {
             opacity: 1; transform: translateY(0); pointer-events: auto;
         }
         .theme-toggle-btn {
@@ -71,7 +72,7 @@
             cursor: pointer; transition: 0.3s;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        .theme-toggle-btn:hover { background: var(--primary-dim); }
+        .theme-toggle-btn:active { transform: scale(0.9); }
         
         .color-dot {
             width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
@@ -150,8 +151,7 @@
             cursor: pointer; transition: 0.3s;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        #musicBtn:hover { background: var(--primary-dim); }
-        #musicBtn.spinning i { animation: spin 4s linear infinite; }
+        #musicBtn.spinning i { animation: spin 4s linear infinite; color: var(--primary); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* ═══════════════════════════════════════
@@ -186,7 +186,7 @@
         .status-dot { width: 6px; height: 6px; background: #8ce19e; border-radius: 50%; animation: blink 2s infinite; }
 
         /* ═══════════════════════════════════════
-           LUXURY GLASS CARDS
+           LUXURY GLASS CARDS (Stat Grid & Forms)
         ═══════════════════════════════════════ */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
         .luxury-card {
@@ -202,21 +202,23 @@
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             box-shadow: var(--shadow-elegant); transition: 0.3s;
         }
-        .stat-card:hover { border-color: var(--primary-border); background: var(--bg-hover); }
-        .stat-icon-bg { position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg); }
+        .stat-icon-bg {
+            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg);
+        }
         .stat-label { font-size: 0.65rem; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
         .stat-value { font-size: 2rem; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
         
+        /* Pewarnaan Spesifik Card & Ikon */
         .stat-card.primary { border-top: 2px solid var(--primary); }
         .stat-card.primary .stat-value { color: var(--primary); }
         .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
 
         .stat-card.rose { border-top: 2px solid var(--rose); }
-        .stat-card.rose .stat-value { color: var(--text); }
+        .stat-card.rose .stat-value { color: var(--rose); }
         .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; }
 
         .stat-card.azure { border-top: 2px solid var(--azure); }
-        .stat-card.azure .stat-value { color: var(--text); }
+        .stat-card.azure .stat-value { color: var(--azure); }
         .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; }
 
         /* Form Elements */
@@ -290,6 +292,17 @@
         .btn-export { background: transparent; border: 1px solid var(--glass-border); color: var(--text-dim); padding: 6px 14px; border-radius: 8px; font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
         .btn-export:hover { background: rgba(255,255,255,0.08); color: var(--text); border-color: var(--primary); }
 
+        /* SCROLL KHUSUS UNTUK DAFTAR TAMU */
+        #guestList {
+            max-height: 350px; /* Batas tinggi maksimal */
+            overflow-y: auto;  /* Mengaktifkan scroll vertical jika kepanjangan */
+            padding-right: 5px;
+            margin-top: 10px;
+        }
+        #guestList::-webkit-scrollbar { width: 5px; }
+        #guestList::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+        #guestList::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
+
         .guest-item {
             padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex; justify-content: space-between; align-items: center;
@@ -314,8 +327,13 @@
         /* ═══════════════════════════════════════
            LIVE CHAT CUSTOM STYLES
         ═══════════════════════════════════════ */
-        #chatBox::-webkit-scrollbar { width: 4px; }
-        #chatBox::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        #chatBox {
+            height: 320px; overflow-y: auto; display: flex; flex-direction: column; 
+            padding: 10px 5px; margin-bottom: 15px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
+        }
+        #chatBox::-webkit-scrollbar { width: 5px; }
+        #chatBox::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+        #chatBox::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
         
         .chat-bubble-wrap { display: flex; flex-direction: column; margin-bottom: 12px; animation: revealItem 0.3s ease forwards; }
         .chat-sender { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 4px; padding: 0 4px; font-weight: 500; letter-spacing: 0.5px; }
@@ -346,7 +364,7 @@
     </audio>
 
     <div class="theme-switcher-wrap">
-        <div class="theme-toggle-btn"><i class="fas fa-palette"></i></div>
+        <div class="theme-toggle-btn" onclick="togglePalette()"><i class="fas fa-palette"></i></div>
         <div class="theme-palette">
             <div class="color-dot" style="background: #b32441;" title="Maroon Rose" onclick="setTheme('maroon')"></div>
             <div class="color-dot" style="background: #cda453;" title="Luxury Gold" onclick="setTheme('gold')"></div>
@@ -446,12 +464,12 @@
                 <span class="list-title"><i class="fas fa-comments" style="margin-right: 6px;"></i> Live Chat Family</span>
             </div>
             
-            <div id="chatBox" style="height: 320px; overflow-y: auto; display: flex; flex-direction: column; padding: 10px 5px; margin-bottom: 15px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+            <div id="chatBox">
                 <div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;">Memuat pesan...</div>
             </div>
             
             <form id="chatForm" onsubmit="sendChat(event)" style="display: flex; gap: 10px;">
-                <input type="text" id="chatInput" class="luxury-input" style="flex: 1; padding: 14px 16px; background: var(--bg-main); border-radius: 12px; border: 1px solid var(--glass-border); text-align: left;" placeholder="Tulis pesan publik..." autocomplete="off">
+                <input type="text" id="chatInput" class="luxury-input" style="flex: 1; padding: 14px 16px; background: var(--bg-main); border-radius: 12px; border: 1px solid var(--glass-border); text-align: left;" placeholder="Tulis ucapan selamat..." autocomplete="off">
                 <button type="submit" id="btnSendChat" style="background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: 0 20px; cursor: pointer; transition: 0.3s;"><i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
@@ -473,6 +491,11 @@
 
     let activeThemeHex = '#b32441';
 
+    // Buka/tutup palet saat diklik
+    function togglePalette() {
+        document.querySelector('.theme-palette').classList.toggle('show');
+    }
+
     function setTheme(themeName) {
         const t = themes[themeName]; if(!t) return;
         const root = document.documentElement;
@@ -480,6 +503,9 @@
         root.style.setProperty('--primary-dim', t.dim); root.style.setProperty('--primary-border', t.border);
         activeThemeHex = t.main;
         localStorage.setItem('weddingTheme', themeName);
+        
+        // Tutup palet otomatis setelah memilih warna
+        document.querySelector('.theme-palette').classList.remove('show');
     }
     const savedTheme = localStorage.getItem('weddingTheme'); if(savedTheme) setTheme(savedTheme);
 
@@ -524,7 +550,7 @@
     // SUPABASE GUESTS LOGIC
     // ═══════════════════════════════════════════
     const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
-    const chatApiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/messages'; // Endpoint untuk Chat
+    const chatApiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/messages'; 
     const apiKey = 'sb_publishable_UXr26UzpGIVnL-U7QBPdLg_7Oo4cvCU';
     const headers = { 'apikey': apiKey, 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
     
@@ -622,19 +648,15 @@
 
     async function fetchChat() {
         try {
-            // Ambil maksimal 100 pesan terbaru untuk performa
             const res = await fetch(chatApiUrl + '?select=*&order=created_at.desc&limit=100', { headers });
             if (!res.ok) return;
             const data = await res.json();
             
-            // Filter pesan yang HANYA dari 3 HARI terakhir (Hapus 3 hari sekali secara visual)
             const threeDaysAgo = new Date();
             threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
             
-            const recentChats = data.filter(m => new Date(m.created_at) >= threeDaysAgo).reverse(); // Reverse agar yg lama di atas
+            const recentChats = data.filter(m => new Date(m.created_at) >= threeDaysAgo).reverse();
             const chatBox = document.getElementById('chatBox');
-            
-            // Deteksi jika user sedang scroll, jangan auto-scroll ke bawah saat fetch baru
             const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 30;
 
             if (recentChats.length === 0) {
@@ -652,7 +674,6 @@
                 `;
             }).join('');
 
-            // Auto scroll ke pesan terbaru jika sebelumnya ada di bawah
             if (isScrolledToBottom) {
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
@@ -669,11 +690,10 @@
         
         if (!msg) return;
 
-        // Minta Nama jika belum pernah chat (Simpan di LocalStorage)
         if (!myChatName) {
             const { value: inputName } = await Swal.fire({
                 title: 'Nama Kamu?',
-                text: 'Masukkan namamu agar teman lain tahu siapa yang mengirim ucapan.',
+                text: 'Masukkan namamu agar teman lain tahu siapa yang mengirim pesan.',
                 input: 'text',
                 inputPlaceholder: 'Contoh: Ayogi Akbar',
                 background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
@@ -682,22 +702,19 @@
             });
             if (!inputName || !inputName.trim()) return;
             myChatName = inputName.trim();
-            localStorage.setItem('guestChatName', myChatName); // Simpan nama selamanya di browser HP
+            localStorage.setItem('guestChatName', myChatName); 
         }
 
-        // Kunci input sementara
         input.value = ''; input.disabled = true; btnSend.disabled = true;
         btnSend.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
         
         try {
-            // Kirim ke database
             await fetch(chatApiUrl, { 
                 method: 'POST', 
                 headers, 
                 body: JSON.stringify({ sender_name: myChatName, message: msg }) 
             });
             
-            // Reload chat dan paksa scroll ke bawah
             await fetchChat();
             setTimeout(() => {
                 const chatBox = document.getElementById('chatBox');
@@ -708,7 +725,7 @@
         } finally {
             input.disabled = false; btnSend.disabled = false;
             btnSend.innerHTML = '<i class="fas fa-paper-plane"></i>';
-            input.focus(); // Kembalikan keyboard
+            input.focus(); 
         }
     }
 
