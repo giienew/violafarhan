@@ -11,7 +11,7 @@
 
     <style>
         :root {
-            /* Tema Default: Bold Maroon Rose (Tegas & Mewah) */
+            /* Tema Default: Bold Maroon Rose */
             --primary: #b32441;
             --primary-light: #d93658;
             --primary-dim: rgba(179, 36, 65, 0.15);
@@ -20,7 +20,6 @@
             --rose: #d93658;
             --azure: #4a709e;
             
-            /* Latar belakang gelap elegan */
             --bg-main: #111113;
             --bg-card: rgba(25, 25, 28, 0.6);
             --bg-hover: rgba(255, 255, 255, 0.04);
@@ -37,8 +36,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            background: var(--bg-main);
-            color: var(--text);
+            background: var(--bg-main); color: var(--text);
             font-family: 'Outfit', sans-serif;
             margin: 0; padding-bottom: 100px;
             overflow-x: hidden; min-height: 100vh;
@@ -46,7 +44,7 @@
         }
 
         /* ═══════════════════════════════════════
-           THEME SWITCHER WIDGET (SISTEM KLIK)
+           THEME SWITCHER
         ═══════════════════════════════════════ */
         .theme-switcher-wrap {
             position: fixed; right: 20px; bottom: 90px; z-index: 1000;
@@ -57,233 +55,105 @@
             opacity: 0; transform: translateY(15px); pointer-events: none;
             transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             background: rgba(17, 17, 19, 0.85); padding: 10px; border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); backdrop-filter: blur(15px);
         }
-        /* Class ini ditambahkan via JS saat tombol palet diklik */
-        .theme-palette.show {
-            opacity: 1; transform: translateY(0); pointer-events: auto;
-        }
+        .theme-palette.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .theme-toggle-btn {
             width: 44px; height: 44px; border-radius: 50%;
             background: rgba(17, 17, 19, 0.85); border: 1px solid var(--primary-border);
             color: var(--primary); font-size: 1.1rem;
             display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
         }
         .theme-toggle-btn:active { transform: scale(0.9); }
-        
-        .color-dot {
-            width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
-            border: 2px solid transparent; transition: 0.3s;
-        }
+        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
         .color-dot:hover { transform: scale(1.2); border-color: #fff; }
 
         /* ═══════════════════════════════════════
-           SPLASH SCREEN
+           SPLASH SCREEN & PARTICLES
         ═══════════════════════════════════════ */
         #splashScreen {
-            position: fixed; inset: 0; z-index: 10000;
-            background: var(--bg-main);
+            position: fixed; inset: 0; z-index: 10000; background: var(--bg-main);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 1.2s ease, transform 1.2s ease;
         }
         .splash-ornament {
             width: 160px; height: 160px; border: 1px solid var(--primary-border);
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            position: relative; margin-bottom: 30px;
-            transition: border-color 0.8s;
-            background: var(--primary-dim);
+            position: relative; margin-bottom: 30px; background: var(--primary-dim);
         }
-        .splash-ornament::before {
-            content: ''; position: absolute; inset: 8px;
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 50%;
-        }
-        .splash-monogram {
-            font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-style: italic;
-            color: var(--primary); line-height: 1; transition: color 0.8s;
-        }
-        .splash-names {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 500;
-            color: var(--text); letter-spacing: 2px; text-align: center; margin-bottom: 8px;
-        }
-        .splash-subtitle {
-            font-size: 0.65rem; letter-spacing: 5px; color: var(--text-dim);
-            text-transform: uppercase; margin-bottom: 40px;
-        }
+        .splash-ornament::before { content: ''; position: absolute; inset: 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; }
+        .splash-monogram { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-style: italic; color: var(--primary); line-height: 1; }
+        .splash-names { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 500; color: var(--text); letter-spacing: 2px; text-align: center; margin-bottom: 8px; }
+        .splash-subtitle { font-size: 0.65rem; letter-spacing: 5px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 40px; }
         .splash-cta {
-            display: flex; align-items: center; gap: 10px;
-            border: 1px solid var(--primary-border); background: var(--primary);
-            padding: 12px 26px; border-radius: 40px;
-            font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #fff;
+            display: flex; align-items: center; gap: 10px; border: 1px solid var(--primary-border); background: var(--primary);
+            padding: 12px 26px; border-radius: 40px; font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #fff;
             animation: float 3s ease-in-out infinite; transition: 0.5s;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-            50% { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); box-shadow: 0 4px 15px rgba(0,0,0,0.3); } 50% { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); } }
 
-        /* ═══════════════════════════════════════
-           PARTICLES
-        ═══════════════════════════════════════ */
         #particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-        .particle {
-            position: absolute; top: -30px; opacity: 0;
-            animation: particleFall linear infinite;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-        }
-        @keyframes particleFall {
-            0% { transform: translateY(-30px) rotate(0deg) translateX(0); opacity: 0; }
-            15% { opacity: 0.7; }
-            85% { opacity: 0.5; }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(40px); opacity: 0; }
-        }
+        .particle { position: absolute; top: -30px; opacity: 0; animation: particleFall linear infinite; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+        @keyframes particleFall { 0% { transform: translateY(-30px) rotate(0deg) translateX(0); opacity: 0; } 15% { opacity: 0.7; } 85% { opacity: 0.5; } 100% { transform: translateY(110vh) rotate(360deg) translateX(40px); opacity: 0; } }
 
         /* ═══════════════════════════════════════
-           MUSIC BUTTON
+           UI LAYOUT
         ═══════════════════════════════════════ */
-        #musicBtn {
-            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-            width: 44px; height: 44px;
-            background: rgba(17, 17, 19, 0.85); border: 1px solid var(--primary-border);
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-        }
+        #musicBtn { position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 44px; height: 44px; background: rgba(17, 17, 19, 0.85); border: 1px solid var(--primary-border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
         #musicBtn.spinning i { animation: spin 4s linear infinite; color: var(--primary); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* ═══════════════════════════════════════
-           LAYOUT & HEADER
-        ═══════════════════════════════════════ */
-        .container {
-            max-width: 540px; margin: 0 auto; padding: 20px 18px; position: relative; z-index: 10;
-        }
+        .container { max-width: 540px; margin: 0 auto; padding: 20px 18px; position: relative; z-index: 10; }
         .royal-header { text-align: center; padding: 30px 0 25px; }
         .header-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .header-divider::before, .header-divider::after {
-            content: ''; flex: 1; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary-border), transparent);
-        }
+        .header-divider::before, .header-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--primary-border), transparent); }
         .header-divider-icon { color: var(--primary); font-size: 0.5rem; opacity: 0.9; }
-        
-        .royal-title {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-style: italic; font-weight: 600;
-            color: var(--primary); margin: 0 0 4px; line-height: 1; transition: color 0.8s;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-        .royal-subtitle {
-            font-size: 0.65rem; letter-spacing: 4px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 15px;
-        }
+        .royal-title { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-style: italic; font-weight: 600; color: var(--primary); margin: 0 0 4px; line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+        .royal-subtitle { font-size: 0.65rem; letter-spacing: 4px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 15px; }
 
-        .status-pill {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(52,199,89,0.1); border: 1px solid rgba(52,199,89,0.25);
-            padding: 5px 14px; border-radius: 20px; font-size: 0.65rem; font-weight: 500;
-            color: #8ce19e; letter-spacing: 1px; text-transform: uppercase;
-        }
+        .status-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(52,199,89,0.1); border: 1px solid rgba(52,199,89,0.25); padding: 5px 14px; border-radius: 20px; font-size: 0.65rem; font-weight: 500; color: #8ce19e; letter-spacing: 1px; text-transform: uppercase; }
         .status-dot { width: 6px; height: 6px; background: #8ce19e; border-radius: 50%; animation: blink 2s infinite; }
 
-        /* ═══════════════════════════════════════
-           LUXURY GLASS CARDS (Stat Grid & Forms)
-        ═══════════════════════════════════════ */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-        .luxury-card {
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 18px; position: relative; overflow: hidden;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-elegant); margin-bottom: 24px;
-        }
-        .stat-card {
-            display: flex; flex-direction: column;
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            border-radius: 18px; padding: 18px; position: relative; overflow: hidden;
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            box-shadow: var(--shadow-elegant); transition: 0.3s;
-        }
-        .stat-icon-bg {
-            position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg);
-        }
+        .luxury-card { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 20px; padding: 18px; position: relative; overflow: hidden; backdrop-filter: blur(20px); box-shadow: var(--shadow-elegant); margin-bottom: 24px; }
+        .stat-card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 18px; padding: 18px; position: relative; overflow: hidden; box-shadow: var(--shadow-elegant); transition: 0.3s; }
+        .stat-icon-bg { position: absolute; right: -5px; bottom: -5px; font-size: 3.5rem; transform: rotate(-10deg); }
         .stat-label { font-size: 0.65rem; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
         .stat-value { font-size: 2rem; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
         
-        /* Pewarnaan Spesifik Card & Ikon */
-        .stat-card.primary { border-top: 2px solid var(--primary); }
-        .stat-card.primary .stat-value { color: var(--primary); }
-        .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
+        .stat-card.primary { border-top: 2px solid var(--primary); } .stat-card.primary .stat-value { color: var(--primary); } .stat-card.primary .stat-icon-bg { color: var(--primary); opacity: 0.15; }
+        .stat-card.rose { border-top: 2px solid var(--rose); } .stat-card.rose .stat-value { color: var(--rose); } .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; }
+        .stat-card.azure { border-top: 2px solid var(--azure); } .stat-card.azure .stat-value { color: var(--azure); } .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; }
 
-        .stat-card.rose { border-top: 2px solid var(--rose); }
-        .stat-card.rose .stat-value { color: var(--rose); }
-        .stat-card.rose .stat-icon-bg { color: var(--rose); opacity: 0.8; }
-
-        .stat-card.azure { border-top: 2px solid var(--azure); }
-        .stat-card.azure .stat-value { color: var(--azure); }
-        .stat-card.azure .stat-icon-bg { color: var(--azure); opacity: 0.8; }
-
-        /* Form Elements */
+        /* FORM */
         .card-header { padding-bottom: 14px; border-bottom: 1px solid var(--glass-border); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         .card-title { font-size: 0.7rem; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-
         .form-row { padding: 14px 0; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; }
         .form-row:last-of-type { border-bottom: none; }
         .form-label { font-size: 0.85rem; font-weight: 400; color: var(--text-dim); }
+        .luxury-input, .luxury-select { background: transparent; border: none; outline: none; padding: 0; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.95rem; width: 100%; text-align: right; }
+        .luxury-input { text-align: left; } .luxury-input::placeholder { color: var(--text-muted); font-weight: 300; }
+        .luxury-select { color: var(--primary); font-weight: 600; cursor: pointer; -webkit-appearance: none; direction: rtl; } .luxury-select option { background: var(--bg-main); color: var(--text); direction: ltr; }
 
-        .luxury-input, .luxury-select {
-            background: transparent; border: none; outline: none; padding: 0;
-            color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.95rem; width: 100%; text-align: right;
-        }
-        .luxury-input { text-align: left; }
-        .luxury-input::placeholder { color: var(--text-muted); font-weight: 300; }
-        .luxury-select { color: var(--primary); font-weight: 600; cursor: pointer; -webkit-appearance: none; direction: rtl; }
-        .luxury-select option { background: var(--bg-main); color: var(--text); direction: ltr; }
-
-        .vip-row {
-            padding: 14px 16px; margin-top: 10px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: space-between;
-            background: var(--primary-dim); border: 1px solid var(--primary-border);
-        }
+        .vip-row { padding: 14px 16px; margin-top: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; background: var(--primary-dim); border: 1px solid var(--primary-border); }
         .vip-label { font-size: 0.85rem; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .toggle-wrap { position: relative; width: 46px; height: 26px; } .toggle-wrap input { opacity: 0; width: 0; height: 0; }
+        .toggle-track { position: absolute; inset: 0; background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
+        .toggle-track::before { content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background: var(--text-dim); border-radius: 50%; transition: 0.3s; }
+        .toggle-wrap input:checked + .toggle-track { background: var(--primary); border-color: var(--primary); } .toggle-wrap input:checked + .toggle-track::before { transform: translateX(20px); background: #fff; }
 
-        .toggle-wrap { position: relative; width: 46px; height: 26px; }
-        .toggle-wrap input { opacity: 0; width: 0; height: 0; }
-        .toggle-track {
-            position: absolute; inset: 0; background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s;
-        }
-        .toggle-track::before {
-            content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background: var(--text-dim); border-radius: 50%; transition: 0.3s;
-        }
-        .toggle-wrap input:checked + .toggle-track { background: var(--primary); border-color: var(--primary); }
-        .toggle-wrap input:checked + .toggle-track::before { transform: translateX(20px); background: #fff; }
-
-        .btn-royal {
-            display: block; width: 100%; margin-top: 15px; border: none; padding: 16px; border-radius: 14px;
-            background: var(--primary); color: #fff; font-family: 'Outfit', sans-serif;
-            font-size: 0.85rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-            cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
+        .btn-royal { display: block; width: 100%; margin-top: 15px; border: none; padding: 16px; border-radius: 14px; background: var(--primary); color: #fff; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .btn-royal:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
-        .btn-royal:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        /* ═══════════════════════════════════════
-           SEARCH & LIST
-        ═══════════════════════════════════════ */
+        /* LIST & SEARCH */
         .search-wrap { position: sticky; top: 0; z-index: 90; padding: 10px 0 14px; background: var(--bg-main); }
-        .search-inner {
-            background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 16px;
-            display: flex; align-items: center; gap: 10px; margin-bottom: 12px; backdrop-filter: blur(10px);
-        }
-        .search-inner input { background: none; border: none; outline: none; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.95rem; width: 100%; }
-        .search-inner input::placeholder { color: var(--text-muted); }
+        .search-inner { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; backdrop-filter: blur(10px); }
+        .search-inner input { background: none; border: none; outline: none; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.95rem; width: 100%; } .search-inner input::placeholder { color: var(--text-muted); }
         .search-icon { color: var(--text-dim); font-size: 0.85rem; }
 
-        .filter-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: none; }
-        .filter-strip::-webkit-scrollbar { display: none; }
-        .filter-pill {
-            white-space: nowrap; padding: 8px 16px; border-radius: 20px;
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            color: var(--text-dim); font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: 0.3s;
-        }
+        .filter-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: none; } .filter-strip::-webkit-scrollbar { display: none; }
+        .filter-pill { white-space: nowrap; padding: 8px 16px; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
         .filter-pill:hover { border-color: var(--primary-border); color: var(--text); }
         .filter-pill.active { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
@@ -292,69 +162,64 @@
         .btn-export { background: transparent; border: 1px solid var(--glass-border); color: var(--text-dim); padding: 6px 14px; border-radius: 8px; font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
         .btn-export:hover { background: rgba(255,255,255,0.08); color: var(--text); border-color: var(--primary); }
 
-        /* SCROLL KHUSUS UNTUK DAFTAR TAMU */
-        #guestList {
-            max-height: 350px; /* Batas tinggi maksimal */
-            overflow-y: auto;  /* Mengaktifkan scroll vertical jika kepanjangan */
-            padding-right: 5px;
-            margin-top: 10px;
-        }
-        #guestList::-webkit-scrollbar { width: 5px; }
-        #guestList::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
-        #guestList::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
+        #guestList { max-height: 350px; overflow-y: auto; padding-right: 5px; margin-top: 10px; }
+        #guestList::-webkit-scrollbar { width: 5px; } #guestList::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; } #guestList::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
 
-        .guest-item {
-            padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex; justify-content: space-between; align-items: center;
-            animation: revealItem 0.4s ease forwards; opacity: 0; transform: translateY(10px);
-        }
+        /* LIST ITEM */
+        .guest-item { padding: 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; animation: revealItem 0.4s ease forwards; opacity: 0; transform: translateY(10px); transition: background 0.3s; border-radius: 12px; cursor: pointer; }
+        .guest-item:active { background: var(--bg-hover); }
         @keyframes revealItem { to { opacity: 1; transform: translateY(0); } }
-        .guest-item:last-child { border-bottom: none; }
         .guest-name { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; }
-        .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); }
+        .guest-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        
+        .tag { font-size: 0.6rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid var(--glass-border); display: inline-flex; align-items: center;}
         .tag-viola { color: #fff; background: var(--rose); border-color: var(--rose); } 
         .tag-farhan { color: #fff; background: var(--azure); border-color: var(--azure); }
-        .tag-vip { background: var(--primary); color: #fff; border-color: var(--primary); }
         .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.03); }
+        
+        /* Modifikasi Tag Terkirim/Belum agar hanya berupa icon */
+        .tag-terkirim { color: #8ce19e; background: rgba(52,199,89,0.1); border-color: rgba(52,199,89,0.3); padding: 3px 6px; font-size: 0.75rem; }
+        .tag-belum { color: #ff6b6b; background: rgba(255,59,48,0.1); border-color: rgba(255,59,48,0.25); padding: 3px 6px; font-size: 0.75rem; }
 
         .btn-delete { background: transparent; border: none; color: var(--text-muted); padding: 8px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
         .btn-delete:hover { color: #ff4757; }
-
         .empty-state { padding: 40px 20px; text-align: center; display: none; }
         .empty-icon { font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px; }
         
         /* ═══════════════════════════════════════
            LIVE CHAT CUSTOM STYLES
         ═══════════════════════════════════════ */
-        #chatBox {
-            height: 320px; overflow-y: auto; display: flex; flex-direction: column; 
-            padding: 10px 5px; margin-bottom: 15px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
-        }
-        #chatBox::-webkit-scrollbar { width: 5px; }
-        #chatBox::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
-        #chatBox::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
+        #chatBox { height: 350px; overflow-y: auto; display: flex; flex-direction: column; padding: 10px 5px; margin-bottom: 15px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+        #chatBox::-webkit-scrollbar { width: 5px; } #chatBox::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; } #chatBox::-webkit-scrollbar-thumb { background: var(--primary-border); border-radius: 10px; }
         
-        .chat-bubble-wrap { display: flex; flex-direction: column; margin-bottom: 12px; animation: revealItem 0.3s ease forwards; }
+        .chat-bubble-wrap { display: flex; flex-direction: column; margin-bottom: 14px; animation: revealItem 0.3s ease forwards; }
         .chat-sender { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 4px; padding: 0 4px; font-weight: 500; letter-spacing: 0.5px; }
-        .chat-bubble { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
+        
+        .chat-bubble { 
+            position: relative; padding: 10px 14px; border-radius: 16px; font-size: 0.85rem; 
+            max-width: 85%; word-wrap: break-word; line-height: 1.4; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s;
+        }
+        .chat-bubble:active { transform: scale(0.98); }
         
         .chat-me { align-items: flex-end; }
-        .chat-me .chat-bubble { background: var(--primary); color: #fff; border-bottom-right-radius: 4px; border: 1px solid var(--primary-light); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
+        .chat-me .chat-bubble { background: var(--primary); color: #fff; border-bottom-right-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .chat-other { align-items: flex-start; }
         .chat-other .chat-bubble { background: var(--bg-hover); color: var(--text); border-bottom-left-radius: 4px; border: 1px solid var(--glass-border); }
+        
+        .chat-time { font-size: 0.55rem; opacity: 0.6; align-self: flex-end; margin-top: 5px; letter-spacing: 0.5px; }
+        .chat-action-hint { font-size: 0.5rem; color: rgba(255,255,255,0.6); margin-top: 2px; text-align: right; display: none; }
+        .chat-me .chat-bubble:hover .chat-action-hint { display: block; }
 
         .royal-footer { text-align: center; padding: 20px; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; }
 
-        /* SweetAlert Elegan */
+        /* SweetAlert */
         .swal2-popup { background: rgba(25, 25, 28, 0.98) !important; backdrop-filter: blur(20px) !important; color: var(--text) !important; border: 1px solid var(--glass-border) !important; border-radius: 20px !important; box-shadow: var(--shadow-elegant) !important; }
         .swal2-title { color: var(--primary) !important; font-family: 'Cormorant Garamond', serif !important; font-size: 1.8rem !important; font-style: italic; font-weight: 600 !important;}
         .swal2-html-container { color: var(--text-dim) !important; font-family: 'Outfit', sans-serif !important; font-size: 0.95rem !important;}
         .swal2-confirm { background: var(--primary) !important; color: #fff !important; border-radius: 12px !important; font-family: 'Outfit', sans-serif !important; font-weight: 600 !important; letter-spacing: 1px !important; }
-        .swal2-cancel { background: transparent !important; color: var(--text-dim) !important; border: 1px solid var(--glass-border) !important; font-family: 'Outfit', sans-serif !important; font-weight: 500 !important; }
-        .swal2-input { background: var(--bg-main) !important; border: 1px solid var(--glass-border) !important; color: var(--text) !important; border-radius: 12px !important; font-family: 'Outfit', sans-serif !important; }
-        .swal2-input:focus { border-color: var(--primary) !important; box-shadow: 0 0 0 2px var(--primary-dim) !important; }
+        .swal2-cancel, .swal2-deny { background: transparent !important; color: var(--text-dim) !important; border: 1px solid var(--glass-border) !important; font-family: 'Outfit', sans-serif !important; font-weight: 500 !important; border-radius: 12px !important; }
+        .swal2-input, .swal2-select { background: var(--bg-main) !important; border: 1px solid var(--glass-border) !important; color: var(--text) !important; border-radius: 12px !important; font-family: 'Outfit', sans-serif !important; }
+        .swal2-input:focus, .swal2-select:focus { border-color: var(--primary) !important; box-shadow: 0 0 0 2px var(--primary-dim) !important; }
     </style>
 </head>
 <body>
@@ -382,7 +247,6 @@
     </div>
 
     <div id="particles"></div>
-
     <div id="musicBtn" onclick="toggleMusic()"><i class="fas fa-music" style="color:var(--text-dim);"></i></div>
 
     <div class="container">
@@ -401,19 +265,12 @@
         </div>
 
         <div class="luxury-card">
-            <div class="card-header">
-                <div class="card-title"><i class="fas fa-plus"></i> Tambah Tamu Baru</div>
-            </div>
+            <div class="card-header"><div class="card-title"><i class="fas fa-plus"></i> Tambah Tamu Baru</div></div>
             <form id="guestForm" onsubmit="submitGuest(event)">
-                <div class="form-row">
-                    <input type="text" id="guestName" class="luxury-input" placeholder="Nama Lengkap Tamu…" required autocomplete="off">
-                </div>
+                <div class="form-row"><input type="text" id="guestName" class="luxury-input" placeholder="Nama Lengkap Tamu…" required autocomplete="off"></div>
                 <div class="form-row">
                     <span class="form-label">Keluarga Pihak</span>
-                    <select id="guestSide" class="luxury-select">
-                        <option value="Viola">Viola (Perempuan)</option>
-                        <option value="Farhan">Farhan (Laki-laki)</option>
-                    </select>
+                    <select id="guestSide" class="luxury-select"><option value="Viola">Viola (Perempuan)</option><option value="Farhan">Farhan (Laki-laki)</option></select>
                 </div>
                 <div class="form-row">
                     <span class="form-label">Kategori</span>
@@ -427,7 +284,7 @@
                     <span class="vip-label"><i class="fas fa-crown" style="font-size:0.75rem;"></i> Set VIP</span>
                     <label class="toggle-wrap"><input type="checkbox" id="guestVip"><span class="toggle-track"></span></label>
                 </div>
-                <button type="submit" class="btn-royal" id="btnSubmit">Add List</button>
+                <button type="submit" class="btn-royal" id="btnSubmit">Simpan Data</button>
             </form>
         </div>
 
@@ -435,6 +292,8 @@
             <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
             <div class="filter-strip">
                 <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
+                <button class="filter-pill" onclick="setFilter('terkirim',this)">✅ Terkirim</button>
+                <button class="filter-pill" onclick="setFilter('belum',this)">⏳ Belum</button>
                 <button class="filter-pill" onclick="setFilter('vip',this)">VIP ✨</button>
                 <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
                 <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
@@ -452,22 +311,16 @@
                 <span class="list-title">Daftar (<span id="liveCount">0</span>)</span>
                 <button class="btn-export" onclick="exportText()"><i class="fas fa-file-alt"></i> Export Text</button>
             </div>
+            <div style="font-size:0.6rem; color:var(--text-muted); text-align:center; margin-bottom:5px;">💡 Tahan (Long-Press) nama tamu untuk Edit / Tandai Terkirim</div>
             <div id="guestList"></div>
-            <div id="emptyState" class="empty-state">
-                <div class="empty-icon"><i class="fas fa-book-open"></i></div>
-                <div style="font-size:0.85rem; color:var(--text-muted)">Belum ada data tamu</div>
-            </div>
+            <div id="emptyState" class="empty-state"><div class="empty-icon"><i class="fas fa-book-open"></i></div><div style="font-size:0.85rem; color:var(--text-muted)">Belum ada data tamu</div></div>
         </div>
 
         <div class="luxury-card" style="padding:18px 22px;">
             <div class="list-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 5px;">
                 <span class="list-title"><i class="fas fa-comments" style="margin-right: 6px;"></i> Live Chat Family</span>
             </div>
-            
-            <div id="chatBox">
-                <div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;">Memuat pesan...</div>
-            </div>
-            
+            <div id="chatBox"><div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;">Memuat pesan...</div></div>
             <form id="chatForm" onsubmit="sendChat(event)" style="display: flex; gap: 10px;">
                 <input type="text" id="chatInput" class="luxury-input" style="flex: 1; padding: 14px 16px; background: var(--bg-main); border-radius: 12px; border: 1px solid var(--glass-border); text-align: left;" placeholder="Tulis pesan..." autocomplete="off">
                 <button type="submit" id="btnSendChat" style="background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: 0 20px; cursor: pointer; transition: 0.3s;"><i class="fas fa-paper-plane"></i></button>
@@ -488,23 +341,15 @@
         sapphire: { main: '#4a709e', light: '#6b96cc', dim: 'rgba(74, 112, 158, 0.15)', border: 'rgba(74, 112, 158, 0.4)' },
         plum: { main: '#864c73', light: '#b06a98', dim: 'rgba(134, 76, 115, 0.15)', border: 'rgba(134, 76, 115, 0.4)' }
     };
-
     let activeThemeHex = '#b32441';
 
-    // Buka/tutup palet saat diklik
-    function togglePalette() {
-        document.querySelector('.theme-palette').classList.toggle('show');
-    }
-
+    function togglePalette() { document.querySelector('.theme-palette').classList.toggle('show'); }
     function setTheme(themeName) {
         const t = themes[themeName]; if(!t) return;
         const root = document.documentElement;
         root.style.setProperty('--primary', t.main); root.style.setProperty('--primary-light', t.light);
         root.style.setProperty('--primary-dim', t.dim); root.style.setProperty('--primary-border', t.border);
-        activeThemeHex = t.main;
-        localStorage.setItem('weddingTheme', themeName);
-        
-        // Tutup palet otomatis setelah memilih warna
+        activeThemeHex = t.main; localStorage.setItem('weddingTheme', themeName);
         document.querySelector('.theme-palette').classList.remove('show');
     }
     const savedTheme = localStorage.getItem('weddingTheme'); if(savedTheme) setTheme(savedTheme);
@@ -524,30 +369,18 @@
         else{ audio.play(); document.getElementById('musicBtn').classList.add('spinning'); }
         isPlaying = !isPlaying;
     }
-
     function startParticles() {
-        const c = document.getElementById('particles');
-        const icons = ['fas fa-leaf', 'fas fa-seedling', 'fas fa-star', 'fas fa-spa', 'fas fa-sparkles', 'fab fa-pagelines'];
-        const pastelColors = ['#f4cfdf', '#e2f0cb', '#b5ead7', '#c7ceea', '#fff2cc', '#f3d1dc'];
-        
+        const c = document.getElementById('particles'), icons = ['fas fa-leaf', 'fas fa-seedling', 'fas fa-star', 'fas fa-spa', 'fas fa-sparkles', 'fab fa-pagelines'], pastelColors = ['#f4cfdf', '#e2f0cb', '#b5ead7', '#c7ceea', '#fff2cc', '#f3d1dc'];
         setInterval(() => {
             const el = document.createElement('i');
-            const randIcon = icons[Math.floor(Math.random()*icons.length)];
-            const randColor = pastelColors[Math.floor(Math.random()*pastelColors.length)];
-            
-            el.className = randIcon + ' particle';
-            el.style.left = Math.random()*100 + 'vw';
-            el.style.fontSize = (Math.random()*12+10) + 'px';
-            el.style.color = randColor; 
-            el.style.animationDuration = (Math.random()*8+8) + 's'; 
-            
-            c.appendChild(el);
-            setTimeout(() => el.remove(), 16000);
+            el.className = icons[Math.floor(Math.random()*icons.length)] + ' particle';
+            el.style.left = Math.random()*100 + 'vw'; el.style.fontSize = (Math.random()*12+10) + 'px'; el.style.color = pastelColors[Math.floor(Math.random()*pastelColors.length)]; el.style.animationDuration = (Math.random()*8+8) + 's'; 
+            c.appendChild(el); setTimeout(() => el.remove(), 16000);
         }, 800);
     }
 
     // ═══════════════════════════════════════════
-    // SUPABASE GUESTS LOGIC
+    // SUPABASE GUESTS LOGIC & LONG PRESS
     // ═══════════════════════════════════════════
     const apiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/guests';
     const chatApiUrl = 'https://odarliliqtnliiwayyhe.supabase.co/rest/v1/messages'; 
@@ -563,13 +396,11 @@
             fullData = await res.json() || []; updateStats(); renderList(); setStatus(true);
         } catch { setStatus(false); }
     }
-
     function setStatus(online) {
         const el = document.getElementById('statusPill');
         if (online) { el.style.color = '#8ce19e'; el.style.background = 'rgba(52,199,89,0.1)'; el.style.borderColor = 'rgba(52,199,89,0.25)'; el.innerHTML = '<span class="status-dot"></span> System Online'; } 
         else { el.style.color = '#ff6b6b'; el.style.background = 'rgba(255,59,48,0.1)'; el.style.borderColor = 'rgba(255,59,48,0.25)'; el.innerHTML = 'Offline'; }
     }
-
     function updateStats() {
         document.getElementById('countAll').innerText = fullData.length; document.getElementById('countVip').innerText = fullData.filter(g => g.is_vip).length;
         document.getElementById('countViola').innerText = fullData.filter(g => g.side === 'Viola').length; document.getElementById('countFarhan').innerText = fullData.filter(g => g.side === 'Farhan').length;
@@ -577,20 +408,57 @@
 
     function renderList() {
         const search = document.getElementById('searchInput').value.toLowerCase();
-        let filtered = fullData.filter(g => (g.name.toLowerCase().includes(search) || g.category.toLowerCase().includes(search)) && (currentFilter === 'all' ? true : currentFilter === 'vip' ? g.is_vip : g.side === currentFilter || g.category === currentFilter));
+        let filtered = fullData.filter(g => {
+            const matchSearch = g.name.toLowerCase().includes(search) || g.category.toLowerCase().includes(search);
+            let matchFilter = true;
+            if (currentFilter === 'all') matchFilter = true;
+            else if (currentFilter === 'vip') matchFilter = g.is_vip;
+            else if (currentFilter === 'terkirim') matchFilter = g.is_invited === true;
+            else if (currentFilter === 'belum') matchFilter = g.is_invited !== true;
+            else matchFilter = (g.side === currentFilter || g.category === currentFilter);
+            return matchSearch && matchFilter;
+        });
+
         document.getElementById('liveCount').innerText = filtered.length;
         const list = document.getElementById('guestList'), empty = document.getElementById('emptyState');
         if (filtered.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
         empty.style.display = 'none';
+        
         list.innerHTML = filtered.map((g, i) => `
-            <div class="guest-item" style="animation-delay:${Math.min(i*0.03, 0.3)}s">
+            <div class="guest-item" data-id="${g.id}" style="animation-delay:${Math.min(i*0.03, 0.3)}s">
                 <div>
-                    <div class="guest-name">${g.name} ${g.is_vip ? '<i class="fas fa-crown" style="color:var(--primary); font-size:0.75rem; margin-left:4px;"></i>' : ''}</div>
-                    <div class="guest-meta"><span class="tag tag-${g.side.toLowerCase() === 'farhan' ? 'farhan' : 'viola'}">${g.side}</span><span class="tag tag-cat">${g.category}</span></div>
+                    <div class="guest-name">
+                        ${g.name} 
+                        ${g.is_vip ? '<i class="fas fa-crown" style="color:var(--primary); font-size:0.75rem; margin-left:4px;"></i>' : ''}
+                    </div>
+                    <div class="guest-meta">
+                        <span class="tag tag-${g.side.toLowerCase() === 'farhan' ? 'farhan' : 'viola'}">${g.side}</span>
+                        <span class="tag tag-cat">${g.category}</span>
+                        ${g.is_invited 
+                            ? '<span class="tag tag-terkirim" title="Undangan Terkirim"><i class="fas fa-check-circle"></i></span>' 
+                            : '<span class="tag tag-belum" title="Belum Terkirim"><i class="fas fa-clock"></i></span>'}
+                    </div>
                 </div>
-                <button class="btn-delete" onclick="deleteGuest(${g.id}, '${g.name.replace(/'/g,"\\'")}')"><i class="fas fa-times"></i></button>
+                <button class="btn-delete" onclick="deleteGuest(event, ${g.id}, '${g.name.replace(/'/g,"\\'")}')"><i class="fas fa-times"></i></button>
             </div>
         `).join('');
+
+        // Deteksi Long Press / Tahan
+        document.querySelectorAll('.guest-item').forEach(item => {
+            let timer;
+            const startPress = (e) => {
+                if(e.target.closest('.btn-delete')) return; 
+                timer = setTimeout(() => { openGuestMenu(item.getAttribute('data-id')); }, 500); 
+            };
+            const cancelPress = () => clearTimeout(timer);
+            
+            item.addEventListener('touchstart', startPress, {passive: true});
+            item.addEventListener('touchend', cancelPress);
+            item.addEventListener('touchmove', cancelPress);
+            item.addEventListener('mousedown', startPress);
+            item.addEventListener('mouseup', cancelPress);
+            item.addEventListener('mouseleave', cancelPress);
+        });
     }
 
     function setFilter(filter, btn) { currentFilter = filter; document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); renderList(); }
@@ -599,46 +467,98 @@
         e.preventDefault(); const btn = document.getElementById('btnSubmit');
         let rawName = document.getElementById('guestName').value.trim();
         let name = rawName.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
-        
         if (fullData.some(g => g.name.toLowerCase() === name.toLowerCase())) {
-            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Apakah yakin itu orang yang berbeda?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan', cancelButtonText: 'Batal' });
+            const conf = await Swal.fire({ title: 'Nama Sudah Ada', html: `Tamu <b style="color:var(--primary)">${name}</b> sudah terdaftar. Yakin orang yang berbeda?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Simpan' });
             if (!conf.isConfirmed) return;
         }
         btn.disabled = true; btn.innerText = 'Menyimpan...';
         try {
-            await fetch(apiUrl, { method: 'POST', headers, body: JSON.stringify({ name, side: document.getElementById('guestSide').value, category: document.getElementById('guestCategory').value, is_vip: document.getElementById('guestVip').checked }) });
+            await fetch(apiUrl, { method: 'POST', headers, body: JSON.stringify({ name, side: document.getElementById('guestSide').value, category: document.getElementById('guestCategory').value, is_vip: document.getElementById('guestVip').checked, is_invited: false }) });
             Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Tersimpan', showConfirmButton: false, timer: 2000, background: 'rgba(25, 25, 28, 0.98)', color: activeThemeHex });
             e.target.reset(); fetchData();
-        } catch { Swal.fire('Error', 'Gagal menyimpan', 'error'); } finally { btn.disabled = false; btn.innerText = 'Simpan Data'; }
+        } catch { Swal.fire('Error', 'Gagal', 'error'); } finally { btn.disabled = false; btn.innerText = 'Simpan Data'; }
     }
 
-    async function deleteGuest(id, name) {
+    async function deleteGuest(e, id, name) {
+        e.stopPropagation();
         const conf = await Swal.fire({ title: 'Hapus Tamu', html: `Hapus <b style="color:var(--primary)">${name}</b> dari daftar?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Hapus', cancelButtonText: 'Batal' });
         if (!conf.isConfirmed) return;
         try { await fetch(apiUrl + '?id=eq.' + id, { method: 'DELETE', headers }); fetchData(); } catch {}
     }
 
-    // ═══════════════════════════════════════════
-    // EXPORT TO TEXT (.TXT)
-    // ═══════════════════════════════════════════
-    function exportText() {
-        if (fullData.length === 0) return Swal.fire({ toast: true, position:'top', title: 'Data Kosong', icon: 'info', showConfirmButton:false, timer:2000, background: 'rgba(25, 25, 28, 0.98)', color: activeThemeHex });
-        
-        let textContent = "DAFTAR UNDANGAN VIOLA & FARHAN\n";
-        textContent += "=========================================\n\n";
-        
-        fullData.forEach((g, i) => {
-            textContent += `${i + 1}. ${g.name}\n`;
-            textContent += `   ▪ Pihak    : ${g.side}\n`;
-            textContent += `   ▪ Kategori : ${g.category}\n`;
-            textContent += `   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n`;
-            textContent += `-----------------------------------------\n`;
+    // Modal Menu Edit / Centang 
+    async function openGuestMenu(id) {
+        const g = fullData.find(x => x.id == id);
+        if(!g) return;
+
+        const res = await Swal.fire({
+            title: 'Opsi Tamu',
+            html: `<span style="color:var(--primary); font-size:1.3rem; font-weight:600;">${g.name}</span><br><br><span style="font-size:0.85rem">Pilih tindakan untuk tamu ini:</span>`,
+            showDenyButton: true, showCancelButton: true,
+            confirmButtonText: '✏️ Edit Data',
+            denyButtonText: g.is_invited ? '❌ Hapus Status Terkirim' : '✅ Tandai Terkirim',
+            cancelButtonText: 'Tutup',
+            background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
+            confirmButtonColor: 'var(--azure)', denyButtonColor: g.is_invited ? '#ff6b6b' : '#8ce19e'
         });
 
+        if (res.isConfirmed) {
+            editGuestData(g);
+        } else if (res.isDenied) {
+            await fetch(apiUrl + '?id=eq.' + g.id, { method: 'PATCH', headers, body: JSON.stringify({ is_invited: !g.is_invited }) });
+            fetchData();
+        }
+    }
+
+    async function editGuestData(g) {
+        const res = await Swal.fire({
+            title: 'Edit Data',
+            html: `
+                <input id="swal-edit-name" class="swal2-input" value="${g.name}" placeholder="Nama Lengkap" style="width:80%; font-size:0.9rem;">
+                <select id="swal-edit-side" class="swal2-select" style="width:80%; font-size:0.9rem;">
+                    <option value="Viola" ${g.side==='Viola'?'selected':''}>Pihak Viola</option>
+                    <option value="Farhan" ${g.side==='Farhan'?'selected':''}>Pihak Farhan</option>
+                </select>
+                <select id="swal-edit-cat" class="swal2-select" style="width:80%; font-size:0.9rem;">
+                    <option value="Keluarga Inti" ${g.category==='Keluarga Inti'?'selected':''}>Keluarga Inti</option>
+                    <option value="Kakek / Nenek" ${g.category==='Kakek / Nenek'?'selected':''}>Kakek / Nenek</option>
+                    <option value="Om / Tante" ${g.category==='Om / Tante'?'selected':''}>Om / Tante</option>
+                    <option value="Sepupu" ${g.category==='Sepupu'?'selected':''}>Sepupu</option>
+                    <option value="Teman" ${g.category==='Teman'?'selected':''}>Teman</option>
+                    <option value="Rekan Kerja" ${g.category==='Rekan Kerja'?'selected':''}>Rekan Kerja</option>
+                    <option value="Tamu Ayah Farhan" ${g.category==='Tamu Ayah Farhan'?'selected':''}>Tamu Ayah Farhan</option>
+                    <option value="Tamu Ibu Farhan" ${g.category==='Tamu Ibu Farhan'?'selected':''}>Tamu Ibu Farhan</option>
+                    <option value="Tamu Ayah Viola" ${g.category==='Tamu Ayah Viola'?'selected':''}>Tamu Ayah Viola</option>
+                    <option value="Tamu Ibu Viola" ${g.category==='Tamu Ibu Viola'?'selected':''}>Tamu Ibu Viola</option>
+                    <option value="Lainnya" ${g.category==='Lainnya'?'selected':''}>Lainnya</option>
+                </select>
+            `,
+            showCancelButton: true, confirmButtonText: 'Simpan Perubahan',
+            background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
+            preConfirm: () => {
+                return {
+                    name: document.getElementById('swal-edit-name').value,
+                    side: document.getElementById('swal-edit-side').value,
+                    category: document.getElementById('swal-edit-cat').value
+                }
+            }
+        });
+        if(res.isConfirmed) {
+            if(!res.value.name) return;
+            await fetch(apiUrl + '?id=eq.' + g.id, { method: 'PATCH', headers, body: JSON.stringify(res.value) });
+            fetchData();
+        }
+    }
+
+    function exportText() {
+        if (fullData.length === 0) return;
+        let textContent = "DAFTAR UNDANGAN VIOLA & FARHAN\n=========================================\n\n";
+        fullData.forEach((g, i) => {
+            textContent += `${i + 1}. ${g.name} ${g.is_invited ? '(✅ Terkirim)' : '(⏳ Belum)'}\n   ▪ Pihak    : ${g.side}\n   ▪ Kategori : ${g.category}\n   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n-----------------------------------------\n`;
+        });
         const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href = url; a.download = 'Undangan_ViolaFarhan.txt';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Undangan_ViolaFarhan.txt';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
     }
 
     // ═══════════════════════════════════════════
@@ -652,91 +572,87 @@
             if (!res.ok) return;
             const data = await res.json();
             
-            const threeDaysAgo = new Date();
-            threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-            
+            const threeDaysAgo = new Date(); threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
             const recentChats = data.filter(m => new Date(m.created_at) >= threeDaysAgo).reverse();
             const chatBox = document.getElementById('chatBox');
             const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 30;
 
             if (recentChats.length === 0) {
-                chatBox.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;"><i class="fas fa-comment-dots" style="font-size:2rem; margin-bottom:10px; opacity:0.5;"></i><br>Jadilah yang pertama mengirim ucapan!</div>`;
+                chatBox.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;"><i class="fas fa-comment-dots" style="font-size:2rem; margin-bottom:10px; opacity:0.5;"></i><br>Kirim ucapan pertamamu!</div>`;
                 return;
             }
 
             chatBox.innerHTML = recentChats.map(m => {
                 const isMe = m.sender_name === myChatName;
+                const timeStr = new Date(m.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const safeMsg = encodeURIComponent(m.message);
+                
                 return `
                     <div class="chat-bubble-wrap ${isMe ? 'chat-me' : 'chat-other'}">
                         <span class="chat-sender">${isMe ? 'Anda' : m.sender_name}</span>
-                        <div class="chat-bubble">${m.message}</div>
+                        <div class="chat-bubble" ${isMe ? `onclick="chatOptions(${m.id}, '${safeMsg}')"` : ''} title="${isMe ? 'Klik untuk Edit/Hapus' : ''}">
+                            <span>${m.message}</span>
+                            <span class="chat-time">${timeStr}</span>
+                            ${isMe ? '<span class="chat-action-hint">Klik untuk Edit</span>' : ''}
+                        </div>
                     </div>
                 `;
             }).join('');
 
-            if (isScrolledToBottom) {
-                chatBox.scrollTop = chatBox.scrollHeight;
+            if (isScrolledToBottom) chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (e) { console.log("Chat error"); }
+    }
+
+    async function chatOptions(id, msgRaw) {
+        const msg = decodeURIComponent(msgRaw);
+        const res = await Swal.fire({
+            title: 'Opsi Pesan', text: 'Apa yang ingin kamu lakukan?',
+            showDenyButton: true, showCancelButton: true,
+            confirmButtonText: '✏️ Edit', denyButtonText: '🗑️ Hapus', cancelButtonText: 'Batal',
+            background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)'
+        });
+
+        if (res.isConfirmed) {
+            const { value: newMsg } = await Swal.fire({
+                title: 'Edit Pesan', input: 'text', inputValue: msg,
+                showCancelButton: true, confirmButtonText: 'Update',
+                background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)'
+            });
+            if (newMsg && newMsg.trim() !== '' && newMsg.trim() !== msg) {
+                await fetch(chatApiUrl + '?id=eq.' + id, { method: 'PATCH', headers, body: JSON.stringify({ message: newMsg.trim() }) });
+                fetchChat();
             }
-        } catch (e) {
-            console.log("Chat fetch error");
+        } else if (res.isDenied) {
+            await fetch(chatApiUrl + '?id=eq.' + id, { method: 'DELETE', headers });
+            fetchChat();
         }
     }
 
     async function sendChat(e) {
-        e.preventDefault();
-        const input = document.getElementById('chatInput');
-        const btnSend = document.getElementById('btnSendChat');
-        const msg = input.value.trim();
-        
-        if (!msg) return;
+        e.preventDefault(); const input = document.getElementById('chatInput'); const btnSend = document.getElementById('btnSendChat');
+        const msg = input.value.trim(); if (!msg) return;
 
         if (!myChatName) {
             const { value: inputName } = await Swal.fire({
-                title: 'Nama Kamu?',
-                text: 'Masukkan namamu agar teman lain tahu siapa yang mengirim pesan.',
-                input: 'text',
-                inputPlaceholder: 'Contoh: Ayogi Akbar',
-                background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
-                confirmButtonColor: 'var(--primary)',
-                showCancelButton: true, cancelButtonText: 'Batal'
+                title: 'Nama Kamu?', text: 'Masukkan namamu agar teman lain tahu.',
+                input: 'text', inputPlaceholder: 'Contoh: Ayogi', background: 'rgba(25, 25, 28, 0.98)', color: 'var(--text)',
+                showCancelButton: true
             });
             if (!inputName || !inputName.trim()) return;
-            myChatName = inputName.trim();
-            localStorage.setItem('guestChatName', myChatName); 
+            myChatName = inputName.trim(); localStorage.setItem('guestChatName', myChatName); 
         }
 
-        input.value = ''; input.disabled = true; btnSend.disabled = true;
-        btnSend.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
-        
+        input.value = ''; input.disabled = true; btnSend.disabled = true; btnSend.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
         try {
-            await fetch(chatApiUrl, { 
-                method: 'POST', 
-                headers, 
-                body: JSON.stringify({ sender_name: myChatName, message: msg }) 
-            });
-            
+            await fetch(chatApiUrl, { method: 'POST', headers, body: JSON.stringify({ sender_name: myChatName, message: msg }) });
             await fetchChat();
-            setTimeout(() => {
-                const chatBox = document.getElementById('chatBox');
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 300);
-        } catch (e) {
-            Swal.fire({ toast: true, position: 'top', icon: 'error', title: 'Pesan Gagal Terkirim', showConfirmButton: false, timer: 2000, background: 'rgba(25, 25, 28, 0.98)', color: activeThemeHex });
-        } finally {
-            input.disabled = false; btnSend.disabled = false;
-            btnSend.innerHTML = '<i class="fas fa-paper-plane"></i>';
-            input.focus(); 
-        }
+            setTimeout(() => { const cb = document.getElementById('chatBox'); cb.scrollTop = cb.scrollHeight; }, 300);
+        } catch (e) {} finally { input.disabled = false; btnSend.disabled = false; btnSend.innerHTML = '<i class="fas fa-paper-plane"></i>'; input.focus(); }
     }
 
     // INIT ALL
-    fetchData(); 
-    fetchChat();
-    // Update data setiap 5 detik
-    setInterval(() => {
-        fetchData();
-        fetchChat();
-    }, 5000);
+    fetchData(); fetchChat();
+    setInterval(() => { fetchData(); fetchChat(); }, 5000);
     </script>
 </body>
 </html>
