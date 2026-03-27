@@ -177,7 +177,7 @@
         .tag-farhan { color: #fff; background: var(--azure); border-color: var(--azure); }
         .tag-cat { color: var(--text-dim); background: rgba(255,255,255,0.03); }
         
-        /* Modifikasi Tag Terkirim/Belum agar hanya berupa icon */
+        /* Ikon Terkirim/Belum */
         .tag-terkirim { color: #8ce19e; background: rgba(52,199,89,0.1); border-color: rgba(52,199,89,0.3); padding: 3px 6px; font-size: 0.75rem; }
         .tag-belum { color: #ff6b6b; background: rgba(255,59,48,0.1); border-color: rgba(255,59,48,0.25); padding: 3px 6px; font-size: 0.75rem; }
 
@@ -243,7 +243,7 @@
         <div class="splash-ornament"><div class="splash-monogram">V&F</div></div>
         <div class="splash-names">Viola & Farhan</div>
         <div class="splash-subtitle">Wedding Guest Management</div>
-        <div class="splash-cta"><span>Tambahkan Tamu</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
+        <div class="splash-cta"><span>Buka Undangan</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
     </div>
 
     <div id="particles"></div>
@@ -284,7 +284,7 @@
                     <span class="vip-label"><i class="fas fa-crown" style="font-size:0.75rem;"></i> Set VIP</span>
                     <label class="toggle-wrap"><input type="checkbox" id="guestVip"><span class="toggle-track"></span></label>
                 </div>
-                <button type="submit" class="btn-royal" id="btnSubmit">Add List</button>
+                <button type="submit" class="btn-royal" id="btnSubmit">Simpan Data</button>
             </form>
         </div>
 
@@ -292,8 +292,8 @@
             <div class="search-inner"><i class="fas fa-search search-icon"></i><input type="text" id="searchInput" placeholder="Cari nama atau kategori…" oninput="renderList()"></div>
             <div class="filter-strip">
                 <button class="filter-pill active" onclick="setFilter('all',this)">Semua</button>
-                <button class="filter-pill" onclick="setFilter('terkirim',this)">Terkirim</button>
-                <button class="filter-pill" onclick="setFilter('belum',this)">Pending</button>
+                <button class="filter-pill" onclick="setFilter('terkirim',this)">✅ Terkirim</button>
+                <button class="filter-pill" onclick="setFilter('belum',this)">⏳ Belum</button>
                 <button class="filter-pill" onclick="setFilter('vip',this)">VIP ✨</button>
                 <button class="filter-pill" onclick="setFilter('Viola',this)">Viola</button>
                 <button class="filter-pill" onclick="setFilter('Farhan',this)">Farhan</button>
@@ -578,7 +578,7 @@
             const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 30;
 
             if (recentChats.length === 0) {
-                chatBox.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;"><i class="fas fa-comment-dots" style="font-size:2rem; margin-bottom:10px; opacity:0.5;"></i><br>Kirim ucapan pertamamu!</div>`;
+                chatBox.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-top:20px;"><i class="fas fa-comment-dots" style="font-size:2rem; margin-bottom:10px; opacity:0.5;"></i><br>Jadilah yang pertama mengirim ucapan!</div>`;
                 return;
             }
 
