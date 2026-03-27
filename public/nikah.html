@@ -243,7 +243,7 @@
         <div class="splash-ornament"><div class="splash-monogram">V&F</div></div>
         <div class="splash-names">Viola & Farhan</div>
         <div class="splash-subtitle">Wedding Guest Management</div>
-        <div class="splash-cta"><span>Buka Undangan</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
+        <div class="splash-cta"><span>Tambahkan Tamu</span> <i class="fas fa-arrow-right" style="font-size:0.6rem"></i></div>
     </div>
 
     <div id="particles"></div>
@@ -284,7 +284,7 @@
                     <span class="vip-label"><i class="fas fa-crown" style="font-size:0.75rem;"></i> Set VIP</span>
                     <label class="toggle-wrap"><input type="checkbox" id="guestVip"><span class="toggle-track"></span></label>
                 </div>
-                <button type="submit" class="btn-royal" id="btnSubmit">Simpan Data</button>
+                <button type="submit" class="btn-royal" id="btnSubmit">Add List</button>
             </form>
         </div>
 
@@ -557,7 +557,7 @@
         if (fullData.length === 0) return;
         let textContent = "DAFTAR UNDANGAN VIOLA & FARHAN\n=========================================\n\n";
         fullData.forEach((g, i) => {
-            textContent += `${i + 1}. ${g.name} ${g.is_invited ? '(✅ Terkirim)' : '(⏳ Belum)'}\n   ▪ Pihak    : ${g.side}\n   ▪ Kategori : ${g.category}\n   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n-----------------------------------------\n`;
+            textContent += `${i + 1}. ${g.name} ${g.is_invited ? '(Terkirim)' : '(Belum)'}\n   ▪ Pihak    : ${g.side}\n   ▪ Kategori : ${g.category}\n   ▪ Status   : ${g.is_vip ? 'VIP ✨' : 'Reguler'}\n-----------------------------------------\n`;
         });
         const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Undangan_ViolaFarhan.txt';
